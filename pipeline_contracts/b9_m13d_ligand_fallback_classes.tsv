@@ -1,0 +1,39 @@
+ligand_code	fallback_class	support_level	interpretation_policy	note
+HOH	SOLVENT_WATER_IGNORE	NO	IGNORE	Water; never positive functional support
+DOD	SOLVENT_WATER_IGNORE	NO	IGNORE	Heavy water/deuterated solvent; never positive functional support
+MSE	MODIFIED_RESIDUE_OR_EXPRESSION_ARTIFACT	NO	NO_UPGRADE	Selenomethionine; expression/crystallography artifact unless explicitly biological in another context
+GOL	CRYSTALLIZATION_ADDITIVE_OR_SOLVENT	NO	NO_UPGRADE	Glycerol; common crystallization additive
+EDO	CRYSTALLIZATION_ADDITIVE_OR_SOLVENT	NO	NO_UPGRADE	Ethylene glycol; common crystallization additive
+PEG	CRYSTALLIZATION_ADDITIVE_OR_SOLVENT	NO	NO_UPGRADE	PEG; crystallization additive
+1PE	CRYSTALLIZATION_ADDITIVE_OR_SOLVENT	NO	NO_UPGRADE	PEG-related additive
+BME	CRYSTALLIZATION_ADDITIVE_OR_REDUCING_AGENT	NO	NO_UPGRADE	Beta-mercaptoethanol or additive; not functional support alone
+SO4	SMALL_INORGANIC_ANION_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Sulfate; context-dependent, no automatic support
+PO4	SMALL_INORGANIC_ANION_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Phosphate; context-dependent, no automatic support
+NO2	SMALL_INORGANIC_REACTION_RELATED_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Nitrite; context-dependent, no automatic support alone
+NO3	SMALL_INORGANIC_REACTION_RELATED_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Nitrate; context-dependent, no automatic support alone
+UNX	UNKNOWN_ATOM_OR_UNMODELED_SPECIES	NO	NO_UPGRADE	Unknown atom/species; no functional support
+NAD	BIOLOGICAL_COFACTOR_NAD_FAMILY	YES	BIOLOGICAL_SUPPORT	NAD family cofactor fallback; curate explicitly if frequent
+NAP	BIOLOGICAL_COFACTOR_NADP_FAMILY	YES	BIOLOGICAL_SUPPORT	NADP analog/cofactor; already curated in dictionary as NAP
+N8E	POSSIBLE_NAD_ANALOG_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Possible ligand/analog; manual review unless curated
+PLP	BIOLOGICAL_COFACTOR_PLP	YES	BIOLOGICAL_SUPPORT	Pyridoxal phosphate; curated dictionary positive
+LLP	BIOLOGICAL_COVALENT_PLP_ADDUCT_CONTEXT_DEPENDENT	YES_REFERENCE_OR_QUERY_DEPENDENT	MANUAL_OR_RULE_DEPENDENT	PLP-linked lysine; requires query/reference context
+MGD	BIOLOGICAL_COFACTOR_MOLYBDOPTERIN	YES	BIOLOGICAL_SUPPORT	Molybdopterin guanosine dinucleotide
+MO	BIOLOGICAL_METAL_CENTER_MOLYBDENUM	YES	BIOLOGICAL_SUPPORT	Molybdenum center in molybdopterin cases
+SF4	BIOLOGICAL_METAL_CLUSTER_4FE4S	YES	BIOLOGICAL_SUPPORT	4Fe-4S cluster
+ZN	METAL_OR_ION_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Zinc; can be biological or nonspecific, manual context
+CU	METAL_OR_ION_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Copper; can be biological or nonspecific, manual context
+MN	METAL_OR_ION_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Manganese; can be biological or nonspecific, manual context
+CA	METAL_OR_ION_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Calcium; often structural or crystallization-related, manual context
+NA	METAL_OR_ION_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Sodium; usually not functional support alone
+NI	METAL_OR_ION_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Nickel; can be biological or artifact, manual context
+HG	TOXIC_HEAVY_METAL_OR_ARTIFACT_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Mercury; often crystallographic/heavy-atom context, no automatic support
+CL	SMALL_INORGANIC_ION_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Chloride; no automatic support
+ACO	SMALL_MOLECULE_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Acetate/acetyl-like ligand; manual review only unless curated
+3IB	SMALL_MOLECULE_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Uncurated small molecule; manual review only
+4LU	SMALL_MOLECULE_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Uncurated ligand; manual review only
+BG3	SMALL_MOLECULE_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Uncurated ligand; manual review only
+C5J	SMALL_MOLECULE_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Uncurated ligand; manual review only
+HCB	SMALL_MOLECULE_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Uncurated ligand; manual review only
+URE	SMALL_MOLECULE_MANUAL_CONTEXT	MANUAL	MANUAL_ONLY	Urea; no automatic support
+NES	CONTEXT_DEPENDENT_LIGAND_MANUAL_REVIEW	MANUAL	MANUAL_ONLY	DAPDH_C context-dependent; do not use as primary biological support without manual confirmation
+PYL	SPECIAL_PROTEIN_RESIDUE_CONTEXT	REVIEW	MANUAL_ONLY	Pyrrolysine/special residue; check conservation

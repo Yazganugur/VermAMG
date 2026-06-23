@@ -1,0 +1,12 @@
+mismatch_class	meaning	typical_trigger	recommended_action	automatic_final_class_allowed
+NO_EXISTING_FAMILY_RULE	Family absent from Pilot32/Bölüm 8 rulebook	family not in known family rule table	Create candidate-specific or family-specific new rule after manual review	NO
+FAMILY_RULE_EXISTS_BUT_REQUIRED_EVIDENCE_MISSING	Family exists but required motif/residue/ligand evidence is absent	known residue not mapped; ligand class missing; no pocket residue overlap	Keep as REVIEW; inspect raw residue/pocket mapping	NO
+FAMILY_RULE_EXISTS_BUT_REFERENCE_CONTEXT_CHANGED	Rule exists but primary/reference context differs from Pilot32 calibration	PDB primary became AFSP primary; chain-specific reference unavailable; cache missing	Apply rule only if evidence compatibility is confirmed	NO
+PRIMARY_APO_OR_NO_LIGAND	Primary reference has no ligand/cofactor context	n_ligand_groups=0 or no biological ligand in primary PDB	Do not penalize automatically; check known residues and supporting holo context	YES_REVIEW_ONLY
+SUPPORTING_HOLO_CONTEXT_AVAILABLE	Supporting PDB contains plausible biological ligand/cofactor context	supporting PDB ligand/cofactor present near pocket	Record as supporting evidence; do not override primary	YES_SUPPORTING_ONLY
+POTENTIAL_NEW_LIGAND_CONTEXT_RULE	Observed ligand/cofactor pattern not represented in rulebook	new ligand family, substrate analog, cofactor, metal cluster	Propose new ligand/cofactor rule class	NO
+POTENTIAL_NEW_METAL_COFACTOR_RULE	Metal/cofactor context appears but biological class is unresolved	metal HETATM, cluster, molybdopterin-like cofactor	Separate biological metal/cofactor from crystallization artifact	NO
+POTENTIAL_NEW_DOMAIN_PARTIAL_RULE	Domain expansion/truncation changes interpretability	partial qcov/tcov; domain-specific alignment; viral remodeling	Create domain-aware family rule	NO
+AFSP_ONLY_NO_PDB_LIGAND_CONTEXT	Only AFSP/predicted reference context available	PDB weak/missing; AFSP primary/supporting only	Use structural/pocket evidence but ligand-contact unavailable	YES_REVIEW_ONLY
+REFERENCE_CACHE_MISSING_FOR_SUPPORTING_HIT	Supporting PDB selected by Foldseek but local structure not available	reference_file_exists=NO	Keep Foldseek context; mark unresolved; optionally download/fetch later	YES_AUDIT_ONLY
+LOW_EVIDENCE_REVIEW_ONLY	Signals too weak or inconsistent to open new rule	weak primary, weak supporting, missing pocket, no motif	Keep low/review; do not overinterpret	YES_REVIEW_ONLY

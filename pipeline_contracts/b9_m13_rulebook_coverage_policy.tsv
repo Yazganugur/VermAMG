@@ -1,0 +1,13 @@
+policy_key	value	rationale	downstream_effect
+m13_scope	ligand/cofactor/motif/known-residue/rulebook evidence layer	M12 is structural decision; M13 adds biochemical/rulebook evidence	Feeds refined evidence matrix and final interpretation
+existing_rulebook_scope	Pilot32 Bölüm 8 rulebook was calibrated on 32 proteins / 11 families	It must not be blindly forced onto new Tier1 full families	Family coverage must be checked explicitly
+never_force_classification	YES	New families or mismatching evidence patterns should not be forced into old classes	Use REVIEW / NEW_RULE_NEEDED classes
+primary_reference_rule	Primary/rank-1 evidence remains the main automated interpretation anchor	Consistent with M12 primary decision matrix	Rulebook may refine but must retain primary/supporting distinction
+supporting_reference_rule	Supporting rank-2-to-rank-5 references provide context and warnings, not automatic confirmation	Prevents holo supporting structure from overclaiming function	Add supporting ligand/cofactor flags without overriding primary
+apo_holo_policy	Primary apo/no-ligand does not automatically weaken candidate	PDB ligand absence can be experimental artifact	Add PRIMARY_APO_OR_NO_LIGAND and check supporting references
+supporting_holo_policy	Supporting PDB ligand/cofactor context should be retained as supporting evidence	Can explain why rank-1 is not chemically informative	Add SUPPORTING_HOLO_CONTEXT_AVAILABLE / POTENTIAL_NEW_LIGAND_CONTEXT_RULE
+known_residue_policy	Known catalytic/cofactor residues may override lack of ligand evidence only when family-specific rule exists	CoA_trans Glu54-like cases need explicit curated rule	Add KNOWN_RESIDUE_RULE_APPLIED / KNOWN_RESIDUE_RULE_MISSING
+motif_policy	Motif/residue conservation is family-specific and must not be generalized blindly	Broad families can share fold but differ in function	Unmatched motifs become NEW_RULE_NEEDED or MANUAL_REVIEW
+metal_cofactor_policy	Metals/cofactors require biological interpretation; raw HETATM is not enough	Non-biological crystallization artifacts are common	Add biological ligand/cofactor classification layer
+viral_context_policy	Candidates are viral-contig encoded; divergence is expected	Partial/low conservation is not automatically negative	Add viral evolutionary caution notes
+raw_output_policy	Do not modify raw M12/M10F/M11 source TSVs	Maintains reproducibility	M13 writes refined/derived outputs only

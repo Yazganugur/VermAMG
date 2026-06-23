@@ -1,0 +1,7 @@
+output_key	path_pattern	rows_expected_regression	role
+primary_ligand_context	results/{mode}/08_rulebook_evidence/{mode}_ligand_cofactor_primary_context.tsv	32	One row per protein; primary/rank-1 ligand/cofactor interpretation
+supporting_ligand_context	results/{mode}/08_rulebook_evidence/{mode}_ligand_cofactor_supporting_context.tsv	128	Four rows per protein; rank-2-to-rank-5 supporting ligand/cofactor context
+ligand_context_summary	results/{mode}/08_rulebook_evidence/{mode}_ligand_cofactor_context_summary.tsv	>=1	Summary of primary/supporting ligand/cofactor classes
+ligand_context_qc	results/{mode}/08_rulebook_evidence/{mode}_ligand_cofactor_context_qc.tsv	>=1	QC for M13D ligand/cofactor scan
+primary_policy	POLICY	PRIMARY_RANK1_ONLY	Main automated ligand/cofactor table
+supporting_policy	POLICY	SUPPORTING_CONTEXT_ONLY_NO_OVERRIDE	Supporting table provides audit/manual review context only

@@ -1,0 +1,17 @@
+module	item	path_or_pattern	contract_role	required	status
+M12A	input	results/{mode}/07_decision_matrix/{mode}_primary_decision_matrix.tsv	primary structural decision and rank-1 context	yes	available
+M12B	input	results/{mode}/07_decision_matrix/{mode}_supporting_reference_decision_matrix.tsv	rank-2-to-rank-5 supporting context	yes	available
+M12C	input	results/{mode}/07_decision_matrix/{mode}_combined_decision_summary.tsv	one-row-per-protein structural bridge	yes	available
+M10F	input	06_visual_qc_v6/{mode}/canonical_v6_engine*/rendered_png/pilot32_v6_standard/tables/*_pocket_residue_details.tsv	primary pocket residue details	yes	available_for_regression
+M10F	input	06_visual_qc_v6/{mode}/canonical_v6_engine*/rendered_png/pilot32_v6_standard/tables/*_alignment_pocket_classification.tsv	primary alignment/pocket classification	yes	available_for_regression
+M08/M09	input	05_reference_panel/{mode}/{mode}_reference_panel_targets.tsv	reference panel identities and source ranks	yes	available
+M11	input	results/{mode}/06_supporting_reference_audit/{mode}_supporting_reference_audit.tsv	supporting reference audit layer	yes	available
+B8_legacy	input	08_rulebook_evidence/scripts/	existing Pilot32 rulebook scripts/resources	if_available	to_discover
+B8_legacy	input	08_rulebook_evidence/config_or_rules/*	existing family rules / known residues / ligand classes	if_available	to_discover
+M13A	output	results/{mode}/08_rulebook_evidence/{mode}_rulebook_context_collector.tsv	merged context for rulebook classification	planned	planned
+M13B	output	results/{mode}/08_rulebook_evidence/{mode}_existing_rulebook_classified.tsv	cases matching existing Bölüm 8 rulebook	planned	planned
+M13C	output	results/{mode}/08_rulebook_evidence/{mode}_rulebook_unmatched_families.tsv	families absent from existing rulebook	planned	planned
+M13C	output	results/{mode}/08_rulebook_evidence/{mode}_rulebook_mismatch_reasons.tsv	cases with family rule but missing/mismatching evidence	planned	planned
+M13D	output	results/{mode}/08_rulebook_evidence/{mode}_rulebook_new_class_suggestions.tsv	suggested new classes/rules for full Tier1 expansion	planned	planned
+M13E	output	results/{mode}/08_rulebook_evidence/{mode}_final_rulebook_evidence_matrix.tsv	final refined rulebook evidence matrix	planned	planned
+M13QC	output	results/{mode}/08_rulebook_evidence/{mode}_rulebook_coverage_qc.tsv	rulebook coverage and mismatch QC	planned	planned

@@ -1,0 +1,136 @@
+# =============================================================================
+# VermAMG smoke demo — 3 proteins, precomputed mode, no external DBs required.
+# =============================================================================
+# Run this after cloning (no setup.sh needed):
+#
+#   python scripts/vermamg.py plan --config examples/smoke_precomputed/config.yaml
+#   python scripts/vermamg.py run  --config examples/smoke_precomputed/config.yaml --resume --follow
+#
+# Requires: Python >= 3.10, pip install -r requirements.txt, P2Rank + Java.
+# Outputs land in: runs/smoke_precomputed/smoke_3prot_v1/exports/
+# =============================================================================
+
+schema_version: 2
+
+project:
+  name: "VermAMG Smoke Demo"
+  slug: "smoke_precomputed"
+
+sample:
+  name: ""
+  slug: ""
+
+analysis:
+  mode: full
+
+environment:
+  backend: local
+  profile: local_wsl
+
+run:
+  label: "smoke_3prot_v1"
+  root: "runs/{project_slug}/{run_label}"
+  layout_version: 2
+  resume_policy: skip_pass
+  overwrite_policy: fail_if_outputs_exist
+  import_policy: reference
+
+inputs:
+  fasta: "examples/smoke_precomputed/data/proteins.faa"
+  metadata_tsv: ""
+
+input_intake:
+  id_policy: preserve_first_token
+  duplicate_policy: fail
+  min_sequence_length: 1
+  invalid_sequence_policy: fail
+
+metadata:
+  id_column: protein_id
+  required: false
+  strict_extra_rows: false
+
+batching:
+  enabled: true
+  strategy: fixed_size
+  batch_size: 128
+  target_batches: 0
+  max_sequences: 0
+  batch_prefix: "smoke"
+
+backend_jobs:
+  dry_run: true
+  submit_jobs: false
+  emit_local_bundle: true
+  emit_slurm_bundle: false
+  plan_colabfold: true
+  plan_foldseek: true
+  local_threads: 4
+
+slurm:
+  account: ""
+  partition_cpu: ""
+  partition_gpu: ""
+  partition_debug: ""
+  cpus_cpu: 8
+  cpus_gpu: 10
+  mem_cpu: "16G"
+  mem_gpu: "32G"
+  time_cpu: "12:00:00"
+  time_gpu: "12:00:00"
+
+colabfold:
+  mode: precomputed
+  query_pdb_dir: "examples/smoke_precomputed/data/query_pdbs"
+  collector_manifest: "examples/smoke_precomputed/data/foldseek/collector_manifest.tsv"
+  score_json_dir: ""
+  pae_json_dir: ""
+  placeholder_confidence_policy: explicit_na_with_qc
+
+foldseek:
+  mode: precomputed_all_hits
+  pdb_all_hits: "examples/smoke_precomputed/data/foldseek/pdb_all_hits.tsv"
+  afsp_all_hits: "examples/smoke_precomputed/data/foldseek/afsp_all_hits.tsv"
+  id_map: "examples/smoke_precomputed/data/foldseek/id_map.tsv"
+
+resources:
+  java_bin: "java"
+  # P2Rank is installed by setup.sh into resources/tools/p2rank/
+  # After running setup.sh, update the two paths below (or use the paths printed by setup.sh):
+  p2rank_cmd: "resources/tools/p2rank/prank"
+  p2rank_jar: "resources/tools/p2rank/bin/p2rank.jar"
+
+reference_materialization:
+  method: full_atom_cache
+  # Reference PDB files for the 3 demo proteins are bundled in the repo.
+  source_run_root: "examples/smoke_precomputed/data/reference_run_cache"
+  overwrite: false
+  guard_reference_atom_names: true
+  allow_ca_only_diagnostic: false
+
+stages:
+  input_intake: true
+  batch_plan: true
+  backend_job_plan: true
+  import_colabfold: true
+  import_foldseek: true
+  foldseek_search: false
+  m06b_m07b: true
+  m08: true
+  m09: true
+  p2rank: true
+  m10a_d: true
+  m10f_render: false
+  m11: true
+  m12: true
+  m13: true
+  m14: true
+  interpretation_ready_export: true
+
+p2rank:
+  threads: 4
+  chunk_size: 64
+
+safety:
+  require_run_root_outputs_only: true
+  stop_on_dirty_partial_output: true

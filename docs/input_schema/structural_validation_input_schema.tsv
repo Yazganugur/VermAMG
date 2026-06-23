@@ -1,0 +1,28 @@
+field	requirement	level	purpose	notes
+protein_id	required	core	Unique protein identifier	Must match FASTA header or be resolvable through an ID mapping table
+protein_sequence	required	core	Protein amino-acid sequence	Provided through FASTA
+id_mapping	optional	core	Map original FASTA IDs to stable run IDs	Recommended when FASTA headers are long or tool-generated
+family_label	recommended	annotation	Functional/family label used for grouping	If absent, pipeline should assign unknown_family or unannotated
+custom_annotation	recommended	annotation	User-defined functional annotation	Can replace Pfam/KO labels in non-BAPS datasets
+pfam_name	optional	annotation	Protein family annotation	Useful, but not required
+pfam_acc	optional	annotation	Pfam accession	Useful for reproducibility
+pfam_score	optional	annotation	Pfam support score	Useful for confidence/context
+kofam_ko_id	optional	annotation	KEGG Orthology annotation	Useful for functional interpretation
+dram_ko_id	optional	annotation	DRAM-v KO annotation	Useful when AMG discovery came from DRAM-v
+dram_amg_flags	optional	annotation	DRAM-v AMG flags	Useful for upstream AMG provenance
+vibrant_ko_id	optional	annotation	VIBRANT KO annotation	Useful when AMG discovery came from VIBRANT
+src_dramv	optional	annotation	Source flag from DRAM-v	BAPS-specific upstream provenance
+src_vibrant	optional	annotation	Source flag from VIBRANT	BAPS-specific upstream provenance
+src_concordant	optional	annotation	Agreement between upstream AMG callers	Useful for candidate prioritization
+eggnog_cog	optional	annotation	COG category	Useful for broad functional interpretation
+eggnog_kegg_ko	optional	annotation	EggNOG-derived KO	Alternative KO support
+viral_context	optional	context	Viral genomic context evidence	Can be hallmark-neighbor, viral-like-neighbor, contig-level support
+phrog_support	optional	context	PHROG/hallmark support	Used for viral-context confidence
+left_class	optional	context	Left-neighbor class	BAPS-specific neighborhood context
+right_class	optional	context	Right-neighbor class	BAPS-specific neighborhood context
+context_score	optional	context	Neighborhood/context score	BAPS-specific prioritization
+confidence_final	optional	metadata	Upstream candidate confidence	Used for filtering/prioritization, not structural computation
+habitat_broad	optional	metadata	Broad habitat/source context	Not required for structural validation
+habitat_fine	optional	metadata	Finer habitat/source context	Not required for structural validation
+organism	optional	metadata	Source organism/bin label	Useful for reporting
+genus	optional	metadata	Genus label	Useful for reporting

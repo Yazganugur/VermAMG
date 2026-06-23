@@ -1,0 +1,126 @@
+# NOTE: This is a working example config for the developer's local dataset.
+# Paths under colabfold/foldseek point to local data (incoming/) not shipped in git.
+# To start your own project, copy a template instead:
+#   cp run_templates/local_run.yaml.template run_configs/my_project.yaml
+#
+schema_version: 2
+
+project:
+  name: "HOXD Viral AMG Screen"
+  slug: ""
+
+sample:
+  name: ""
+  slug: ""
+
+analysis:
+  mode: full
+
+environment:
+  backend: local
+  profile: local_wsl
+
+run:
+  label: "hoxd_precomputed_project_v2_fullatom_cache_smoke"
+  root: "runs/{project_slug}/{run_label}"
+  layout_version: 2
+  resume_policy: skip_pass
+  overwrite_policy: fail_if_outputs_exist
+  import_policy: reference
+
+inputs:
+  fasta: "00_inputs/tier1_amg.faa"
+  metadata_tsv: "00_inputs/full665_amg_sequence_metadata.tsv"
+
+input_intake:
+  id_policy: preserve_first_token
+  duplicate_policy: fail
+  min_sequence_length: 1
+  invalid_sequence_policy: fail
+
+metadata:
+  id_column: protein_id
+  required: false
+  strict_extra_rows: false
+
+batching:
+  enabled: true
+  strategy: fixed_size
+  batch_size: 128
+  target_batches: 0
+  max_sequences: 0
+  batch_prefix: "{project_slug}"
+
+backend_jobs:
+  dry_run: true
+  submit_jobs: false
+  emit_local_bundle: true
+  emit_slurm_bundle: true
+  plan_colabfold: true
+  plan_foldseek: true
+  local_threads: 4
+
+slurm:
+  account: ""
+  partition_cpu: ""
+  partition_gpu: ""
+  partition_debug: ""
+  cpus_cpu: 8
+  cpus_gpu: 10
+  mem_cpu: "16G"
+  mem_gpu: "32G"
+  time_cpu: "12:00:00"
+  time_gpu: "12:00:00"
+
+colabfold:
+  mode: precomputed
+  query_pdb_dir: "incoming/truba_manual_full665/foldseek/query_pdbs"
+  collector_manifest: "incoming/truba_manual_full665/foldseek/collector_manifest.tsv"
+  score_json_dir: ""
+  pae_json_dir: ""
+  placeholder_confidence_policy: explicit_na_with_qc
+
+foldseek:
+  mode: precomputed_all_hits
+  pdb_all_hits: "incoming/truba_manual_full665/adapter_canonical_full/full_vs_pdb_foldseek_all_hits.tsv"
+  afsp_all_hits: "incoming/truba_manual_full665/adapter_canonical_full/full_vs_afsp_foldseek_all_hits.tsv"
+  id_map: "incoming/truba_manual_full665/adapter_canonical_full/full_manual665_id_map.tsv"
+
+resources:
+  java_bin: "java"
+  p2rank_cmd: "resources/tools/p2rank/p2rank_2.5.1/prank"
+  p2rank_jar: "resources/tools/p2rank/p2rank_2.5.1/bin/p2rank.jar"
+
+reference_materialization:
+  method: full_atom_cache
+  source_run_root: "runs/tier1_tier2_colabfold_postrun_fresh_v1_fullatom_refs_v1"
+  overwrite: false
+  guard_reference_atom_names: true
+  allow_ca_only_diagnostic: false
+
+stages:
+  input_intake: true
+  batch_plan: true
+  backend_job_plan: true
+  import_colabfold: true
+  import_foldseek: true
+  foldseek_search: false
+  m06b_m07b: true
+  m08: true
+  m09: true
+  p2rank: true
+  m10a_d: true
+  m10f_render: false
+  m11: true
+  m12: true
+  m13: true
+  m14: true
+  interpretation_ready_export: true
+
+p2rank:
+  threads: 4
+  chunk_size: 64
+
+safety:
+  require_run_root_outputs_only: true
+  stop_on_dirty_partial_output: true

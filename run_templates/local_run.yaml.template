@@ -1,0 +1,204 @@
+# =============================================================================
+# VermAMG — Local Run Template (schema v2)
+# =============================================================================
+# Copy this file and fill in every [FILL] field, then:
+#
+#   python scripts/vermamg.py plan --config run_configs/my_project.yaml
+#   python scripts/vermamg.py run  --config run_configs/my_project.yaml --resume --follow
+#
+# Fields marked [FILL] are REQUIRED.
+# Fields marked [OPTIONAL] can be left at their default values.
+# Fields marked [CHOOSE] require you to pick one of the documented options.
+#
+# Two execution modes — select via colabfold.mode + foldseek.mode:
+#   precomputed : you already have structure PDBs + Foldseek hit tables → fast, no GPU
+#   live        : pipeline runs ColabFold + Foldseek from your FASTA → needs GPU + DBs
+#
+# See run_templates/README_RUN_TEMPLATES.md for field-by-field documentation.
+# See docs/INSTALL.md for tool/database installation.
+# =============================================================================
+
+schema_version: 2
+
+# ---------------------------------------------------------------------------
+# Project identity
+# ---------------------------------------------------------------------------
+project:
+  name: "[FILL] Human-readable project name, e.g. 'Viral AMG Screen — Lake X'"
+  slug: ""   # auto-derived from name if left blank; override to fix the run dir name
+
+sample:
+  name: ""   # [OPTIONAL] sub-sample label
+  slug: ""   # auto-derived
+
+analysis:
+  mode: full
+
+# ---------------------------------------------------------------------------
+# Environment
+# ---------------------------------------------------------------------------
+environment:
+  backend: local          # local | slurm  (use hpc_slurm_run_v2 template for slurm)
+  profile: local_wsl      # leave as-is for Linux/WSL local runs
+
+# ---------------------------------------------------------------------------
+# Run control
+# ---------------------------------------------------------------------------
+run:
+  label: "[FILL] Short run identifier, e.g. 'lake_x_precomputed_v1'"
+  root: "runs/{project_slug}/{run_label}"   # do not change — keeps runs organised
+  layout_version: 2
+  resume_policy: skip_pass        # skip stages that already PASS — safe default
+  overwrite_policy: fail_if_outputs_exist
+  import_policy: reference        # precomputed mode; use 'copy' for live mode
+
+# ---------------------------------------------------------------------------
+# Inputs
+# ---------------------------------------------------------------------------
+inputs:
+  fasta: "[FILL] Path to your FASTA file, e.g. 'inputs/my_proteins.faa'"
+  metadata_tsv: ""   # [OPTIONAL] TSV with protein_id + annotation columns
+
+input_intake:
+  id_policy: preserve_first_token    # use the first whitespace-delimited token as ID
+  duplicate_policy: fail
+  min_sequence_length: 1
+  invalid_sequence_policy: fail
+
+metadata:
+  id_column: protein_id
+  required: false        # set true if metadata_tsv is provided and must be complete
+  strict_extra_rows: false
+
+# ---------------------------------------------------------------------------
+# Batching  (count-agnostic — works for any N proteins)
+# ---------------------------------------------------------------------------
+batching:
+  enabled: true
+  strategy: fixed_size
+  batch_size: 128        # proteins per ColabFold / Foldseek batch
+  target_batches: 0      # 0 = auto
+  max_sequences: 0       # 0 = process all sequences in the FASTA
+  batch_prefix: "{project_slug}"
+
+# ---------------------------------------------------------------------------
+# Backend job planning
+# ---------------------------------------------------------------------------
+backend_jobs:
+  dry_run: true          # set false to actually submit/run compute jobs
+  submit_jobs: false
+  emit_local_bundle: true
+  emit_slurm_bundle: false
+  plan_colabfold: true
+  plan_foldseek: true
+  local_threads: 4       # [OPTIONAL] CPU threads for local Foldseek / P2Rank
+
+slurm:                   # not used with backend: local — ignored
+  account: ""
+  partition_cpu: ""
+  partition_gpu: ""
+  partition_debug: ""
+  cpus_cpu: 8
+  cpus_gpu: 10
+  mem_cpu: "16G"
+  mem_gpu: "32G"
+  time_cpu: "12:00:00"
+  time_gpu: "12:00:00"
+
+# ---------------------------------------------------------------------------
+# ColabFold — [CHOOSE] mode: precomputed  OR  live
+# ---------------------------------------------------------------------------
+colabfold:
+  # --- PRECOMPUTED mode (you already have structure PDB files) ---
+  mode: precomputed
+  query_pdb_dir: "[FILL] Directory of per-protein PDB files (one file per protein)"
+  collector_manifest: "[FILL] TSV with columns: run_id | pdb_path | confidence_score"
+  score_json_dir: ""         # [OPTIONAL] per-protein ColabFold JSON score files
+  pae_json_dir: ""           # [OPTIONAL] per-protein PAE JSON files
+  placeholder_confidence_policy: explicit_na_with_qc
+
+  # --- LIVE mode (uncomment and fill, comment out precomputed block above) ---
+  # mode: live
+  # cmd: "colabfold_batch"          # ColabFold executable on PATH or full path
+  # msa_mode: "mmseqs2_uniref_env"  # MSA strategy (see ColabFold docs)
+  # model_type: "alphafold2_ptm"
+  # num_recycle: "3"
+  # num_models: "1"
+  # dry_run: true                   # set false to run predictions on GPU node
+
+# ---------------------------------------------------------------------------
+# Foldseek — [CHOOSE] mode: precomputed_all_hits  OR  live
+# ---------------------------------------------------------------------------
+foldseek:
+  # --- PRECOMPUTED mode (you already have Foldseek hit tables) ---
+  mode: precomputed_all_hits
+  pdb_all_hits: "[FILL] TSV of Foldseek hits vs PDB (columns: query target evalue bits prob ...)"
+  afsp_all_hits: "[FILL] TSV of Foldseek hits vs AlphaFold/Swiss-Prot"
+  id_map: "[FILL] TSV mapping run_id → protein_id (+ optional family_label, habitat_broad)"
+
+  # --- LIVE mode (uncomment and fill, comment out precomputed block above) ---
+  # mode: live
+  # threads: 4
+  # dry_run: true   # set false where foldseek_bin + DBs are available
+
+# ---------------------------------------------------------------------------
+# Resources  (paths set by setup.sh; paste the printed summary here)
+# ---------------------------------------------------------------------------
+resources:
+  java_bin: "java"
+  p2rank_cmd: "[FILL] e.g. resources/tools/p2rank/p2rank_2.5.2/prank"
+  p2rank_jar: "[FILL] e.g. resources/tools/p2rank/p2rank_2.5.2/bin/p2rank.jar"
+  # Live Foldseek mode only:
+  foldseek_bin: ""       # e.g. resources/tools/foldseek/bin/foldseek  (setup.sh installs here)
+  pdb_foldseek_db: ""    # e.g. resources/databases/foldseek/pdb       (setup.sh installs here)
+  afsp_foldseek_db: ""   # e.g. resources/databases/foldseek/alphafold_swissprot
+
+# ---------------------------------------------------------------------------
+# Reference materialization
+# A prior run whose full-atom reference PDB files are reused as the starting
+# cache.  For a fresh project you will need to run once to populate this, or
+# use the bundled smoke cache (examples/smoke_precomputed/data/reference_run_cache).
+# ---------------------------------------------------------------------------
+reference_materialization:
+  method: full_atom_cache
+  source_run_root: "[FILL] Path to a prior run root that has materialized references,
+    e.g. runs/my_prior_project/my_prior_run"
+  overwrite: false
+  guard_reference_atom_names: true
+  allow_ca_only_diagnostic: false
+
+# ---------------------------------------------------------------------------
+# Stage toggles  (true = enabled, false = skip)
+# ---------------------------------------------------------------------------
+stages:
+  input_intake: true
+  batch_plan: true
+  backend_job_plan: true
+  import_colabfold: true
+  import_foldseek: true
+  foldseek_search: false        # live Foldseek search stage (set true for live mode)
+  m06b_m07b: true
+  m08: true
+  m09: true
+  p2rank: true
+  m10a_d: true
+  m10f_render: false            # visual rendering (optional; needs PyMOL/ChimeraX)
+  m11: true
+  m12: true
+  m13: true
+  m14: true
+  interpretation_ready_export: true
+
+# ---------------------------------------------------------------------------
+# P2Rank settings
+# ---------------------------------------------------------------------------
+p2rank:
+  threads: 4
+  chunk_size: 64
+
+# ---------------------------------------------------------------------------
+# Safety guards
+# ---------------------------------------------------------------------------
+safety:
+  require_run_root_outputs_only: true
+  stop_on_dirty_partial_output: true

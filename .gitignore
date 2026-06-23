@@ -1,0 +1,81 @@
+# ============================================================================
+# VermAMG .gitignore
+# Keeps the repo to source code only (~5 MB). Heavy data, databases, tool
+# binaries, containers, and per-run outputs stay local and are NOT committed.
+# `setup.sh` fetches tools/databases for a fresh clone.
+# ============================================================================
+
+# --- Tools / databases / containers (local only; setup.sh installs these) ---
+resources/
+
+# --- Inputs and precomputed handoff data (local only) ---
+incoming/
+
+# --- Per-run outputs (each user generates their own) ---
+runs/
+work/
+results/
+exports/
+logs/
+tmp/
+pipeline_state/
+
+# --- V1 / historical artifacts (kept locally / archived, not shipped) ---
+legacy_examples/
+00_inputs_transfer/
+01_colabfold/
+02_foldseek/
+03_references/
+04_p2rank/
+05_overlay_manifest/
+05_reference_panel/
+06_residue_level/
+06_visual_qc_v6/
+07_decision_matrix/
+08_rulebook_evidence/
+09_regression_pilot32/
+10_results_package/
+backups/
+run_sets/
+smoke_test/
+
+# --- Large input working dir (keep example inputs via examples/ instead) ---
+00_inputs/
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+*.egg-info/
+
+# --- Backups / scratch / junk ---
+*.bak
+*.bak_*
+*.before_*
+*.orig
+*~
+/1
+
+# --- Large binaries / presentations ---
+*.sif
+*.pptx
+*.pdb.gz
+
+# --- Presentation / local agent assets (not pipeline source) ---
+presentation_assets/
+.claude/
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ============================================================================
+# Explicitly TRACK the small bundled example data (DB-free smoke demo):
+!examples/
+!examples/**
+# ============================================================================

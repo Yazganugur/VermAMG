@@ -1,0 +1,14 @@
+metric	value
+module	B9_pipeline_contracts
+status	OK
+contract_dir	pipeline_contracts
+policy_file	pipeline_contracts/b9_primary_supporting_reference_policy.tsv
+policy_rows	11
+downstream_contract_file	pipeline_contracts/b9_downstream_input_contract.tsv
+downstream_contract_rows	20
+roadmap_file	pipeline_contracts/b9_post_m10f_roadmap.tsv
+roadmap_rows	5
+readme_file	pipeline_contracts/README_B9_pipeline_contracts.md
+readme_lines	53
+current_accepted_endpoint	M10F_canonical_v6_visual_QC
+next_module	M11_supporting_reference_audit

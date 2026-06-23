@@ -1,0 +1,33 @@
+VermAMG — Viral Auxiliary Metabolic Gene structural–functional validation pipeline
+
+Copyright (c) 2026 VermAMG author. All rights reserved.
+
+This is unpublished academic research software. It is shared for the purposes of
+evaluation, review, and potential scientific collaboration.
+
+Permission is granted to view and evaluate this source code. You may NOT, without
+the prior written permission of the copyright holder:
+
+  * redistribute, publish, or sublicense this software or substantial portions
+    of it, in source or compiled form;
+  * use it, or methods derived from it, in published research, products, or
+    services;
+  * remove or alter this notice.
+
+Cloning the repository and running the pipeline locally for evaluation is
+permitted.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE
+LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THIS
+SOFTWARE.
+
+For collaboration, reuse, or licensing inquiries, please contact the author.
+
+----------------------------------------------------------------------------
+NOTE TO MAINTAINER: If you prefer a permissive open-source license (so others
+can freely build on VermAMG), replace this file with MIT or Apache-2.0. Keep
+this restrictive notice while the underlying research is unpublished to avoid
+being scooped.
+----------------------------------------------------------------------------

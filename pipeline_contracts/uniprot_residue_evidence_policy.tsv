@@ -1,0 +1,5 @@
+evidence_family	evidence_code_pattern	evidence_tier	interpretation_policy
+UniProt_experimental	ECO:0000269	STRONG	Residue evidence may support interpretation when mapped; not experimental validation of the query.
+UniProt_high_confidence	ECO:0000305;ECO:0007744	STRONG	High-confidence curated context; inspect source details.
+UniProt_similarity_or_prediction	ECO:0000250;ECO:0000255;ECO:0000256;ECO:0000259;ECO:0000313;ECO:0000314	SUPPORT_CAUTION	Context only; must not be described as catalytic proof.
+UniProt_unknown	UNKNOWN	SUPPORT_CAUTION	Context only until evidence code is classified.

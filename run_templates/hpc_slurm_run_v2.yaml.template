@@ -1,0 +1,200 @@
+# =============================================================================
+# VermAMG — HPC / SLURM Run Template (schema v2)
+# =============================================================================
+# For local runs use run_templates/local_run.yaml.template instead.
+#
+# Copy this file and fill in every [FILL] field, then:
+#
+#   python scripts/vermamg.py plan --config run_configs/my_hpc_project.yaml
+#   python scripts/vermamg.py run  --config run_configs/my_hpc_project.yaml --resume
+#
+# Fields marked [FILL] are REQUIRED.
+# Fields marked [OPTIONAL] can be left at their default values.
+# Fields marked [CHOOSE] require you to pick one of the documented options.
+#
+# See run_templates/README_RUN_TEMPLATES.md for field-by-field documentation.
+# See docs/INSTALL.md for tool/database installation on HPC.
+# =============================================================================
+
+schema_version: 2
+
+# ---------------------------------------------------------------------------
+# Project identity
+# ---------------------------------------------------------------------------
+project:
+  name: "[FILL] Human-readable project name, e.g. 'Viral AMG Screen — Lake X'"
+  slug: ""   # auto-derived from name if left blank
+
+sample:
+  name: ""
+  slug: ""
+
+analysis:
+  mode: full
+
+# ---------------------------------------------------------------------------
+# Environment
+# ---------------------------------------------------------------------------
+environment:
+  backend: slurm          # slurm → SLURM job submission
+  profile: hpc_slurm
+
+# ---------------------------------------------------------------------------
+# Run control
+# ---------------------------------------------------------------------------
+run:
+  label: "[FILL] Short run identifier, e.g. 'lake_x_slurm_v1'"
+  root: "runs/{project_slug}/{run_label}"
+  layout_version: 2
+  resume_policy: skip_pass
+  overwrite_policy: fail_if_outputs_exist
+  import_policy: reference
+
+# ---------------------------------------------------------------------------
+# Inputs
+# ---------------------------------------------------------------------------
+inputs:
+  fasta: "[FILL] Path to your FASTA file"
+  metadata_tsv: ""   # [OPTIONAL] TSV with protein_id + annotation columns
+
+input_intake:
+  id_policy: preserve_first_token
+  duplicate_policy: fail
+  min_sequence_length: 1
+  invalid_sequence_policy: fail
+
+metadata:
+  id_column: protein_id
+  required: false
+  strict_extra_rows: false
+
+# ---------------------------------------------------------------------------
+# Batching
+# ---------------------------------------------------------------------------
+batching:
+  enabled: true
+  strategy: fixed_size
+  batch_size: 128
+  target_batches: 0
+  max_sequences: 0       # 0 = all sequences
+  batch_prefix: "{project_slug}"
+
+# ---------------------------------------------------------------------------
+# Backend job planning
+# ---------------------------------------------------------------------------
+backend_jobs:
+  dry_run: true          # set false to actually submit SLURM jobs
+  submit_jobs: false     # set true to auto-submit (requires sbatch on PATH)
+  emit_local_bundle: false
+  emit_slurm_bundle: true
+  plan_colabfold: true
+  plan_foldseek: true
+  local_threads: 1
+
+# ---------------------------------------------------------------------------
+# SLURM resource allocation  — [FILL] all required fields
+# ---------------------------------------------------------------------------
+slurm:
+  account: "[FILL] Your SLURM account / allocation, e.g. 'mylab'"
+  partition_cpu: "[FILL] CPU partition name, e.g. 'short' or 'compute'"
+  partition_gpu: "[FILL] GPU partition name, e.g. 'gpu'"
+  partition_debug: "[OPTIONAL] Debug/interactive partition name"
+  cpus_cpu: 8            # CPUs per CPU job (Foldseek, P2Rank)
+  cpus_gpu: 10           # CPUs per GPU job (ColabFold)
+  mem_cpu: "16G"
+  mem_gpu: "32G"
+  time_cpu: "12:00:00"   # walltime for CPU jobs
+  time_gpu: "12:00:00"   # walltime for GPU jobs
+
+# ---------------------------------------------------------------------------
+# ColabFold — [CHOOSE] mode: precomputed  OR  live
+# ---------------------------------------------------------------------------
+colabfold:
+  # --- PRECOMPUTED mode ---
+  mode: precomputed
+  query_pdb_dir: "[FILL] Directory of per-protein structure PDB files"
+  collector_manifest: "[FILL] TSV with columns: run_id | pdb_path | confidence_score"
+  score_json_dir: ""
+  pae_json_dir: ""
+  placeholder_confidence_policy: explicit_na_with_qc
+
+  # --- LIVE mode (uncomment, comment out precomputed block above) ---
+  # mode: live
+  # cmd: "colabfold_batch"
+  # msa_mode: "mmseqs2_uniref_env"
+  # model_type: "alphafold2_ptm"
+  # num_recycle: "3"
+  # num_models: "1"
+  # dry_run: true
+
+# ---------------------------------------------------------------------------
+# Foldseek — [CHOOSE] mode: precomputed_all_hits  OR  live
+# ---------------------------------------------------------------------------
+foldseek:
+  # --- PRECOMPUTED mode ---
+  mode: precomputed_all_hits
+  pdb_all_hits: "[FILL] Foldseek vs PDB all-hits TSV"
+  afsp_all_hits: "[FILL] Foldseek vs AlphaFold/Swiss-Prot all-hits TSV"
+  id_map: "[FILL] TSV mapping run_id → protein_id"
+
+  # --- LIVE mode (uncomment, comment out precomputed block above) ---
+  # mode: live
+  # threads: 4
+  # dry_run: true
+
+# ---------------------------------------------------------------------------
+# Resources  (HPC module paths — fill after running setup.sh on the cluster)
+# ---------------------------------------------------------------------------
+resources:
+  java_bin: "java"                   # or full path if Java is not on PATH
+  p2rank_cmd: "[FILL] e.g. /path/to/p2rank_2.5.2/prank"
+  p2rank_jar: "[FILL] e.g. /path/to/p2rank_2.5.2/bin/p2rank.jar"
+  foldseek_bin: ""                   # [FILL for live mode] full path to foldseek binary
+  pdb_foldseek_db: ""                # [FILL for live mode] path to PDB Foldseek DB prefix
+  afsp_foldseek_db: ""               # [FILL for live mode] path to AFSP Foldseek DB prefix
+
+# ---------------------------------------------------------------------------
+# Reference materialization
+# ---------------------------------------------------------------------------
+reference_materialization:
+  method: full_atom_cache
+  source_run_root: "[FILL] Path to a prior run with materialized reference PDB files"
+  overwrite: false
+  guard_reference_atom_names: true
+  allow_ca_only_diagnostic: false
+
+# ---------------------------------------------------------------------------
+# Stage toggles
+# ---------------------------------------------------------------------------
+stages:
+  input_intake: true
+  batch_plan: true
+  backend_job_plan: true
+  import_colabfold: true
+  import_foldseek: true
+  foldseek_search: false
+  m06b_m07b: true
+  m08: true
+  m09: true
+  p2rank: true
+  m10a_d: true
+  m10f_render: false
+  m11: true
+  m12: true
+  m13: true
+  m14: true
+  interpretation_ready_export: true
+
+# ---------------------------------------------------------------------------
+# P2Rank
+# ---------------------------------------------------------------------------
+p2rank:
+  threads: 8             # match slurm.cpus_cpu
+  chunk_size: 64
+
+# ---------------------------------------------------------------------------
+# Safety
+# ---------------------------------------------------------------------------
+safety:
+  require_run_root_outputs_only: true
+  stop_on_dirty_partial_output: true

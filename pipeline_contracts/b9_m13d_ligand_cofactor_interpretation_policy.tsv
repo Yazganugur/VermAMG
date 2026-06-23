@@ -1,0 +1,17 @@
+policy_key	value	rationale	downstream_effect
+dictionary_code_column	ligand_resn	Raw ligand dictionary uses ligand_resn as the PDB HETATM residue/code column	M13D parser must read ligand_resn before fallback guesses
+hetatm_not_equal_biological_support	YES	Most HETATM records are water, ions, crystallization additives, modified residues, or artifacts	HETATM presence alone must never upgrade evidence class
+primary_reference_scope	PRIMARY_RANK1_ONLY	Primary/rank-1 reference remains the main automated rulebook anchor	Primary ligand/cofactor context gets separate one-row-per-protein table
+supporting_reference_scope	RANK2_TO_RANK5_CONTEXT_ONLY	Supporting references can reveal holo/cofactor context but do not override primary	Supporting ligand/cofactor context gets separate four-row-per-protein table
+supporting_override_policy	NO_OVERRIDE	Supporting ligand/cofactor evidence must not automatically override primary/rulebook class	Add notes/flags only; final interpretation remains cautious
+afsp_ligand_policy	NO_CRYSTAL_LIGAND_CONTEXT	AFSP models are predicted structures and do not contain experimental crystallographic ligands	Classify AFSP rows as AFSP_NO_CRYSTAL_LIGAND_CONTEXT
+water_policy	HOH_IGNORE	Water is not functional ligand support	Ignore HOH for positive support
+apo_like_policy	NO_BIOLOGICAL_LIGAND_AFTER_FILTER	If HETATM exists but only water/additives/manual ions remain, classify as apo-like/no biological ligand context	Prevents 1poi CU/HOH from being falsely treated as holo support
+metal_policy	MANUAL_CONTEXT_UNLESS_CURATED	Metals can be catalytic, structural, crystallization-related, or nonspecific	ZN/CU/MN/CA/NA/NI/HG fallback to metal/ion manual context unless explicitly curated
+biological_cofactor_policy	CURATED_DICTIONARY_POSITIVE_ONLY	NAP/PLP/MGD/MO/SF4 and similar dictionary-supported cofactors count as biological support	Positive support only when curated dictionary/fallback class marks it biological
+manual_ligand_policy	MANUAL_CONTEXT_NOT_AUTOMATIC_SUPPORT	SO4/PO4/NES/NO2/NO3 and similar context-dependent ligands do not support function alone	Record as manual context; no automatic upgrade
+nonbiological_policy	NO_UPGRADE	MSE/GOL/EDO/PEG/BME and crystallization additives do not support functional inference	Record as non-biological HETATM only
+primary_apo_supporting_holo_policy	SUPPORTING_NOTE_ONLY	If primary is apo/no biological ligand but supporting PDB has curated biological ligand, record a supporting holo-context note	Do not override primary; mark POTENTIAL_SUPPORTING_HOLO_CONTEXT
+missing_reference_policy	AUDIT_ONLY	If supporting PDB path is missing, keep Foldseek hit as unresolved audit evidence	No ligand scan claim is made
+old_section8_error_policy	REVIEW_AND_PATCH_NOT_BLIND_REUSE	Old Pilot32 outputs may contain incomplete or over-specific assumptions	Use old outputs as calibration, not unquestioned truth
+viral_context_policy	CAUTIOUS_DIVERGENCE_ALLOWED	Viral-contig encoded proteins may diverge from bacterial/PDB references	Do not penalize partial motif/ligand context automatically

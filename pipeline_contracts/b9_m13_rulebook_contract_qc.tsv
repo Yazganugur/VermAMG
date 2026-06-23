@@ -1,0 +1,16 @@
+metric	value
+module	M13_rulebook_contract_freeze
+status	OK
+policy_file	pipeline_contracts/b9_m13_rulebook_coverage_policy.tsv
+policy_rows	12
+contract_file	pipeline_contracts/b9_m13_rulebook_input_output_contract.tsv
+contract_rows	16
+mismatch_taxonomy_file	pipeline_contracts/b9_m13_rulebook_mismatch_taxonomy.tsv
+mismatch_taxonomy_rows	11
+roadmap_file	pipeline_contracts/b9_m13_rulebook_roadmap.tsv
+roadmap_rows	7
+readme_file	pipeline_contracts/README_B9_M13_rulebook_contract.md
+readme_lines	35
+current_pipeline_endpoint	M12_structural_decision_matrix_layer
+next_step	M13_DISCOVERY_legacy_rulebook_resources
+heavy_jobs_started	NO

@@ -1,0 +1,7 @@
+# VermAMG Python dependencies (Python >= 3.10).
+# The orchestrator core depends only on PyYAML; pandas is used by some
+# downstream tabular modules. External compute tools (Foldseek, P2Rank,
+# ColabFold) are installed separately via setup.sh, not pip.
+
+PyYAML>=6.0
+pandas>=1.5

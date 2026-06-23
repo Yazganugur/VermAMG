@@ -1,0 +1,10 @@
+class_key	evidence_tier	required_condition	interpretation_policy	canonical_expected_count	report_language
+CATALYTIC_LAYER_MCSA_CORE_CONSERVED_IDENTITY	GOLD	MCSA_CORE_ALL_MAPPABLE_AND_IDENTITY_CONSERVED	ADD_IDENTITY_LEVEL_CATALYTIC_SUPPORT	17	M-CSA core catalytic residue identities are conserved after original-PDB coordinate rescue; identity-level support only, geometry not validated.
+CATALYTIC_LAYER_MCSA_CORE_PARTIAL_IDENTITY	GOLD	MCSA_CORE_PARTIAL_IDENTITY_SUPPORT	ADD_IDENTITY_LEVEL_CATALYTIC_SUPPORT_WITH_CAUTION	5	Some M-CSA core catalytic residue identities are conserved, but support is partial or incomplete; inspect manually.
+CATALYTIC_LAYER_MCSA_CORE_CHANGED_IDENTITY	GOLD	MCSA_CORE_MAPPED_CHANGED_IDENTITY	ADD_IDENTITY_CHANGE_FLAG	2	M-CSA core catalytic residue identity differs in the query; inspect manually.
+CATALYTIC_LAYER_MCSA_CORE_NOT_FULLY_MAPPABLE	GOLD	MCSA_CORE_NOT_FULLY_MAPPABLE	ADD_MAPPABILITY_CAUTION	1	M-CSA core catalytic residues are not fully mappable; no negative catalytic claim.
+CATALYTIC_LAYER_MCSA_NONCORE_ONLY	GOLD_CONTEXT	MCSA_LITERATURE_NONCORE_ONLY	REPORT_CONTEXT_ONLY	8	M-CSA literature evidence is present but only non-core roles are represented by the current role policy.
+CATALYTIC_LAYER_UNIPROT_RESIDUE_MAPPED_NO_MCSA_CORE	STRONG	UNIPROT_RESIDUE_MAPPED_WITHOUT_MCSA_CORE	REPORT_STRONG_NON_MCSA_CONTEXT	152	UniProt residue evidence maps, but no M-CSA core catalytic support is available.
+CATALYTIC_LAYER_SUPPORT_CAUTION_ONLY	SUPPORT_CAUTION	ONLY_SUPPORT_CAUTION_EVIDENCE	REPORT_CONTEXT_ONLY	336	Support-caution evidence only; must not be described as catalytic proof.
+CATALYTIC_LAYER_CANDIDATE_NO_FULL_SUPPORT	SUPPORT_CAUTION	CANDIDATES_PRESENT_NO_FULL_TRANSFER	REPORT_CONTEXT_ONLY	27	Candidate residue evidence is present but not fully transferred; manual review only.
+CATALYTIC_LAYER_NO_RESIDUE_EVIDENCE	NONE	NO_CANDIDATE_RESIDUE_EVIDENCE	REPORT_ABSENCE_OF_RESIDUE_EVIDENCE	117	No residue-level evidence found in configured resources.
