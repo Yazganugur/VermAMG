@@ -1863,10 +1863,10 @@ def _run_m13a(ctx: RunContext, log: TextIO, follow: bool) -> int:
         "--m12a",            _rel(ctx, dec / "full_primary_decision_matrix.tsv"),
         "--m12b",            _rel(ctx, dec / "full_supporting_reference_decision_matrix.tsv"),
         "--m12c",            _rel(ctx, dec / "full_combined_decision_summary.tsv"),
-        "--family-coverage", "results/regression/08_rulebook_evidence/discovery/m13_existing_rulebook_family_coverage.tsv",
-        "--known-rules",     "08_rulebook_evidence/rulebook/known_residue_rules.tsv",
-        "--ligand-classes",  "08_rulebook_evidence/rulebook/ligand_biological_classes.tsv",
-        "--case-definitions","08_rulebook_evidence/rulebook/section8_case_definitions.tsv",
+        "--family-coverage", "pipeline_data/rulebook/m13_existing_rulebook_family_coverage.tsv",
+        "--known-rules",     "pipeline_data/rulebook/known_residue_rules.tsv",
+        "--ligand-classes",  "pipeline_data/rulebook/ligand_biological_classes.tsv",
+        "--case-definitions","pipeline_data/rulebook/section8_case_definitions.tsv",
         "--outdir",          _rel(ctx, out),
     ]
     return _run_command(ctx, [str(x) for x in cmd], log, follow)
@@ -1880,9 +1880,9 @@ def _run_m13b(ctx: RunContext, log: TextIO, follow: bool) -> int:
         "--mode", "full",
         "--context",          _rel(ctx, out / "full_rulebook_context_collector.tsv"),
         "--m12a",             _rel(ctx, ctx.run_path("results/full/07_decision_matrix/full_primary_decision_matrix.tsv")),
-        "--known-rules",      "08_rulebook_evidence/rulebook/known_residue_rules.tsv",
-        "--case-definitions", "08_rulebook_evidence/rulebook/section8_case_definitions.tsv",
-        "--old-auto",         "09_regression_pilot32/old_pilot32_outputs/section8_final_auto_evidence_classification_refined_known_residue.tsv",
+        "--known-rules",      "pipeline_data/rulebook/known_residue_rules.tsv",
+        "--case-definitions", "pipeline_data/rulebook/section8_case_definitions.tsv",
+        "--old-auto",         "pipeline_data/rulebook/section8_final_auto_evidence_classification_refined_known_residue.tsv",
         "--outdir",           _rel(ctx, out),
     ]
     return _run_command(ctx, [str(x) for x in cmd], log, follow)
@@ -1926,7 +1926,7 @@ def _run_m13d_scan(ctx: RunContext, log: TextIO, follow: bool) -> int:
         "--mode", "full",
         "--scan-map",          _rel(ctx, discovery / "full_m13d_primary_supporting_reference_ligand_scan_map.tsv"),
         "--hetatm-inventory",  _rel(ctx, discovery / "full_m13d_reference_pdb_hetatm_inventory.tsv"),
-        "--ligand-dictionary", "08_rulebook_evidence/rulebook/ligand_biological_classes.tsv",
+        "--ligand-dictionary", "pipeline_data/rulebook/ligand_biological_classes.tsv",
         "--fallback",          "pipeline_contracts/b9_m13d_ligand_fallback_classes.tsv",
         "--m13b",              _rel(ctx, out / "full_existing_rulebook_classified.tsv"),
         "--m13c-notes",        _rel(ctx, out / "full_rulebook_supporting_context_notes.tsv"),

@@ -42,7 +42,7 @@ bash setup.sh --with-colabfold-db # also fetches the ColabFold MSA DB (~100 GB)
 | **PyYAML, pandas** | Pipeline deps | `pip install -r requirements.txt` | site-packages | <50 MB | — |
 | **Java ≥ 11** | Required by P2Rank | adoptium.net or `apt install default-jre` | system | ~200 MB | `resources.java_bin` |
 | **Foldseek binary** | Structural search (live mode) | mmseqs.com/foldseek | `resources/tools/foldseek/bin/foldseek` | ~50 MB | `resources.foldseek_bin` |
-| **P2Rank binary** | Binding pocket prediction | github.com/rdk/p2rank/releases | `resources/tools/p2rank/prank` (symlink) | ~30 MB | `resources.p2rank_cmd` |
+| **P2Rank binary** | Binding pocket prediction | github.com/rdk/p2rank/releases | `resources/tools/p2rank/current/prank` (symlink) | ~30 MB | `resources.p2rank_cmd` |
 | **Foldseek PDB DB** | PDB structural homologs | `foldseek databases PDB ...` | `resources/databases/foldseek/pdb` | ~11 GB | `resources.pdb_foldseek_db` |
 | **Foldseek AFSP DB** | AlphaFold/Swiss-Prot homologs | `foldseek databases Alphafold/Swiss-Prot ...` | `resources/databases/foldseek/alphafold_swissprot` | ~5 GB | `resources.afsp_foldseek_db` |
 | **ColabFold MSA DB** | MSA for structure prediction (live) | ColabFold docs | `resources/databases/colabfold/` | ~100 GB | `resources.colabfold_db` |
@@ -69,12 +69,14 @@ bash setup.sh --tools-only --foldseek-sse2
 
 ## P2Rank
 
-`setup.sh` downloads P2Rank 2.5.2 and creates version-agnostic symlinks:
+`setup.sh` downloads P2Rank 2.5.1 and creates a version-agnostic directory symlink
+(`resources/tools/p2rank/current -> p2rank_2.5.1`) so your config never needs to
+encode the version number:
 
 ```bash
 bash setup.sh --tools-only
-# Executable: resources/tools/p2rank/prank
-# JAR:        resources/tools/p2rank/bin/p2rank.jar
+# Executable: resources/tools/p2rank/current/prank
+# JAR:        resources/tools/p2rank/current/bin/p2rank.jar
 ```
 
 **Java is required.** If `java -version` fails, install Java 11+:
@@ -91,8 +93,8 @@ Run-config (already set this way in the smoke demo and templates):
 ```yaml
 resources:
   java_bin: "java"
-  p2rank_cmd: "resources/tools/p2rank/prank"
-  p2rank_jar: "resources/tools/p2rank/bin/p2rank.jar"
+  p2rank_cmd: "resources/tools/p2rank/current/prank"
+  p2rank_jar: "resources/tools/p2rank/current/bin/p2rank.jar"
 ```
 
 ---

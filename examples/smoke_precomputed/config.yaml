@@ -62,7 +62,7 @@ backend_jobs:
   dry_run: true
   submit_jobs: false
   emit_local_bundle: true
-  emit_slurm_bundle: false
+  emit_slurm_bundle: true
   plan_colabfold: true
   plan_foldseek: true
   local_threads: 4
@@ -97,8 +97,8 @@ resources:
   java_bin: "java"
   # P2Rank is installed by setup.sh into resources/tools/p2rank/
   # After running setup.sh, update the two paths below (or use the paths printed by setup.sh):
-  p2rank_cmd: "resources/tools/p2rank/prank"
-  p2rank_jar: "resources/tools/p2rank/bin/p2rank.jar"
+  p2rank_cmd: "resources/tools/p2rank/current/prank"
+  p2rank_jar: "resources/tools/p2rank/current/bin/p2rank.jar"
 
 reference_materialization:
   method: full_atom_cache

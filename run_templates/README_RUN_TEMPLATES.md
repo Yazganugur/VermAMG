@@ -118,8 +118,8 @@ After running `bash setup.sh`, copy the printed paths here:
 ```yaml
 resources:
   java_bin: "java"
-  p2rank_cmd: "resources/tools/p2rank/prank"           # symlink created by setup.sh
-  p2rank_jar: "resources/tools/p2rank/bin/p2rank.jar"  # symlink created by setup.sh
+  p2rank_cmd: "resources/tools/p2rank/current/prank"           # symlink created by setup.sh
+  p2rank_jar: "resources/tools/p2rank/current/bin/p2rank.jar"  # symlink created by setup.sh
   # Live Foldseek mode only:
   foldseek_bin: "resources/tools/foldseek/bin/foldseek"
   pdb_foldseek_db:  "resources/databases/foldseek/pdb"

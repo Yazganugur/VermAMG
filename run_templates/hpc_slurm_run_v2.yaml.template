@@ -147,8 +147,8 @@ foldseek:
 # ---------------------------------------------------------------------------
 resources:
   java_bin: "java"                   # or full path if Java is not on PATH
-  p2rank_cmd: "[FILL] e.g. /path/to/p2rank_2.5.2/prank"
-  p2rank_jar: "[FILL] e.g. /path/to/p2rank_2.5.2/bin/p2rank.jar"
+  p2rank_cmd: "resources/tools/p2rank/current/prank"          # symlink created by setup.sh
+  p2rank_jar: "resources/tools/p2rank/current/bin/p2rank.jar" # symlink created by setup.sh
   foldseek_bin: ""                   # [FILL for live mode] full path to foldseek binary
   pdb_foldseek_db: ""                # [FILL for live mode] path to PDB Foldseek DB prefix
   afsp_foldseek_db: ""               # [FILL for live mode] path to AFSP Foldseek DB prefix

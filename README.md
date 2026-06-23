@@ -69,8 +69,9 @@ everything downstream is identical.
 
 ## Quickstart — smoke demo (5 min, no databases required)
 
-The repo ships a 3-protein precomputed demo that exercises the full pipeline
-end-to-end without downloading any databases.
+The repo ships a 3-protein precomputed demo that exercises the **full pipeline
+end-to-end** (FASTA intake → structure import → reference panel → P2Rank pockets
+→ decision matrices → interpretation export) without downloading any databases.
 
 ```bash
 # 1. Clone and install Python dependencies
@@ -204,7 +205,7 @@ Use the dedicated template for each; field differences are documented in
 - [x] Precomputed downstream (structure homology → reference panel → pockets → decisions → export)
 - [x] FASTA intake, batching, and backend job planning (local + SLURM)
 - [x] Live ColabFold + Foldseek adapters wired into the same contracts
-- [x] Bundled 3-protein smoke demo (`examples/smoke_precomputed/`) for clone → run verification
+- [x] Bundled 3-protein smoke demo (`examples/smoke_precomputed/`) — verified clone → run → M14 export, no DBs
 - [ ] Topology (DeepTMHMM) and catalytic (M-CSA / UniProt) evidence axes
 - [ ] Packaging (`pip install`, `vermamg` console command)
 

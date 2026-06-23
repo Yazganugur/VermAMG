@@ -88,8 +88,8 @@ foldseek:
 
 resources:
   java_bin: "java"
-  p2rank_cmd: "resources/tools/p2rank/p2rank_2.5.1/prank"
-  p2rank_jar: "resources/tools/p2rank/p2rank_2.5.1/bin/p2rank.jar"
+  p2rank_cmd: "resources/tools/p2rank/current/prank"
+  p2rank_jar: "resources/tools/p2rank/current/bin/p2rank.jar"
 
 reference_materialization:
   method: full_atom_cache

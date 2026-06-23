@@ -146,8 +146,8 @@ foldseek:
 # ---------------------------------------------------------------------------
 resources:
   java_bin: "java"
-  p2rank_cmd: "[FILL] e.g. resources/tools/p2rank/p2rank_2.5.2/prank"
-  p2rank_jar: "[FILL] e.g. resources/tools/p2rank/p2rank_2.5.2/bin/p2rank.jar"
+  p2rank_cmd: "resources/tools/p2rank/current/prank"          # symlink created by setup.sh
+  p2rank_jar: "resources/tools/p2rank/current/bin/p2rank.jar" # symlink created by setup.sh
   # Live Foldseek mode only:
   foldseek_bin: ""       # e.g. resources/tools/foldseek/bin/foldseek  (setup.sh installs here)
   pdb_foldseek_db: ""    # e.g. resources/databases/foldseek/pdb       (setup.sh installs here)

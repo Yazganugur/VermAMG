@@ -78,11 +78,15 @@ fi
 # 2) P2Rank binary + Java check + version-agnostic symlink
 # ---------------------------------------------------------------------------
 P2RANK_DIR="${TOOLS}/p2rank"
-P2RANK_VER="2.5.2"
-P2RANK_RELEASE_URL="https://github.com/rdk/p2rank/releases/download/2.5.2/p2rank_2.5.2.tar.gz"
+P2RANK_VER="2.5.1"
+P2RANK_RELEASE_URL="https://github.com/rdk/p2rank/releases/download/${P2RANK_VER}/p2rank_${P2RANK_VER}.tar.gz"
 P2RANK_VERSIONED="${P2RANK_DIR}/p2rank_${P2RANK_VER}"
-P2RANK_SYMLINK_CMD="${P2RANK_DIR}/prank"
-P2RANK_SYMLINK_JAR="${P2RANK_DIR}/bin/p2rank.jar"
+# Version-agnostic directory symlink: configs point to resources/tools/p2rank/current/prank.
+# P2Rank's launcher resolves its libraries relative to the script's directory, so a whole-
+# directory symlink (not a bare file symlink) is required for the classpath to resolve.
+P2RANK_CURRENT="${P2RANK_DIR}/current"
+P2RANK_SYMLINK_CMD="${P2RANK_CURRENT}/prank"
+P2RANK_SYMLINK_JAR="${P2RANK_CURRENT}/bin/p2rank.jar"
 
 say "Java runtime check (required for P2Rank)"
 if have java; then
@@ -104,17 +108,12 @@ else
   ok "Installed: ${P2RANK_VERSIONED}"
 fi
 
-# Version-agnostic symlinks so configs use resources/tools/p2rank/prank regardless of version
-mkdir -p "${P2RANK_DIR}/bin"
-if [[ ! -L "${P2RANK_SYMLINK_CMD}" ]]; then
-  ln -sf "${P2RANK_VERSIONED}/prank" "${P2RANK_SYMLINK_CMD}"
-  ok "Symlink: ${P2RANK_SYMLINK_CMD} -> ${P2RANK_VERSIONED}/prank"
-else
-  skip "Symlink already exists: ${P2RANK_SYMLINK_CMD}"
-fi
-if [[ ! -L "${P2RANK_SYMLINK_JAR}" ]]; then
-  ln -sf "${P2RANK_VERSIONED}/bin/p2rank.jar" "${P2RANK_SYMLINK_JAR}"
-  ok "Symlink: ${P2RANK_SYMLINK_JAR}"
+# Version-agnostic directory symlink: resources/tools/p2rank/current -> p2rank_<ver>
+# Configs then reference resources/tools/p2rank/current/prank regardless of installed version.
+ln -sfn "p2rank_${P2RANK_VER}" "${P2RANK_CURRENT}"
+ok "Symlink: ${P2RANK_CURRENT} -> p2rank_${P2RANK_VER}"
+if [[ -x "${P2RANK_SYMLINK_CMD}" ]]; then
+  ok "P2Rank ready: ${P2RANK_SYMLINK_CMD}"
 fi
 
 if [[ "${TOOLS_ONLY}" -eq 1 ]]; then
