@@ -2,6 +2,15 @@
 
 **A reproducible structural–functional validation pipeline for viral auxiliary metabolic genes (AMGs).**
 
+![status](https://img.shields.io/badge/status-active%20development-yellow)
+![python](https://img.shields.io/badge/python-%E2%89%A53.10-blue)
+![pipeline](https://img.shields.io/badge/schema-v2-informational)
+![reproducible](https://img.shields.io/badge/runs-guarded%20%26%20resumable-success)
+![license](https://img.shields.io/badge/license-research%20use-lightgrey)
+
+> _From raw FASTA to evidence-backed functional hypotheses — structure-aware,
+> contract-checked, and reproducible at any scale._
+
 > Status: active development. The precomputed downstream (structure import →
 > reference panel → pocket prediction → decision export) is stable and
 > reproducible. Live structure prediction via ColabFold and additional evidence
@@ -20,11 +29,27 @@ The pipeline is **data-agnostic**: it processes whatever protein set you give it
 
 ## What it does
 
+```mermaid
+flowchart LR
+    A[FASTA<br/>any N proteins] --> B[ColabFold<br/>structure]
+    B --> C[Foldseek<br/>PDB + AFSP homologs]
+    C --> D[Best-hit<br/>selection]
+    D --> E[Reference<br/>panel]
+    E --> F[P2Rank<br/>binding pockets]
+    F --> G[Decision<br/>matrices]
+    G --> H[Interpretation<br/>export]
+```
+
+<details>
+<summary>Plain-text version</summary>
+
 ```
 FASTA ─▶ ColabFold ─▶ Foldseek ─▶ best-hit ─▶ reference ─▶ P2Rank ─▶ decision ─▶ export
         (structure)   (PDB+AFSP    selection    panel       (pockets)  matrices
                        homologs)
 ```
+
+</details>
 
 Each step is a numbered, contract-checked **stage**. The pipeline records a
 checkpoint per stage, so runs are fully **resumable** and isolated under a

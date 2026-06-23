@@ -1,0 +1,43 @@
+# =============================================================================
+# VermAMG .gitattributes — consistent line endings and correct file handling.
+# =============================================================================
+
+# Default: normalize line endings to LF in the repo, auto on checkout.
+* text=auto eol=lf
+
+# Shell scripts must always be LF (they run on Linux/WSL/HPC).
+*.sh    text eol=lf
+*.template text eol=lf
+
+# Python and config: LF.
+*.py    text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.env   text eol=lf
+*.cff   text eol=lf
+
+# Tabular data: LF, treated as text.
+*.tsv   text eol=lf
+*.csv   text eol=lf
+
+# Documentation: LF.
+*.md    text eol=lf
+
+# Structure files: treat as text (they are plain-text coordinate files),
+# but do not let editors mangle them — keep LF.
+*.faa   text eol=lf
+*.fasta text eol=lf
+*.pdb   text eol=lf
+
+# Binary assets: never touch.
+*.docx  binary
+*.pptx  binary
+*.png   binary
+*.jpg   binary
+*.sif   binary
+*.gz    binary
+*.pdb.gz binary
+
+# Mark generated/vendored paths so GitHub language stats stay accurate.
+examples/** linguist-documentation
+docs/**     linguist-documentation

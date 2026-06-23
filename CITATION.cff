@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+title: >-
+  VermAMG: A reproducible structural–functional validation
+  pipeline for viral auxiliary metabolic genes (AMGs)
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  # TODO: replace with your full name, ORCID, and affiliation before publishing.
+  - given-names: ""
+    family-names: ""
+    # orcid: "https://orcid.org/0000-0000-0000-0000"
+    # affiliation: ""
+    email: risah1111@gmail.com
+abstract: >-
+  VermAMG is a guarded, resumable, project-scoped pipeline
+  that turns candidate viral AMG protein sequences into
+  interpretation-ready, evidence-backed functional
+  hypotheses. It predicts or imports protein structures
+  (ColabFold), finds structural homologs (Foldseek against
+  PDB and AlphaFold/Swiss-Prot), builds a curated reference
+  panel, detects binding pockets (P2Rank), and produces
+  decision matrices. The pipeline is data-agnostic and
+  scales from a handful to hundreds of thousands of
+  sequences without any hardcoded cohort size.
+keywords:
+  - bioinformatics
+  - structural-biology
+  - viral-metagenomics
+  - auxiliary-metabolic-genes
+  - protein-structure-prediction
+  - colabfold
+  - foldseek
+  - p2rank
+license: LicenseRef-unpublished-research
+version: "2.0.0-dev"
+date-released: "2026-06-24"
