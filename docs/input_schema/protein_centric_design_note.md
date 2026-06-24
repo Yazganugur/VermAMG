@@ -27,6 +27,6 @@ candidate protein
 → decision matrix
 → optional rulebook-based ligand/cofactor/residue interpretation
 
-For the BAPS Faz C v2 use case, the full candidate set corresponds to Tier1 viral-context-supported putative AMG/AVG candidates with rich upstream metadata.
+For the originating use case, the full candidate set corresponds to viral-context-supported putative AMG/AVG candidates with rich upstream metadata.
 
 For a general release, users may provide any candidate protein set. If family/annotation labels are absent, the pipeline should fall back to generic labels such as `unknown_family` or `unannotated`.

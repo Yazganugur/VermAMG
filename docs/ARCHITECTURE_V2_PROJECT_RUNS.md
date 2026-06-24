@@ -149,8 +149,7 @@ resources:
   fill real `colabfold_plddt_mean`/`colabfold_ptm` from the ColabFold score
   JSONs, where the precomputed path wrote `NA`.
 - `foldseek.mode=live` runs `scripts/modules/00e_run_foldseek.py` with the
-  proven `createdb -> search --max-seqs 50 -a -> convertalis` sequence (ported
-  from `scripts/modules/06_prepare_foldseek_pdb_search.sh`) and emits the
+  proven `createdb -> search --max-seqs 50 -a -> convertalis` sequence and emits the
   canonical 14-column `full_vs_pdb/afsp_foldseek_all_hits.tsv` plus the id_map.
 
 Both adapters are fully count/data-agnostic: every FASTA record and every query
@@ -196,7 +195,7 @@ Validation highlights:
 - 3325/3325 reference panel rows resolved; 0 missing.
 - Reference atom-name guard PASS; CA-only-like references = 0.
 - Reference P2Rank manifest rows = 1496; failed manifest is header-only.
-- M14 and interpretation-ready exports contain 665 rows with QC status OK.
+- M14 and interpretation-ready exports contain one row per query protein with QC status OK.
 
 ## Project Identity
 

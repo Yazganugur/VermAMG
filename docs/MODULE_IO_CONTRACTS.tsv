@@ -1,9 +1,9 @@
 module_id	script_or_layer	main_inputs	main_outputs	notes
 RESOURCE_QC	scripts/qc/qc_resource_manifest.sh	config/resource_manifest.tsv	results/<mode>/qc/resource_manifest_qc_report.tsv; results/<mode>/qc/resource_manifest_qc_summary.tsv	Lightweight resource gate before MODULE 00.
-M00	scripts/modules/00_input_qc.sh	config/profiles/*.env; config/vermamg_defaults.env	QC status/logs	Input/profile sanity checks.
-M01	scripts/modules/01_prepare_run_set.sh	input FASTA / configured candidate set	run_sets/<mode>/*.faa	Prepares test/regression/full run sets.
+M00	scripts/modules/00_preflight_check.py; scripts/modules/00a_fasta_intake.py	config/profiles/*.env; config/vermamg_defaults.env	QC status/logs	Input/profile sanity checks.
+M01	scripts/modules/00b_plan_fasta_batches.py	input FASTA / configured candidate set	run_sets/<mode>/*.faa	Prepares test/regression/full run sets.
 M02_M04	ColabFold layer / collection	run_sets/<mode>/*.colabfold.faa	01_colabfold outputs; model summaries	Heavy if real structure prediction is run.
-M05	scripts/modules/05_prepare_foldseek_inputs.sh	ColabFold/model outputs	02_foldseek query manifests	Prepares query PDB manifest.
+M05	scripts/modules/00e_run_foldseek.py; scripts/modules/import_precomputed_foldseek_hits.py	ColabFold/model outputs	02_foldseek query manifests	Prepares query PDB manifest.
 M06	PDB Foldseek layer	FOLDSEEK_BIN; PDB_FOLDSEEK_DB; query PDBs	02_foldseek/tables/<mode>/*pdb*	Foldseek against PDB references.
 M07	AFSP Foldseek layer	FOLDSEEK_BIN; AFSP_FOLDSEEK_DB; query PDBs	02_foldseek/tables/<mode>/*afsp*	Foldseek against AlphaFold SwissProt references.
 M08	reference panel layer	M06/M07 outputs	05_reference_panel/<mode>/*	Integrated reference decisions.
@@ -11,7 +11,6 @@ M09	P2Rank manifest/full-atom reference layer	P2RANK_HOME/JAR; reference panel; 
 M10A	scripts/modules/10a_prepare_visual_overlay_input_contract.py	P2Rank/reference tables	visual overlay input contract	Producer integrated into master.
 M10B	scripts/modules/10b_prepare_visual_overlay_smoke_package.py	M10A contract	smoke visual package	Producer integrated into master.
 M10C	scripts/modules/10c_prepare_all_query_visual_script_package.py	M10A/M10B inputs	all-query visual scripts	Producer integrated into master.
-M10F_PREP	scripts/modules/10f_prepare_canonical_visual_render_sbatch.sh	resource profile; render env; M10F paths	scripts/submit/m10f_canonical_visual_render_<profile>_<mode>.sbatch	Generator only; no submit by default.
 M10F	canonical visual/render QC	existing/generated M10F artifacts	M10F QC PASS/FAIL	Current master checks canonical visual artifacts.
 M11	supporting reference audit	M10F/reference outputs	M11 QC PASS/FAIL	Supporting reference layer.
 M12	decision matrix	M11/reference/rulebook context	M12 QC PASS/FAIL	Primary, supporting, and combined decision matrix layer.

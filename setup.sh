@@ -16,7 +16,7 @@
 #   bash setup.sh --help
 #
 # Linux/WSL only. On Windows, open WSL and run:
-#   cd /mnt/d/VermAMG && bash setup.sh
+#   cd /path/to/VermAMG && bash setup.sh
 # ============================================================================
 set -euo pipefail
 

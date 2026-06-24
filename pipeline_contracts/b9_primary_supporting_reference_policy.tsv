@@ -1,9 +1,9 @@
 policy_key	value	rationale	downstream_effect
-primary_reference_definition	panel_order=1; panel_role=PRIMARY; selected from integrated_reference_decision.tsv	Primary reference preserves Bölüm 6 canonical single-reference visual QC logic	Drives canonical PNG, primary residue tables, main decision matrix evidence
+primary_reference_definition	panel_order=1; panel_role=PRIMARY; selected from integrated_reference_decision.tsv	Primary reference preserves Section 6 canonical single-reference visual QC logic	Drives canonical PNG, primary residue tables, main decision matrix evidence
 supporting_reference_definition	panel_order=2-5; panel_role!=PRIMARY	Supporting references preserve multi-reference biological context without exploding PNG count	Used for TSV/audit/context/conflict flags; no mass PNG generation
-rank1_policy	Rank-1/primary remains the default automatic interpretation anchor	Bölüm 4 and Bölüm 6 were calibrated around primary/best reference behavior	Automatic class changes must not be driven by supporting references alone
+rank1_policy	Rank-1/primary remains the default automatic interpretation anchor	Section 4 and Section 6 were calibrated around primary/best reference behavior	Automatic class changes must not be driven by supporting references alone
 top5_policy	Top5 references are retained as contextual/supporting evidence	Protects against apo/holo, partial-domain, paralog/functional-shift problems	Adds manual-review and robustness flags
-png_policy	Generate canonical v6 PNG only for primary reference	Prevents 237 proteins x 5 references x 6 panels explosion	M10F visual output remains compact and interpretable
+png_policy	Generate canonical v6 PNG only for primary reference	Prevents query-proteins x references x panels explosion	M10F visual output remains compact and interpretable
 supporting_png_policy	No automatic PNG for rank-2 to rank-5 references	Supporting structures may be visually inspected manually only if flagged	M11 produces TSVs, not PNGs
 p2rank_policy	Query and resolved reference P2Rank results remain valid for primary and supporting references	P2Rank is geometric pocket prediction, not experimental active-site proof	Used as evidence layer with caution
 ligand_policy	PDB/heteroatom/ligand evidence from supporting references can raise review priority but not automatically confirm function	HETATM contact is not always biological; apo/holo must be interpreted cautiously	Feeds M13 rulebook as supporting/contextual evidence

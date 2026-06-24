@@ -175,7 +175,7 @@ def main():
         row["primary_reference"] = d.get("primary_reference_target", old.get("primary_reference", ""))
         row["primary_reference_type"] = d.get("primary_reference_layer", old.get("primary_reference_type", ""))
 
-        # File paths should point to canonical M10F outputs, not old local Bölüm 6 paths.
+        # File paths should point to canonical M10F outputs, not old local Section 6 paths.
         row["residue_detail_table"] = (
             f"06_visual_qc_v6/regression/canonical_v6_engine_all32_regression/"
             f"rendered_png/pilot32_v6_standard/tables/{pid}_pocket_residue_details.tsv"
@@ -202,7 +202,7 @@ def main():
         row["decision_matrix_source_policy"] = "B7_CALIBRATED_CLASS_WITH_M10F_REFRESH_AND_M11_SUPPORTING_CONTEXT"
         row["primary_decision_scope"] = "PRIMARY_RANK1_REFERENCE_ONLY"
         row["supporting_reference_policy"] = "SUPPORTING_REFERENCES_DO_NOT_OVERRIDE_PRIMARY_DECISION"
-        row["m12a_note"] = "Primary decision matrix preserves Bölüm 7 calibrated class while refreshing canonical M10F values and adding M11 supporting-context summary."
+        row["m12a_note"] = "Primary decision matrix preserves Section 7 calibrated class while refreshing canonical M10F values and adding M11 supporting-context summary."
 
         output_rows.append(row)
 

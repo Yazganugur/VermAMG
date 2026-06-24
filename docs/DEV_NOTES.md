@@ -6,7 +6,7 @@
 
 ---
 
-VermAMG is a structural-functional validation workflow for viral-context-supported putative AMG/AVG candidates from the BAPS Faz C v2 analysis.
+VermAMG is a structural-functional validation workflow for viral-context-supported putative AMG/AVG candidates from an upstream viral-metagenomics analysis.
 
 ## V2 project-run architecture
 
@@ -27,7 +27,7 @@ job-plan bundles under `work/00_inputs/job_plan/` and `work/submit/`.
 
 The checked V2 full-atom cache smoke run is:
 `runs/example_amg_screen/example_precomputed_run/`
-— completed through `320_interpretation_ready_export` with 665 final rows,
+— completed through `320_interpretation_ready_export` with one final row per query protein,
 1496/1496 full-atom references, reference atom-name guard PASS.
 
 ## Current checkpoint (local-only runs)

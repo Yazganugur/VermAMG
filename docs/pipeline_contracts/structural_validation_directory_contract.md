@@ -1,4 +1,4 @@
-# BAPS Structural Validation Pipeline — Directory Contract
+# VermAMG Structural Validation Pipeline — Directory Contract
 
 ## Core principle
 

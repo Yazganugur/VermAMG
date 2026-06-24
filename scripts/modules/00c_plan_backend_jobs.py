@@ -100,7 +100,7 @@ def build_command_preview(job_type: str, input_path: str, output_path: str, args
             q(output_path),
         ])
     if job_type == "collect_colabfold":
-        return "python scripts/modules/04_collect_colabfold_outputs.sh " + q(args.mode)
+        return "# ColabFold output collection is handled by the run pipeline (import_precomputed_colabfold.py / 00d_run_colabfold.py)"
     if job_type == "foldseek_pdb_search":
         return " ".join([q(args.foldseek_bin or "foldseek"), "easy-search", "<query_db>", q(args.pdb_foldseek_db or "<pdb_db>"), q(output_path), "<tmp>"])
     if job_type == "foldseek_afsp_search":

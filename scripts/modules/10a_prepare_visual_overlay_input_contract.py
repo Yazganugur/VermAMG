@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import csv
+import os
 import sys
 from pathlib import Path
 from collections import Counter, defaultdict
@@ -11,9 +12,14 @@ def vermamg_portable_path(value):
     if not value:
         return ""
 
-    known_roots = (
-        "/arf/scratch/yugur/baps_faz_c_v2/structural_validation_tier1_full/",
-        "/arf/scratch/yugur/baps_faz_c_v2/structural_validation/",
+    # Profile-resolvable roots; no hardcoded site-specific absolute paths.
+    known_roots = tuple(
+        r.rstrip("/") + "/"
+        for r in (
+            os.environ.get("VERMAMG_ROOT", ""),
+            os.environ.get("VERMAMG_DB_ROOT", ""),
+        )
+        if r
     )
 
     for root in known_roots:

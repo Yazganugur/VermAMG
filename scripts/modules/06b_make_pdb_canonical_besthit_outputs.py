@@ -227,7 +227,7 @@ with summary_path.open("w") as f:
     w = csv.writer(f, delimiter="\t", lineterminator="\n")
     w.writerow(["metric","value"])
     w.writerow(["best_hit_rule", "foldseek_rank1_default_output_order"])
-    w.writerow(["classification_rule", "Bölüm4_qtmscore_prob_qcov_thresholds"])
+    w.writerow(["classification_rule", "Section4_qtmscore_prob_qcov_thresholds"])
     w.writerow(["all_hit_rows", len(hits)])
     w.writerow(["query_records", len(query_order)])
     w.writerow(["rank1_besthit_rows", len(rank1_rows)])

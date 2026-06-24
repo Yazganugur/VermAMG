@@ -134,7 +134,7 @@ Outputs land in `runs/smoke_precomputed/smoke_3prot_v1/exports/`.
 
 > **Linux/WSL note:** Foldseek, P2Rank, and container-based rendering must run
 > from a Linux environment. On Windows, open WSL and:
-> `cd /mnt/d/VermAMG && bash setup.sh --tools-only`
+> `cd /path/to/VermAMG && bash setup.sh --tools-only`
 
 ---
 

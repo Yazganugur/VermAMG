@@ -1,8 +1,8 @@
-# BAPS Faz C v2 — Bölüm 9 / M13 Rulebook Contract
+# VermAMG — Section 9 / M13 Rulebook Contract
 
 M13 is the ligand/cofactor/motif/known-residue rulebook layer.
 
-The old Bölüm 8 rulebook was calibrated on Pilot32 / 11 families. In the Tier1 full setting, new families and new evidence patterns are expected.
+The old Section 8 rulebook was calibrated on Pilot32 / 11 families. In the Tier1 full setting, new families and new evidence patterns are expected.
 
 ## Core rule
 
@@ -12,7 +12,7 @@ Do not force new families or incompatible evidence patterns into old Pilot32 cla
 
 M13 must:
 
-1. classify candidates that match existing Bölüm 8 rules;
+1. classify candidates that match existing Section 8 rules;
 2. separate families absent from the existing rulebook;
 3. separate cases where a family rule exists but the required evidence is missing;
 4. record primary apo/no-ligand cases without penalizing automatically;

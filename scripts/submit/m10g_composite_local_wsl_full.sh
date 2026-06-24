@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # m10g_composite_local_wsl_full.sh
-# Full composite figure render — local_wsl, 665 proteins, 3-phase parallel.
+# Full composite figure render — local_wsl, all query proteins, 3-phase parallel.
 # Run ONLY after smoke PASS and visual layout confirmed.
 #
 # Usage:
-#   cd /mnt/d/VermAMG
+#   cd /path/to/VermAMG
 #   bash scripts/submit/m10g_composite_local_wsl_full.sh
 #
 # Parallelism: export M10G_N_PARALLEL=N (default 4)
@@ -34,7 +34,6 @@ _find_python_with_pil() {
   local -a candidates=(
     "${PYTHON_BIN:-}"
     "$(command -v python3 2>/dev/null || true)"
-    "/home/yazganuur/miniconda3/bin/python3"
     "/home/$(whoami)/miniconda3/bin/python3"
     "/opt/conda/bin/python3"
     "/usr/bin/python3"
@@ -93,7 +92,7 @@ PYMOL_SIF="${VERMAMG_PYMOL_SIF:-${VERMAMG_ROOT}/resources/containers/pymol_deb12
 test -s "$PYMOL_SIF"                 || _fail "PyMOL SIF not found: $PYMOL_SIF"
 
 # Require evidence of smoke PASS before full run
-FRESH_RUN="${M10G_FRESH_RUN_REL:-runs/tier1_tier2_colabfold_postrun_fresh_v1}"
+FRESH_RUN="${M10G_FRESH_RUN_REL:-runs/full_composite_run_v1}"
 SMOKE_DIR="${VERMAMG_ROOT}/${FRESH_RUN}/06_visual_qc_v6/full/composite_png_smoke"
 SMOKE_OK=$(find "$SMOKE_DIR" "$SMOKE_DIR/final_pngs" -maxdepth 1 -name '*_v6_standard_600dpi.png' 2>/dev/null | wc -l || echo 0)
 if [ "$SMOKE_OK" -lt 1 ]; then
@@ -199,7 +198,7 @@ PRODUCED_N=$(awk -F'\t' 'NR>1 && $3 != "PML_ONLY" {c++} END{print c+0}' "$MANIFE
 FAILED_N=$(awk 'NR>1{c++} END{print c+0}' "$FAILED" 2>/dev/null || echo 0)
 
 echo ""
-echo "FINAL_PRODUCED: $PRODUCED_N / 665"
+echo "FINAL_PRODUCED: $PRODUCED_N"
 echo "FINAL_FAILED:   $FAILED_N"
 echo ""
 

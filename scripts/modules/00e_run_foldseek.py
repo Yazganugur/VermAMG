@@ -8,7 +8,7 @@ the exact Foldseek all-hit contract that downstream M06B/M07B expect:
     work/02_foldseek/tables/full/full_vs_afsp_foldseek_all_hits.tsv  (EXPECTED_HIT_COLUMNS)
     work/02_foldseek/tables/full/full_manual_id_map.tsv              (id_map contract)
 
-The proven command sequence (ported from scripts/modules/06_prepare_foldseek_pdb_search.sh):
+The proven command sequence (Foldseek easy-search / createdb -> search -> convertalis workflow):
 
     foldseek createdb   <query_pdb_dir> <query_db>
     foldseek search     <query_db> <target_db> <result_db> <tmp> --threads N --max-seqs 50 -a

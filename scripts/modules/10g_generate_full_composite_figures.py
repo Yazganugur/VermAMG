@@ -26,7 +26,7 @@ WSL / local_wsl usage:
   source scripts/utils/load_vermamg_profile.sh local_wsl
   # Smoke (3 proteins, sequential):
   bash scripts/submit/m10g_composite_local_wsl_smoke.sh
-  # Full (665 proteins, 3-phase parallel):
+  # Full (all query proteins, 3-phase parallel):
   bash scripts/submit/m10g_composite_local_wsl_full.sh
 """
 
@@ -102,7 +102,7 @@ def _require_pil():
 
 FRESH_RUN_REL = os.environ.get(
     "M10G_FRESH_RUN_REL",
-    "runs/tier1_tier2_colabfold_postrun_fresh_v1"
+    "runs/full_composite_run_v1"
 )
 CONTRACT_REL = f"{FRESH_RUN_REL}/06_visual_qc_v6/full/input_manifests/full_visual_overlay_input_contract.tsv"
 DECISION_MATRIX_REL = f"{FRESH_RUN_REL}/results/full/07_decision_matrix/full_primary_decision_matrix.tsv"
@@ -797,10 +797,10 @@ def compose_figure(query, family, metrics, outdir, panel_dir,
 
     # ── column headers ────────────────────────────────────────────────────────
     for x, txt in zip([x1, x2, x3],
-                      ["Query protein", "Referans", "Örtüşüm"]):
+                      ["Query protein", "Reference", "Overlap"]):
         draw.text((x, y_a_header + 4), txt, fill="black", font=font_header)
     for x, txt in zip([x1, x2, x3],
-                      ["Query tahmini cep", "Referans tahmini cep", "Cep örtüşümü"]):
+                      ["Query predicted pocket", "Reference predicted pocket", "Pocket overlap"]):
         draw.text((x, y_b_header + 4), txt, fill="black", font=font_header)
 
     # ── panels ───────────────────────────────────────────────────────────────
@@ -821,16 +821,16 @@ def compose_figure(query, family, metrics, outdir, panel_dir,
         draw, fig_w, y_legend + 18,
         [
             ("rect", (0, 199, 224), "Query protein"),
-            ("rect", (158, 158, 158), "Referans"),
-            ("circle", (255, 219, 0), "Ortak/örtüşen cep pozisyonu"),
+            ("rect", (158, 158, 158), "Reference"),
+            ("circle", (255, 219, 0), "Shared/overlapping pocket position"),
         ],
         font_legend, marker=32, gap=64, x_min=legend_x_min, x_max=legend_x_max)
     draw_legend_row(
         draw, fig_w, y_legend + 72,
         [
-            ("circle", (255, 82, 10), "Query-özgü cep pozisyonu"),
-            ("circle", (13, 89, 255), "Referans-özgü cep pozisyonu"),
-            ("rect", (210, 210, 210), "B panelinde silik cep çevresi"),
+            ("circle", (255, 82, 10), "Query-specific pocket position"),
+            ("circle", (13, 89, 255), "Reference-specific pocket position"),
+            ("rect", (210, 210, 210), "Faint pocket outline in panel B"),
         ],
         font_legend, marker=32, gap=64, x_min=legend_x_min, x_max=legend_x_max)
 
@@ -859,36 +859,36 @@ def compose_figure(query, family, metrics, outdir, panel_dir,
     ref_sem     = m.get("reference_confidence_semantics", "")
     q_plddt_val = m.get("query_pocket_mean_plddt", "NA") if has_query_pocket else "NA"
     if not has_reference_pocket:
-        ref_conf_label = "Ref cep değeri"
+        ref_conf_label = "Ref pocket value"
         ref_conf_val = "NA"
     elif ref_sem == "REFERENCE_BFACTOR":
-        ref_conf_label = "Ref cep B-factor (PDB)"
+        ref_conf_label = "Ref pocket B-factor (PDB)"
         r_conf_val = m.get("reference_pocket_mean_bfactor", "NA")
     elif ref_sem == "REFERENCE_PLDDT":
-        ref_conf_label = "Ref cep pLDDT (AFSP)"
+        ref_conf_label = "Ref pocket pLDDT (AFSP)"
         r_conf_val = m.get("reference_pocket_mean_plddt", "NA")
     else:
-        ref_conf_label = "Ref cep güven ölçüsü"
+        ref_conf_label = "Ref pocket confidence"
         r_conf_val = "?"
 
     if not has_query_pocket:
-        pocket_label, pocket_value = "Cep durumu", "YOK (NO_QUERY_POCKET)"
-        ozgu_value = "NA"
+        pocket_label, pocket_value = "Pocket status", "NONE (NO_QUERY_POCKET)"
+        unique_value = "NA"
     elif not has_reference_pocket:
-        pocket_label, pocket_value = "Ref cep", "YOK (zero-pocket)"
-        ozgu_value = f"Q {qu}  /  R NA"
+        pocket_label, pocket_value = "Ref pocket", "NONE (zero-pocket)"
+        unique_value = f"Q {qu}  /  R NA"
     else:
-        pocket_label, pocket_value = "Korunmuş cep", f"Q {qc}/{qn}  /  R {rc}/{rn}"
-        ozgu_value = f"Q {qu}  /  R {ru}"
+        pocket_label, pocket_value = "Conserved pocket", f"Q {qc}/{qn}  /  R {rc}/{rn}"
+        unique_value = f"Q {qu}  /  R {ru}"
 
     score_lines = [
         ("qTMscore",         m.get("qtm_score", "NA")),
         ("RMSD",             (m.get("rmsd", "NA") + " Å") if m.get("rmsd", "NA") != "NA" else "NA"),
         ("P2Rank (Q / R)",   f"{m.get('query_p2rank', 'NA')}  /  {m.get('reference_p2rank', 'NA')}"),
-        ("Query cep pLDDT",  q_plddt_val),
+        ("Query pocket pLDDT",  q_plddt_val),
         (ref_conf_label,     r_conf_val),
         (pocket_label,       pocket_value),
-        ("Özgü cep poz.", ozgu_value),
+        ("Unique pocket pos.", unique_value),
     ]
 
     yy = by1 + 14
@@ -904,27 +904,27 @@ def compose_figure(query, family, metrics, outdir, panel_dir,
     ca_raw    = str(m.get("reference_ca_only", "True")).lower()
     is_ca_only = ca_raw in ("true", "yes", "1")
     if is_ca_only:
-        cav_text = "Ref kalitesi: CA-only (cep sinyali belirsiz)"
+        cav_text = "Ref quality: CA-only (pocket signal unclear)"
     elif ref_sem == "REFERENCE_BFACTOR":
-        cav_text = "Ref türü: PDB deneysel; B-factor pLDDT değildir"
+        cav_text = "Ref type: experimental PDB; B-factor is not pLDDT"
     elif ref_sem == "REFERENCE_PLDDT":
-        cav_text = "Ref türü: AFSP; referans değeri pLDDT"
+        cav_text = "Ref type: AFSP; reference value is pLDDT"
     else:
-        cav_text = "Ref türü: tam-atom; güven ölçüsü kontrol edilmeli"
+        cav_text = "Ref type: full-atom; confidence value should be verified"
     cav_color = (130, 90, 40) if is_ca_only else (80, 120, 70)
     draw.text((bx1 + 16, yy), cav_text, fill=cav_color, font=font_score_cav)
 
     # ── caption ───────────────────────────────────────────────────────────────
     pocket_note = (
-        "Sorgu proteini için cep tahmini yapılamamıştır (NO_QUERY_POCKET). "
+        "No pocket could be predicted for the query protein (NO_QUERY_POCKET). "
         if not has_query_pocket else
-        "Küreler P2Rank tahmini cep artıklarının Cα konumlarını gösterir. "
-        "Cep sınıfları hizalanmış Cα pozisyonları üzerinden tanımlanmıştır. "
+        "Spheres show the Cα positions of P2Rank-predicted pocket residues. "
+        "Pocket classes are defined over aligned Cα positions. "
     )
     reference_note = (
         "No reliable reference pocket (zero-pocket). "
         if not has_reference_pocket else
-        "Referans cep tam-atom girdiden P2Rank ile hesaplanmıştır."
+        "Reference pockets are computed with P2Rank from full-atom input."
     )
     caption = (f"{query}  |  Aile: {family}  |  "
                + pocket_note

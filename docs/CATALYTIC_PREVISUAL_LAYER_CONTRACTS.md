@@ -71,14 +71,14 @@ M14 or M15 exports.
 
 A10G-FIX2 canonical outputs under `results/full/10_catalytic_layer/`:
 
-- `full_candidate_residue_transfer_mapping_mcsa_rescued.tsv`: 17,659 rows.
-- `full_query_level_catalytic_residue_summary.tsv`: 665 rows.
-- `full_final_catalytic_layer_integration.tsv`: 665 rows; class-count
+- `full_candidate_residue_transfer_mapping_mcsa_rescued.tsv`: one row per transferred catalytic residue.
+- `full_query_level_catalytic_residue_summary.tsv`: one row per query protein.
+- `full_final_catalytic_layer_integration.tsv`: one row per query protein; class-count
   validation uses `A10G_FIX2_final_catalytic_layer_class` as the canonical
   class column.
-- `full_catalytic_visual_query_manifest.tsv`: 665 rows.
-- `full_catalytic_visual_annotation_manifest.tsv`: 17,659 rows.
-- `full_2fua_Tyr_manual_override_audit.tsv`: 12 rows.
+- `full_catalytic_visual_query_manifest.tsv`: one row per query protein.
+- `full_catalytic_visual_annotation_manifest.tsv`: one row per residue-level annotation.
+- `full_2fua_Tyr_manual_override_audit.tsv`: one row per manual residue override.
 - `full_catalytic_layer_class_transition_to_current.tsv`: transition audit
   with `A10E_strict_final_catalytic_layer_class`,
   `A10G_FIX2_final_catalytic_layer_class`, and `n`.

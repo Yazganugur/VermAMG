@@ -1,4 +1,4 @@
-# BAPS Faz C v2 — Bölüm 9 Pipeline Contracts
+# VermAMG — Section 9 Pipeline Contracts
 
 This directory freezes the architecture after successful M10F integration.
 

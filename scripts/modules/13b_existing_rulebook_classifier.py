@@ -148,7 +148,7 @@ def classify_case_rule(row, old_lookup):
             "m13b_priority": "",
             "m13b_rule_source": "none",
             "m13b_rule_id": "",
-            "m13b_reason": "Family absent from existing Pilot32/Bölüm 8 rulebook.",
+            "m13b_reason": "Family absent from existing Pilot32/Section 8 rulebook.",
             "m13b_next_route": "M13C_UNMATCHED_FAMILY",
         }
 

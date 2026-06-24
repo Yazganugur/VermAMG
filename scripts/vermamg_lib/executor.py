@@ -324,7 +324,7 @@ def _runtime_environment_errors(
     return [
         "profile=local_wsl requires WSL/Linux Python for stages "
         + ",".join(selected)
-        + ". Run from WSL, for example: cd /mnt/d/VermAMG && "
+        + ". Run from WSL, for example: cd /path/to/VermAMG && "
         + "python3 scripts/vermamg.py run --config run_configs/<run>.yaml --resume"
     ]
 
@@ -746,9 +746,6 @@ def _run_m08(ctx: RunContext, log: TextIO, follow: bool) -> int:
 def _portable_project_path(ctx: RunContext, value: str) -> str:
     text = str(value or "").replace("\\", "/")
     known_roots = [
-        "D:/VermAMG/",
-        "d:/VermAMG/",
-        "/mnt/d/VermAMG/",
         str(ctx.project_root).replace("\\", "/").rstrip("/") + "/",
     ]
     for root in known_roots:
@@ -1648,9 +1645,10 @@ def _run_m09r_validate_catalytic_outputs(ctx: RunContext, log: TextIO, follow: b
     out = ctx.run_path("results/full/10_catalytic_layer/full_previsual_catalytic_validation_qc.tsv")
     validation_mode = str(get_nested(ctx.cfg, "catalytic", "validation_mode", default="precomputed"))
     expected_version = str(get_nested(ctx.cfg, "catalytic", "expected_version", default="A10G_FIX2"))
-    expected_query_count = str(get_nested(ctx.cfg, "catalytic", "expected_query_count", default=665))
-    expected_residue_rows = str(get_nested(ctx.cfg, "catalytic", "expected_residue_rows", default=17659))
-    expected_manual_override_rows = str(get_nested(ctx.cfg, "catalytic", "expected_manual_override_rows", default=12))
+    # Golden row-count expectations are opt-in (0 = count-agnostic / not enforced).
+    expected_query_count = str(get_nested(ctx.cfg, "catalytic", "expected_query_count", default=0))
+    expected_residue_rows = str(get_nested(ctx.cfg, "catalytic", "expected_residue_rows", default=0))
+    expected_manual_override_rows = str(get_nested(ctx.cfg, "catalytic", "expected_manual_override_rows", default=0))
     cmd = [
         sys.executable,
         ctx.project_path("scripts/modules/09r_validate_previsual_catalytic_outputs.py"),

@@ -9,7 +9,7 @@ M11	input	results/{mode}/06_supporting_reference_audit/{mode}_supporting_referen
 B8_legacy	input	08_rulebook_evidence/scripts/	existing Pilot32 rulebook scripts/resources	if_available	to_discover
 B8_legacy	input	08_rulebook_evidence/config_or_rules/*	existing family rules / known residues / ligand classes	if_available	to_discover
 M13A	output	results/{mode}/08_rulebook_evidence/{mode}_rulebook_context_collector.tsv	merged context for rulebook classification	planned	planned
-M13B	output	results/{mode}/08_rulebook_evidence/{mode}_existing_rulebook_classified.tsv	cases matching existing Bölüm 8 rulebook	planned	planned
+M13B	output	results/{mode}/08_rulebook_evidence/{mode}_existing_rulebook_classified.tsv	cases matching existing Section 8 rulebook	planned	planned
 M13C	output	results/{mode}/08_rulebook_evidence/{mode}_rulebook_unmatched_families.tsv	families absent from existing rulebook	planned	planned
 M13C	output	results/{mode}/08_rulebook_evidence/{mode}_rulebook_mismatch_reasons.tsv	cases with family rule but missing/mismatching evidence	planned	planned
 M13D	output	results/{mode}/08_rulebook_evidence/{mode}_rulebook_new_class_suggestions.tsv	suggested new classes/rules for full Tier1 expansion	planned	planned

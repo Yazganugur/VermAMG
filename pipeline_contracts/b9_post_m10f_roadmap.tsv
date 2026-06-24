@@ -1,6 +1,6 @@
 step	module	objective	main_inputs	main_outputs	status
 1	M11_supporting_reference_audit	Retain rank-2 to rank-5 reference evidence without PNG generation	M08 reference panel; M09 reference P2Rank; M10A visual contract	supporting_reference_audit.tsv; supporting_conflict_flags.tsv	planned_next
-2	M12_decision_matrix	Rebuild Bölüm 7-style decision matrix with primary plus supporting evidence	ColabFold QC; Foldseek rank1/top5; M10F tables; M11 audit	decision_matrix.tsv; class_summary.tsv	planned
-3	M13_rulebook_evidence_bridge	Adapt Bölüm 8 motif/cofactor/ligand/rulebook logic to new pipeline paths	M12 decision matrix; M10F residue tables; ligand/cofactor resources	rulebook_evidence.tsv; compact_view.tsv	planned
+2	M12_decision_matrix	Rebuild Section 7-style decision matrix with primary plus supporting evidence	ColabFold QC; Foldseek rank1/top5; M10F tables; M11 audit	decision_matrix.tsv; class_summary.tsv	planned
+3	M13_rulebook_evidence_bridge	Adapt Section 8 motif/cofactor/ligand/rulebook logic to new pipeline paths	M12 decision matrix; M10F residue tables; ligand/cofactor resources	rulebook_evidence.tsv; compact_view.tsv	planned
 4	M14_results_export	Create DRAM-V-like user-facing results folder	All module outputs	results/{mode}/ with README, summaries, tables, PNGs	planned
 5	M15_true_one_command_runner	Make new FASTA input run from start to final outputs with resume/checkpoints	FASTA; config; databases	complete reproducible run directory	planned

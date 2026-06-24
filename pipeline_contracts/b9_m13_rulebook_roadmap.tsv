@@ -1,5 +1,5 @@
 step	module	objective	main_inputs	main_outputs	status
-1	M13_DISCOVERY	Discover legacy Bölüm 8 scripts/rules/resources and output schemas	08_rulebook_evidence; transferred B8 package	rulebook_resource_inventory.tsv	next
+1	M13_DISCOVERY	Discover legacy Section 8 scripts/rules/resources and output schemas	08_rulebook_evidence; transferred B8 package	rulebook_resource_inventory.tsv	next
 2	M13A_CONTEXT_COLLECTOR	Merge M12 structural decisions with M10F residue tables and available rulebook resources	M12A/B/C; M10F residue/alignment tables; B8 resources	rulebook_context_collector.tsv	planned
 3	M13B_EXISTING_RULEBOOK_CLASSIFIER	Apply existing Pilot32/B8 rules only where family/evidence pattern matches	M13A context; known family rules	existing_rulebook_classified.tsv	planned
 4	M13C_COVERAGE_MISMATCH_DETECTOR	Separate unmatched families and matched-but-missing-evidence cases	M13A/B outputs	unmatched_families.tsv; mismatch_reasons.tsv	planned

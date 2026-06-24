@@ -3,7 +3,7 @@
 # Smoke render — local_wsl, 3 proteins, sequential.
 #
 # Usage:
-#   cd /mnt/d/VermAMG
+#   cd /path/to/VermAMG
 #   bash scripts/submit/m10g_composite_local_wsl_smoke.sh
 
 set -euo pipefail
@@ -31,8 +31,7 @@ _find_python_with_pil() {
   local -a candidates=(
     "${PYTHON_BIN:-}"                                   # explicit override
     "$(command -v python3 2>/dev/null || true)"         # current PATH python3
-    "/home/yazganuur/miniconda3/bin/python3"            # miniconda default
-    "/home/$(whoami)/miniconda3/bin/python3"            # miniconda (generic user)
+    "/home/$(whoami)/miniconda3/bin/python3"            # miniconda (current user)
     "/opt/conda/bin/python3"                            # conda base alt
     "/usr/bin/python3"                                  # system fallback
   )
@@ -101,7 +100,7 @@ test -s "$PYMOL_SIF"                 || _fail "PyMOL SIF not found: $PYMOL_SIF"
 echo ""
 
 # ── clear stale smoke output ──────────────────────────────────────────────────
-FRESH_RUN="${M10G_FRESH_RUN_REL:-runs/tier1_tier2_colabfold_postrun_fresh_v1}"
+FRESH_RUN="${M10G_FRESH_RUN_REL:-runs/full_composite_run_v1}"
 OUTDIR="${VERMAMG_ROOT}/${FRESH_RUN}/06_visual_qc_v6/full/composite_png_smoke"
 
 if [ -d "$OUTDIR" ]; then

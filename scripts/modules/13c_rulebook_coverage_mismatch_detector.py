@@ -71,7 +71,7 @@ def detect_true_mismatch(row, support_rows):
 
     if family_status == "NO_EXISTING_FAMILY_RULE":
         mismatch_classes.append("NO_EXISTING_FAMILY_RULE")
-        reasons.append("Family is absent from the Pilot32/Bölüm 8 rulebook.")
+        reasons.append("Family is absent from the Pilot32/Section 8 rulebook.")
         suggestions.append("Create a new family-specific rule after checking structural, ligand/cofactor, motif and literature context.")
 
     if m13b_status.startswith("NOT_CLASSIFIED"):

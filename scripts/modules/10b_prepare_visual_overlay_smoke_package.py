@@ -19,9 +19,9 @@ def resolve_vermamg_visual_path(portable_value, legacy_value, root_kind):
             return portable_value
 
         if root_kind == "db":
-            root = os.environ.get("VERMAMG_DB_ROOT", "/arf/scratch/yugur/baps_faz_c_v2/structural_validation")
+            root = os.environ.get("VERMAMG_DB_ROOT", ".")
         else:
-            root = os.environ.get("VERMAMG_ROOT", "/arf/scratch/yugur/baps_faz_c_v2/structural_validation_tier1_full")
+            root = os.environ.get("VERMAMG_ROOT", ".")
 
         return str(Path(root) / portable_value)
 
