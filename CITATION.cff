@@ -32,6 +32,8 @@ keywords:
   - colabfold
   - foldseek
   - p2rank
+repository-code: "https://github.com/Yazganugur/VermAMG"
+url: "https://github.com/Yazganugur/VermAMG"
 license: LicenseRef-unpublished-research
 version: "2.0.0-dev"
 date-released: "2026-06-24"

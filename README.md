@@ -79,6 +79,14 @@ flowchart TB
 > imported. Each box is a numbered **stage** with a recorded checkpoint, so runs
 > are fully **resumable** and isolated under one per-project run directory.
 
+> 🖼️ **Static, high-resolution renders** of this architecture diagram (poster /
+> slide quality) live in [`docs/assets/`](docs/assets/):
+> [PNG](docs/assets/pipeline_architecture.png) ·
+> [SVG (vector)](docs/assets/pipeline_architecture.svg). A detailed stage-by-stage
+> **pipeline map** (M00 → M15) is also rendered there
+> ([PNG](docs/assets/pipeline_map.png) · [SVG](docs/assets/pipeline_map.svg)),
+> alongside the written [docs/PIPELINE_MAP.md](docs/PIPELINE_MAP.md).
+
 <details>
 <summary>Plain-text version</summary>
 
@@ -232,6 +240,7 @@ Use the dedicated template for each; field differences are documented in
 - [docs/PIPELINE_MAP.md](docs/PIPELINE_MAP.md) — stage map
 - [docs/RESOURCE_MANIFEST_GUIDE.md](docs/RESOURCE_MANIFEST_GUIDE.md) — tools/DB resource layout
 - [docs/DEV_NOTES.md](docs/DEV_NOTES.md) — development notes and run checkpoints
+- [docs/assets/](docs/assets/) — rendered diagrams (architecture + pipeline map) as high-resolution PNG and vector SVG
 
 ---
 
@@ -269,6 +278,7 @@ PhD candidate, Basic and Industrial Microbiology
 Department of Biology, Faculty of Science, Istanbul University
 
 - **Email (preferred for contact):** [yazgan.ugur@ogr.iu.edu.tr](mailto:yazgan.ugur@ogr.iu.edu.tr)
+- GitHub: [@Yazganugur](https://github.com/Yazganugur)
 - LinkedIn: [yazgan-uğur](https://www.linkedin.com/in/yazgan-u%C4%9Fur-b75797202/)
 - ORCID: [0009-0005-7907-9480](https://orcid.org/0009-0005-7907-9480)
 
