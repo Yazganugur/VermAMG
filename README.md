@@ -30,15 +30,54 @@ The pipeline is **data-agnostic**: it processes whatever protein set you give it
 ## What it does
 
 ```mermaid
-flowchart LR
-    A[FASTA<br/>any N proteins] --> B[ColabFold<br/>structure]
-    B --> C[Foldseek<br/>PDB + AFSP homologs]
-    C --> D[Best-hit<br/>selection]
-    D --> E[Reference<br/>panel]
-    E --> F[P2Rank<br/>binding pockets]
-    F --> G[Decision<br/>matrices]
-    G --> H[Interpretation<br/>export]
+flowchart TB
+    FASTA(["Candidate viral AMG proteins · FASTA<br/><i>any N — count-agnostic</i>"]):::io
+
+    subgraph S1["① Intake &amp; batching"]
+        direction LR
+        A1["FASTA intake<br/>canonical IDs"] --> A2["batch plan +<br/>backend jobs"]
+    end
+
+    MODE{"Execution mode<br/>colabfold · foldseek"}
+    subgraph S2["② Structure &amp; homology search"]
+        direction LR
+        PRE["<b>precomputed</b><br/>import structures<br/>+ hit tables"]
+        LIVE["<b>live</b><br/>ColabFold + Foldseek<br/><i>(GPU / HPC + DBs)</i>"]
+    end
+
+    subgraph S3["③ Reference panel"]
+        direction LR
+        B1["M06B/M07B<br/>PDB + AFSP best-hit"] --> B2["M08<br/>integrated reference panel<br/>(primary + supporting)"]
+    end
+
+    subgraph S4["④ Pockets"]
+        direction LR
+        C1["M09<br/>full-atom reference<br/>materialization"] --> C2["P2Rank<br/>binding-pocket<br/>prediction"]
+    end
+
+    subgraph S5["⑤ Decision &amp; evidence"]
+        direction LR
+        D1["M11/M12<br/>decision matrices"] --> D2["M13<br/>rulebook evidence"]
+    end
+
+    OUT(["M14 · interpretation-ready export<br/><i>per-protein evidence tables</i>"]):::io
+
+    FASTA --> S1 --> MODE
+    MODE -->|precomputed| PRE
+    MODE -->|live| LIVE
+    PRE --> S3
+    LIVE --> S3
+    S3 --> S4 --> S5 --> OUT
+
+    classDef io fill:#0d3b66,stroke:#0d3b66,color:#fff,font-weight:bold;
+    classDef phase fill:#f4f6fb,stroke:#9bb1d4,color:#1a2a45;
+    class S1,S2,S3,S4,S5 phase;
 ```
+
+> Both modes converge on the **same contract-checked downstream** — nothing after
+> the homology search knows or cares whether structures were predicted live or
+> imported. Each box is a numbered **stage** with a recorded checkpoint, so runs
+> are fully **resumable** and isolated under one per-project run directory.
 
 <details>
 <summary>Plain-text version</summary>
@@ -50,10 +89,6 @@ FASTA ─▶ ColabFold ─▶ Foldseek ─▶ best-hit ─▶ reference ─▶ P
 ```
 
 </details>
-
-Each step is a numbered, contract-checked **stage**. The pipeline records a
-checkpoint per stage, so runs are fully **resumable** and isolated under a
-per-project run directory.
 
 ### Two execution modes (same downstream, same contracts)
 
@@ -233,7 +268,9 @@ or reuse.
 PhD candidate, Basic and Industrial Microbiology
 Department of Biology, Faculty of Science, Istanbul University
 
+- **Email (preferred for contact):** [yazgan.ugur@ogr.iu.edu.tr](mailto:yazgan.ugur@ogr.iu.edu.tr)
 - LinkedIn: [yazgan-uğur](https://www.linkedin.com/in/yazgan-u%C4%9Fur-b75797202/)
 - ORCID: [0009-0005-7907-9480](https://orcid.org/0009-0005-7907-9480)
 
 Open to collaboration in structural bioinformatics and viral metagenomics.
+Please get in touch by email for questions, collaboration, or licensing.
