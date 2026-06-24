@@ -166,12 +166,13 @@ scripts/
   modules/            # stage implementations (intake, adapters, structural, decision, export)
 config/               # environment defaults and resource manifest
 run_templates/        # fill-in-the-blanks templates (local + HPC)
-run_configs/          # example and working run configurations
+run_configs/          # example run configurations
 examples/             # bundled smoke demo (precomputed, DB-free)
 pipeline_contracts/   # stage I/O contracts
+pipeline_data/        # curated rulebook knowledge base
 docs/                 # architecture, stage contracts, pipeline map, install guide
 resources/            # tools, databases, containers  (NOT in git — setup.sh installs these)
-runs/                 # per-project run outputs       (NOT in git)
+inputs/   runs/       # your FASTA inputs / per-project run outputs (NOT in git)
 ```
 
 ---
@@ -228,5 +229,11 @@ or reuse.
 
 ## Contact
 
-<!-- Add your name, email, and affiliation here before publishing the repository. -->
-Maintainer: open to collaboration in structural bioinformatics and viral metagenomics.
+**Yazgan Uğur**
+PhD candidate, Basic and Industrial Microbiology
+Department of Biology, Faculty of Science, Istanbul University
+
+- LinkedIn: [yazgan-uğur](https://www.linkedin.com/in/yazgan-u%C4%9Fur-b75797202/)
+- ORCID: [0009-0005-7907-9480](https://orcid.org/0009-0005-7907-9480)
+
+Open to collaboration in structural bioinformatics and viral metagenomics.

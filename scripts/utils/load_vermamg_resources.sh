@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROFILE_RAW="${1:-${VERMAMG_PROFILE:-truba}}"
+PROFILE_RAW="${1:-${VERMAMG_PROFILE:-local_wsl}}"
 MODE_RAW="${2:-regression}"
 MANIFEST_PATH="${3:-config/resource_manifest.tsv}"
 

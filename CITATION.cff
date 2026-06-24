@@ -7,11 +7,10 @@ message: >-
   metadata from this file.
 type: software
 authors:
-  # TODO: replace with your full name, ORCID, and affiliation before publishing.
-  - given-names: ""
-    family-names: ""
-    # orcid: "https://orcid.org/0000-0000-0000-0000"
-    # affiliation: ""
+  - given-names: "Yazgan"
+    family-names: "Uğur"
+    orcid: "https://orcid.org/0009-0005-7907-9480"
+    affiliation: "Department of Biology, Faculty of Science, Istanbul University"
     email: risah1111@gmail.com
 abstract: >-
   VermAMG is a guarded, resumable, project-scoped pipeline

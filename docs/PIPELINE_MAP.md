@@ -1,20 +1,20 @@
 # VermAMG Pipeline Map
 
 This is the high-level map for the current VermAMG structural/pocket workflow.
-It reflects the corrected full-atom-reference full665 run.
+It reflects the corrected full-atom-reference example run.
 
 ## Current Corrected Run
 
-Interpretation-grade full665 run:
+Interpretation-grade example run:
 
 ```text
-runs/tier1_tier2_colabfold_postrun_fresh_v1_fullatom_refs_v1/
+runs/your_prior_run_fullatom_refs_v1/
 ```
 
 Broken diagnostic run retained for comparison only:
 
 ```text
-runs/tier1_tier2_colabfold_postrun_fresh_v1/
+runs/your_prior_run/
 ```
 
 The older run used CA-only Foldseek exports as reference structures. That is not
@@ -135,7 +135,7 @@ M15 builds compact interpretation tables from M05, M10, M11, M12, and M12D.
 Output directory:
 
 ```text
-runs/tier1_tier2_colabfold_postrun_fresh_v1_fullatom_refs_v1/results/full/08_user_facing_exports/
+runs/your_prior_run_fullatom_refs_v1/results/full/08_user_facing_exports/
 ```
 
 Main files:

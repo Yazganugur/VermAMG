@@ -7,7 +7,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 AUTO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 
 if [ -z "${VERMAMG_PROFILE:-}" ]; then
-  VERMAMG_PROFILE="truba"
+  VERMAMG_PROFILE="local_wsl"
 fi
 
 # Preserve launcher/YAML overrides before profile files load their defaults.
@@ -31,7 +31,7 @@ if [ "${EXECUTION_BACKEND:-local}" != "slurm" ]; then
   exit 0
 fi
 
-PROFILE_NAME="${COLABFOLD_PROFILE:-truba_barbun_cuda}"
+PROFILE_NAME="${COLABFOLD_PROFILE:-local_wsl}"
 PROFILE_FILE="${PROJECT_ROOT}/config/profiles/${PROFILE_NAME}.env"
 
 if [ ! -s "$PROFILE_FILE" ]; then

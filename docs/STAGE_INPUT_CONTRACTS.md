@@ -254,7 +254,7 @@ Expected relationships:
 
 - PDB and AFSP canonical output query sets should match.
 - Decision table should contain one row per query.
-- Full665 panel should contain five rows per query.
+- Reference panel should contain five rows per query.
 
 Outputs:
 

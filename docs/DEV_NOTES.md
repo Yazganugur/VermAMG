@@ -26,15 +26,15 @@ V2 materializes the user FASTA before downstream execution:
 job-plan bundles under `work/00_inputs/job_plan/` and `work/submit/`.
 
 The checked V2 full-atom cache smoke run is:
-`runs/hoxd_viral_amg_screen/hoxd_precomputed_project_v2_fullatom_cache_smoke/`
+`runs/example_amg_screen/example_precomputed_run/`
 — completed through `320_interpretation_ready_export` with 665 final rows,
 1496/1496 full-atom references, reference atom-name guard PASS.
 
 ## Current checkpoint (local-only runs)
 
-- Corrected full665 full-atom-reference run is the current interpretation-grade checkpoint:
-  `runs/tier1_tier2_colabfold_postrun_fresh_v1_fullatom_refs_v1/`.
-- The previous full665 run `runs/tier1_tier2_colabfold_postrun_fresh_v1/` is retained
+- Corrected example full-atom-reference run is the current interpretation-grade checkpoint:
+  `runs/your_prior_run_fullatom_refs_v1/`.
+- The previous example run `runs/your_prior_run/` is retained
   as a broken diagnostic run because its reference structures were CA-only Foldseek
   exports. Do not use it for reference P2Rank, reference-pocket, ligand/contact, or
   residue-level interpretation.
@@ -44,7 +44,7 @@ The checked V2 full-atom cache smoke run is:
 
 ## User-facing outputs (corrected full-atom run)
 
-Under `runs/tier1_tier2_colabfold_postrun_fresh_v1_fullatom_refs_v1/results/full/08_user_facing_exports/`:
+Under `runs/your_prior_run_fullatom_refs_v1/results/full/08_user_facing_exports/`:
 - `full_final_primary_rank1_summary.tsv`: one row per query (primary/rank-1 interpretation).
 - `full_final_reference_panel_long.tsv`: one row per query/reference panel row.
 - `full_pocket_residue_details_long.tsv`: residue-level pocket overlap classes.

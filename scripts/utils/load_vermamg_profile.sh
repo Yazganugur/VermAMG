@@ -2,7 +2,7 @@
 # VermAMG profile loader
 #
 # Usage:
-#   source scripts/utils/load_vermamg_profile.sh truba
+#   source scripts/utils/load_vermamg_profile.sh local_wsl
 #   source scripts/utils/load_vermamg_profile.sh local_wsl
 
 _profile="${1:-${VERMAMG_PROFILE:-local_wsl}}"

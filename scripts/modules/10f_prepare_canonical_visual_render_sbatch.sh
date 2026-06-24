@@ -2,7 +2,7 @@
 set -euo pipefail
 
 MODE_RAW="${1:-regression}"
-PROFILE_RAW="${VERMAMG_PROFILE:-truba}"
+PROFILE_RAW="${VERMAMG_PROFILE:-local_wsl}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 AUTO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"

@@ -334,7 +334,7 @@ readme_path.write_text(
     "Purpose:\n"
     "Generate PyMOL and ChimeraX overlay scripts for every query-reference panel row that is READY_QUERY_AND_REFERENCE, READY_QUERY_REFERENCE_ZERO_POCKET, or READY_QUERY_REFERENCE_UNRELIABLE_CA_ONLY.\n\n"
     "Important:\n"
-    "- PNG rendering is intentionally not required on TRUBA.\n"
+    "- PNG rendering is intentionally not required on the HPC cluster.\n"
     "- Use PyMOL or ChimeraX locally to render .pml/.cxc scripts.\n"
     "- Cache-missing references are listed in the skipped report.\n"
     "- Zero-pocket references generate query-pocket + reference-structure scripts only; this is not positive reference pocket support.\n\n"

@@ -88,7 +88,7 @@ def command_plan(mode: str, profile: str) -> list[list[str]]:
         ["bash", "scripts/modules/01_prepare_run_set.sh", mode],
         ["bash", "scripts/modules/02_prepare_colabfold_batches.sh", mode],
     ]
-    if profile == "truba":
+    if profile == "slurm":
         return common + [["bash", "scripts/modules/03_prepare_colabfold_sbatch.sh", mode]]
     return common + [["bash", "scripts/modules/03_prepare_colabfold_local_runner.sh", mode]]
 
@@ -118,7 +118,7 @@ def mode_target_batches(cfg: dict, mode: str) -> str:
     return {"test": "1", "regression": "4", "full": "8"}[mode]
 
 
-def configure_truba_env(cfg: dict, env: dict[str, str]) -> None:
+def configure_slurm_env(cfg: dict, env: dict[str, str]) -> None:
     execution = cfg.get("execution") or {}
     submit_jobs = bool_value(execution.get("submit_jobs", cfg.get("submit_jobs", False)))
     concurrency_fields = [
@@ -147,7 +147,7 @@ def configure_truba_env(cfg: dict, env: dict[str, str]) -> None:
     ]
     missing = [name for name, value in required if not value]
     if missing:
-        raise SystemExit("CONFIG_ERROR: missing required TRUBA SLURM fields: " + ", ".join(missing))
+        raise SystemExit("CONFIG_ERROR: missing required SLURM fields: " + ", ".join(missing))
 
     slurm = cfg.get("slurm") or {}
     account = str(slurm.get("account"))
@@ -209,12 +209,12 @@ def configure_truba_env(cfg: dict, env: dict[str, str]) -> None:
         "P2RANK_SLURM_TIME": time_cpu,
     })
 
-    print(f"TRUBA_SLURM_ACCOUNT={account}")
-    print(f"TRUBA_SLURM_PARTITION_CPU={partition_cpu}")
-    print(f"TRUBA_SLURM_PARTITION_GPU={partition_gpu}")
-    print(f"TRUBA_SLURM_PARTITION_DEBUG={partition_debug}")
-    print(f"TRUBA_SLURM_CPU_RESOURCES=cpus:{cpus_cpu} mem:{mem_cpu} time:{time_cpu}")
-    print(f"TRUBA_SLURM_GPU_RESOURCES=cpus:{cpus_gpu} mem:{mem_gpu} time:{time_gpu}")
+    print(f"SLURM_ACCOUNT={account}")
+    print(f"SLURM_PARTITION_CPU={partition_cpu}")
+    print(f"SLURM_PARTITION_GPU={partition_gpu}")
+    print(f"SLURM_PARTITION_DEBUG={partition_debug}")
+    print(f"SLURM_CPU_RESOURCES=cpus:{cpus_cpu} mem:{mem_cpu} time:{time_cpu}")
+    print(f"SLURM_GPU_RESOURCES=cpus:{cpus_gpu} mem:{mem_gpu} time:{time_gpu}")
     print(f"SUBMIT_JOBS={str(submit_jobs).upper()}")
     print(
         "CONCURRENCY_POLICY="
@@ -275,9 +275,9 @@ def cmd_prepare(args: argparse.Namespace) -> int:
     print("COMPUTE_GUARD=ENABLED")
     print(f"ALLOW_COMPUTE={str(allow_compute).upper()}")
     print("NOTE=prepare only runs M00/M01/M02/M03; generated runners are not executed.")
-    if profile == "truba":
-        configure_truba_env(cfg, env)
-        print("NOTE_TRUBA=M03 uses scripts/modules/03_prepare_colabfold_sbatch.sh and does not submit jobs.")
+    if profile == "slurm":
+        configure_slurm_env(cfg, env)
+        print("NOTE_SLURM=M03 uses scripts/modules/03_prepare_colabfold_sbatch.sh and does not submit jobs.")
 
     plan = command_plan(mode, profile)
     if args.dry_run:

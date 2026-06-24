@@ -34,7 +34,7 @@ This file records external tools, databases, containers, and render dependencies
 3. Do not copy DB prefixes blindly; include sidecar files.
 4. Containers can be pointer/checksum-managed before optional copying.
 5. Resource QC must pass before master proceeds.
-6. Local profile should eventually point to local mirror paths, not TRUBA paths.
+6. Local profile should eventually point to local mirror paths, not HPC cluster paths.
 
 ## Foldseek DB vs full-atom reference sources
 

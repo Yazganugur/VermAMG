@@ -15,7 +15,7 @@
 schema_version: 2
 
 project:
-  name: "HOXD Viral AMG Screen Live"
+  name: "Example AMG Screen (live mode)"
   slug: ""
 
 sample:
@@ -26,11 +26,11 @@ analysis:
   mode: full
 
 environment:
-  backend: local        # local (GPU box) | slurm (TRUBA / HPC)
+  backend: local        # local (GPU box) | slurm (HPC cluster)
   profile: local_wsl
 
 run:
-  label: "hoxd_live_v2_example"
+  label: "example_live_v1"
   root: "runs/{project_slug}/{run_label}"
   layout_version: 2
   resume_policy: skip_pass
@@ -39,8 +39,8 @@ run:
 
 inputs:
   # Provide your own FASTA. The pipeline processes exactly these records.
-  fasta: "00_inputs/tier1_amg.faa"
-  metadata_tsv: "00_inputs/full665_amg_sequence_metadata.tsv"
+  fasta: "inputs/my_proteins.faa"
+  metadata_tsv: ""
 
 input_intake:
   id_policy: preserve_first_token
@@ -106,7 +106,7 @@ resources:
 
 reference_materialization:
   method: full_atom_cache
-  source_run_root: "runs/tier1_tier2_colabfold_postrun_fresh_v1_fullatom_refs_v1"
+  source_run_root: "runs/your_prior_run"
   overwrite: false
   guard_reference_atom_names: true
   allow_ca_only_diagnostic: false

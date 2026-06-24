@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 AUTO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 
 if [ -z "${VERMAMG_PROFILE:-}" ]; then
-  VERMAMG_PROFILE="truba"
+  VERMAMG_PROFILE="local_wsl"
 fi
 
 # shellcheck disable=SC1090

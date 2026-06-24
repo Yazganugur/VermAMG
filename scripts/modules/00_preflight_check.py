@@ -108,7 +108,7 @@ def check_r03_mode(cfg):
 
 def check_r04_profile(cfg):
     profile = (_get(cfg, "profile") or "").strip()
-    valid = {"local_wsl", "truba"}
+    valid = {"local_wsl", "slurm"}
     if profile not in valid:
         return result("R04", "profile_valid", FAIL,
                       f"profile={profile!r}. Geçerli değerler: {sorted(valid)}")
@@ -285,7 +285,7 @@ def check_o02_metadata_columns(cfg, meta_path):
         return result("O02", "metadata_required_columns", PASS,
                       f"Tüm zorunlu sütunlar mevcut. Toplam sütun: {len(actual_cols)}")
 
-    if profile == "truba" and schema_check != "false":
+    if profile == "slurm" and schema_check != "false":
         status = FAIL
     else:
         status = WARN
@@ -327,7 +327,7 @@ def check_o03_fasta_metadata_join(cfg, fasta_path, meta_path):
 # Optional checks O04-O10 — tools / resources / disk
 # ──────────────────────────────────────────────────────────────
 def _tool_status(profile):
-    return FAIL if profile == "truba" else WARN
+    return FAIL if profile == "slurm" else WARN
 
 
 def _resolve_resource(cfg, project_root, *config_keys, default_relative=""):

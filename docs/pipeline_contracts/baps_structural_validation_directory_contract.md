@@ -36,16 +36,16 @@ Every major module must produce at least one machine-readable TSV manifest or su
 
 The next module should use that TSV as input.
 
-## Current full665 run-root note
+## Current example run-root note
 
-The current interpretation-grade full665 run root is:
+The current interpretation-grade example run root is:
 
-    runs/tier1_tier2_colabfold_postrun_fresh_v1_fullatom_refs_v1/
+    runs/your_prior_run_fullatom_refs_v1/
 
 The older run below is diagnostic/broken for reference-pocket interpretation,
 because reference structures were CA-only Foldseek exports:
 
-    runs/tier1_tier2_colabfold_postrun_fresh_v1/
+    runs/your_prior_run/
 
 Inside the corrected run, the important current interpretation layers are:
 

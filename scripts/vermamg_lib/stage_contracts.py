@@ -220,7 +220,7 @@ CONTRACTS: dict[str, StageContract] = {
             "05_reference_panel/full/full_reference_panel_targets.tsv",
             "05_reference_panel/full/full_reference_panel_manual_review.tsv",
         ),
-        validation_checks=("decision table has one row per query", "panel table has five rows per query in full665 V1"),
+        validation_checks=("decision table has one row per query", "panel table has five rows per query"),
         example_start=_cmd("060_m08_reference_panel", "start-at"),
         example_stop=_cmd("060_m08_reference_panel", "stop-after"),
     ),

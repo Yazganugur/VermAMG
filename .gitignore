@@ -39,8 +39,9 @@ backups/
 run_sets/
 smoke_test/
 
-# --- Large input working dir (keep example inputs via examples/ instead) ---
+# --- User input data (keep your FASTA local; the demo input lives in examples/) ---
 00_inputs/
+inputs/
 
 # --- Python ---
 __pycache__/

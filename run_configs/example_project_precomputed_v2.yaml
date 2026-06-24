@@ -6,7 +6,7 @@
 schema_version: 2
 
 project:
-  name: "HOXD Viral AMG Screen"
+  name: "Example AMG Screen"
   slug: ""
 
 sample:
@@ -21,7 +21,7 @@ environment:
   profile: local_wsl
 
 run:
-  label: "hoxd_precomputed_project_v2_fullatom_cache_smoke"
+  label: "example_precomputed_v1"
   root: "runs/{project_slug}/{run_label}"
   layout_version: 2
   resume_policy: skip_pass
@@ -29,8 +29,8 @@ run:
   import_policy: reference
 
 inputs:
-  fasta: "00_inputs/tier1_amg.faa"
-  metadata_tsv: "00_inputs/full665_amg_sequence_metadata.tsv"
+  fasta: "inputs/my_proteins.faa"
+  metadata_tsv: ""
 
 input_intake:
   id_policy: preserve_first_token
@@ -74,17 +74,17 @@ slurm:
 
 colabfold:
   mode: precomputed
-  query_pdb_dir: "incoming/truba_manual_full665/foldseek/query_pdbs"
-  collector_manifest: "incoming/truba_manual_full665/foldseek/collector_manifest.tsv"
+  query_pdb_dir: "data/precomputed/query_pdbs"
+  collector_manifest: "data/precomputed/collector_manifest.tsv"
   score_json_dir: ""
   pae_json_dir: ""
   placeholder_confidence_policy: explicit_na_with_qc
 
 foldseek:
   mode: precomputed_all_hits
-  pdb_all_hits: "incoming/truba_manual_full665/adapter_canonical_full/full_vs_pdb_foldseek_all_hits.tsv"
-  afsp_all_hits: "incoming/truba_manual_full665/adapter_canonical_full/full_vs_afsp_foldseek_all_hits.tsv"
-  id_map: "incoming/truba_manual_full665/adapter_canonical_full/full_manual665_id_map.tsv"
+  pdb_all_hits: "data/precomputed/pdb_all_hits.tsv"
+  afsp_all_hits: "data/precomputed/afsp_all_hits.tsv"
+  id_map: "data/precomputed/id_map.tsv"
 
 resources:
   java_bin: "java"
@@ -93,7 +93,7 @@ resources:
 
 reference_materialization:
   method: full_atom_cache
-  source_run_root: "runs/tier1_tier2_colabfold_postrun_fresh_v1_fullatom_refs_v1"
+  source_run_root: "runs/your_prior_run"
   overwrite: false
   guard_reference_atom_names: true
   allow_ca_only_diagnostic: false

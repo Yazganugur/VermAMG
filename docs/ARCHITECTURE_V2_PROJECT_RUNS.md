@@ -18,7 +18,7 @@ For `profile: local_wsl`, heavy stages that call Linux Foldseek, P2Rank runner
 scripts, or containerized render tooling must be run from WSL/Linux:
 
 ```bash
-cd /mnt/d/VermAMG
+cd /path/to/VermAMG
 python3 scripts/vermamg.py run --config run_configs/my_project.yaml --resume --follow
 ```
 
@@ -173,7 +173,7 @@ or previous corrected run:
 ```yaml
 reference_materialization:
   method: full_atom_cache
-  source_run_root: "runs/tier1_tier2_colabfold_postrun_fresh_v1_fullatom_refs_v1"
+  source_run_root: "runs/your_prior_run_fullatom_refs_v1"
   guard_reference_atom_names: true
   allow_ca_only_diagnostic: false
 ```
@@ -187,7 +187,7 @@ but it is not the recommended interpretation-grade reference path.
 Current verified V2 smoke:
 
 ```text
-runs/hoxd_viral_amg_screen/hoxd_precomputed_project_v2_fullatom_cache_smoke/
+runs/example_amg_screen/example_precomputed_run/
 ```
 
 Validation highlights:
@@ -206,7 +206,7 @@ Users provide:
 schema_version: 2
 
 project:
-  name: "HOXD Viral AMG Screen"
+  name: "Example AMG Screen"
   slug: ""
 
 run:
@@ -225,7 +225,7 @@ Rules:
 Example resolved root:
 
 ```text
-runs/hoxd_viral_amg_screen/20260621_hoxd_viral_amg_screen_local_full/
+runs/example_amg_screen/example_local_full/
 ```
 
 ## Run Directory Contract
