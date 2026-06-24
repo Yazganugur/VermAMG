@@ -70,9 +70,9 @@ structural logic:
 Do not edit generated artifacts as source. Patch source modules, regenerate artifacts,
 then smoke-test.
 
-## Legacy V1 master pipeline (retained)
+## V1 legacy shell layer (removed)
 
-`scripts/master/run_tier1_master_pipeline.sh` is the V1 shell orchestrator (modes:
-`test` / `regression` / `full`). The V2 path (`scripts/vermamg.py`) supersedes it.
-Legacy upstream compute/cache stayed `mode`-based (`02_foldseek/tables/{mode}/`,
-`04_p2rank/{mode}/`, `06_visual_qc_v6/{mode}/`).
+The original V1 shell orchestrator and its `scripts/modules/*.sh` stages have been
+removed; `scripts/vermamg.py` (the V2 executor) is now the sole entry point
+(`check` / `plan` / `run` / `status`). Upstream compute/cache remained `mode`-based
+(`02_foldseek/tables/{mode}/`, `04_p2rank/{mode}/`, `06_visual_qc_v6/{mode}/`).

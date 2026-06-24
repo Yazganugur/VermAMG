@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-# LEGACY: Pilot32/regression calibration only. Not for production Tier1.
+# LEGACY: regression calibration only. Not for production.
 # Use 12a_lite_primary_decision_matrix.py for dynamic production runs.
-# Requires --old-matrix (Pilot32 QBENCH IDs) and --m10f-metrics/--m10f-alignment
-# (canonical_v6_engine_all32_regression tables). These are not available for
+# Requires --old-matrix (calibration QBENCH IDs) and --m10f-metrics/--m10f-alignment
+# (canonical_v6_engine_regression tables). These are not available for
 # new cohort proteins. Do not call from master pipeline.
 import argparse
 import csv
@@ -177,12 +177,12 @@ def main():
 
         # File paths should point to canonical M10F outputs, not old local Section 6 paths.
         row["residue_detail_table"] = (
-            f"06_visual_qc_v6/regression/canonical_v6_engine_all32_regression/"
-            f"rendered_png/pilot32_v6_standard/tables/{pid}_pocket_residue_details.tsv"
+            f"06_visual_qc_v6/regression/canonical_v6_engine_regression/"
+            f"rendered_png/v6_standard/tables/{pid}_pocket_residue_details.tsv"
         )
         row["alignment_detail_table"] = (
-            f"06_visual_qc_v6/regression/canonical_v6_engine_all32_regression/"
-            f"rendered_png/pilot32_v6_standard/tables/{pid}_alignment_pocket_classification.tsv"
+            f"06_visual_qc_v6/regression/canonical_v6_engine_regression/"
+            f"rendered_png/v6_standard/tables/{pid}_alignment_pocket_classification.tsv"
         )
 
         # Keep viral context caution explicitly.

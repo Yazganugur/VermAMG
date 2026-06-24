@@ -60,7 +60,7 @@ def build_old_auto_lookup(mode, old_auto):
     old_by_pid = {r["protein_id"]: r for r in old_auto}
     lookup = dict(old_by_pid)
 
-    bridge_path = Path("09_regression_pilot32/new_run_comparison/colabfold_model_content/regression_colabfold_old_vs_new_pdb_content_qc.tsv")
+    bridge_path = Path("09_regression/new_run_comparison/colabfold_model_content/regression_colabfold_old_vs_new_pdb_content_qc.tsv")
     if bridge_path.is_file():
         bridge_rows = read_tsv(bridge_path)
         for row in bridge_rows:
@@ -81,7 +81,7 @@ def old_auto_for_row(row, old_lookup):
 
 def classify_case_rule(row, old_lookup):
     """
-    Existing Pilot32/B8 case-rule classifier.
+    Existing Section 8 case-rule classifier.
     For regression, old Section 8 refined classes are used as calibration labels.
     For full mode later, this function must be generalized with family/evidence rules.
     """
@@ -127,7 +127,7 @@ def classify_case_rule(row, old_lookup):
                 "m13b_priority": priority,
                 "m13b_rule_source": source or "old_section8_calibrated_case_rule",
                 "m13b_rule_id": old.get("rulebook_rule_id", ""),
-                "m13b_reason": reason or "Existing Pilot32 Section 8 case-rule class transferred as regression calibration.",
+                "m13b_reason": reason or "Existing Section 8 case-rule class transferred as calibration.",
                 "m13b_next_route": "M13E_FINAL_RULEBOOK_MATRIX",
             }
 
@@ -148,7 +148,7 @@ def classify_case_rule(row, old_lookup):
             "m13b_priority": "",
             "m13b_rule_source": "none",
             "m13b_rule_id": "",
-            "m13b_reason": "Family absent from existing Pilot32/Section 8 rulebook.",
+            "m13b_reason": "Family absent from the existing Section 8 rulebook.",
             "m13b_next_route": "M13C_UNMATCHED_FAMILY",
         }
 

@@ -88,7 +88,7 @@ A10G-FIX2 canonical outputs under `results/full/10_catalytic_layer/`:
 ## Retention Policy
 
 Every major query-level summary must left-join back to the full query manifest.
-No Tier1/Tier2 query protein or A00/reference-equivalent row may silently
+No query protein or A00/reference-equivalent row may silently
 disappear. Alias/symlink representation must remain visible as explicit
 `alias_status` values.
 

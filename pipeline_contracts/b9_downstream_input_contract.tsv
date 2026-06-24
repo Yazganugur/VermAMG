@@ -9,11 +9,11 @@ M08	Reference panel targets	05_reference_panel/{mode}/{mode}_reference_panel_tar
 M09	Query P2Rank top1	04_p2rank/{mode}/query_models/merged_tables/{mode}_query_p2rank_top1_pockets.tsv	query_primary_pocket_summary	yes	Feeds M10F, M12
 M09	Reference P2Rank top1	04_p2rank/{mode}/reference_models/merged_tables/{mode}_reference_p2rank_top1_pockets.tsv	reference_panel_pocket_summary	yes	Feeds M10F, M11, M12
 M10A	Visual overlay input contract	06_visual_qc_v6/{mode}/input_manifests/{mode}_visual_overlay_input_contract.tsv	top5_visual_readiness_contract	yes	Feeds M10C, M11; M10F should use primary-only derived manifest
-M10F	Canonical v6 final PNG directory	06_visual_qc_v6/{mode}/canonical_v6_engine/rendered_png/pilot32_v6_standard	primary_visual_qc_output	yes	For regression path currently canonical_v6_engine_all32_regression
-M10F	Canonical v6 metrics	06_visual_qc_v6/{mode}/canonical_v6_engine/rendered_png/pilot32_v6_standard/tables/pilot32_v6_standard_metrics.tsv	primary_visual_metrics	yes	Feeds M12
-M10F	Canonical v6 metrics detail	06_visual_qc_v6/{mode}/canonical_v6_engine/rendered_png/pilot32_v6_standard/tables/pilot32_v6_standard_metrics_detail.tsv	primary_visual_metrics_detail	yes	Feeds M12
-M10F	Canonical v6 pocket residue details	06_visual_qc_v6/{mode}/canonical_v6_engine/rendered_png/pilot32_v6_standard/tables/pilot32_v6_standard_pocket_residue_details.tsv	primary_residue_level_pocket_overlap	yes	Feeds M12, M13
-M10F	Canonical v6 alignment classification	06_visual_qc_v6/{mode}/canonical_v6_engine/rendered_png/pilot32_v6_standard/tables/pilot32_v6_standard_alignment_pocket_classification.tsv	primary_alignment_pocket_classification	yes	Feeds M12, M13
+M10F	Canonical v6 final PNG directory	06_visual_qc_v6/{mode}/canonical_v6_engine/rendered_png/v6_standard	primary_visual_qc_output	yes	For regression path currently canonical_v6_engine_regression
+M10F	Canonical v6 metrics	06_visual_qc_v6/{mode}/canonical_v6_engine/rendered_png/v6_standard/tables/v6_standard_metrics.tsv	primary_visual_metrics	yes	Feeds M12
+M10F	Canonical v6 metrics detail	06_visual_qc_v6/{mode}/canonical_v6_engine/rendered_png/v6_standard/tables/v6_standard_metrics_detail.tsv	primary_visual_metrics_detail	yes	Feeds M12
+M10F	Canonical v6 pocket residue details	06_visual_qc_v6/{mode}/canonical_v6_engine/rendered_png/v6_standard/tables/v6_standard_pocket_residue_details.tsv	primary_residue_level_pocket_overlap	yes	Feeds M12, M13
+M10F	Canonical v6 alignment classification	06_visual_qc_v6/{mode}/canonical_v6_engine/rendered_png/v6_standard/tables/v6_standard_alignment_pocket_classification.tsv	primary_alignment_pocket_classification	yes	Feeds M12, M13
 M11	Supporting reference audit	results/{mode}/06_supporting_reference_audit/{mode}_supporting_reference_audit.tsv	rank2_to_rank5_context_audit	planned	Feeds M12, M13
 M11	Supporting conflict flags	results/{mode}/06_supporting_reference_audit/{mode}_supporting_reference_conflict_flags.tsv	primary_vs_supporting_conflict_flags	planned	Feeds M12
 M12	Decision matrix	results/{mode}/07_decision_matrix/{mode}_decision_matrix.tsv	final_primary_plus_supporting_decision	planned	Feeds M13, M14

@@ -106,7 +106,7 @@ def main():
             final_class = m13b_class
             final_priority = r.get("m13b_priority", "") or "CALIBRATED"
             final_basis = "M13B_SECTION8_CALIBRATED_CASE_RULE"
-            final_note = r.get("m13b_reason", "") or "Existing Pilot32 Section 8 calibrated case-rule class transferred for regression reproduction."
+            final_note = r.get("m13b_reason", "") or "Existing Section 8 calibrated case-rule class transferred for reproduction."
             if has_true_mismatch == "YES":
                 mismatch_note = mm.get("mismatch_reasons", "") or mm.get("new_rule_suggestion", "")
                 if mismatch_note:

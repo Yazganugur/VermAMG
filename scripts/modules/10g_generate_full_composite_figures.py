@@ -2,7 +2,7 @@
 """
 10g_generate_full_composite_figures.py
 One composite PNG per query protein for the full fresh run.
-Adapted from generate_pilot32_v6_standard_figures.py (M10F canonical engine).
+Adapted from generate_v6_standard_figures.py (M10F canonical engine).
 
 Layout: 2-row x 3-view composite
   Row a: global structural — query | reference | superposition

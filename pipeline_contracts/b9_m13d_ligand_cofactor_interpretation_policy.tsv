@@ -13,5 +13,5 @@ manual_ligand_policy	MANUAL_CONTEXT_NOT_AUTOMATIC_SUPPORT	SO4/PO4/NES/NO2/NO3 an
 nonbiological_policy	NO_UPGRADE	MSE/GOL/EDO/PEG/BME and crystallization additives do not support functional inference	Record as non-biological HETATM only
 primary_apo_supporting_holo_policy	SUPPORTING_NOTE_ONLY	If primary is apo/no biological ligand but supporting PDB has curated biological ligand, record a supporting holo-context note	Do not override primary; mark POTENTIAL_SUPPORTING_HOLO_CONTEXT
 missing_reference_policy	AUDIT_ONLY	If supporting PDB path is missing, keep Foldseek hit as unresolved audit evidence	No ligand scan claim is made
-old_section8_error_policy	REVIEW_AND_PATCH_NOT_BLIND_REUSE	Old Pilot32 outputs may contain incomplete or over-specific assumptions	Use old outputs as calibration, not unquestioned truth
+old_section8_error_policy	REVIEW_AND_PATCH_NOT_BLIND_REUSE	Old calibration outputs may contain incomplete or over-specific assumptions	Use old outputs as calibration, not unquestioned truth
 viral_context_policy	CAUTIOUS_DIVERGENCE_ALLOWED	Viral-contig encoded proteins may diverge from bacterial/PDB references	Do not penalize partial motif/ligand context automatically

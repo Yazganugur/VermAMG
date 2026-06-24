@@ -8,7 +8,7 @@ The accepted current endpoint is:
 
 **M10F canonical v6 visual QC**
 
-The old `M10R_C_all32_v6_standard_render` / `v6_standard_portable` branch was deleted and replaced by M10F.
+The old `M10R_C_v6_standard_render` / `v6_standard_portable` branch was deleted and replaced by M10F.
 
 ## Core interpretation rule
 

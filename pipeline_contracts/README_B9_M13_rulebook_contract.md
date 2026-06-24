@@ -2,11 +2,11 @@
 
 M13 is the ligand/cofactor/motif/known-residue rulebook layer.
 
-The old Section 8 rulebook was calibrated on Pilot32 / 11 families. In the Tier1 full setting, new families and new evidence patterns are expected.
+The old Section 8 rulebook was calibrated on a benchmark protein/family set. In the full setting, new families and new evidence patterns are expected.
 
 ## Core rule
 
-Do not force new families or incompatible evidence patterns into old Pilot32 classes.
+Do not force new families or incompatible evidence patterns into old calibration classes.
 
 ## Required behavior
 

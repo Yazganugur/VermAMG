@@ -1,2 +1,1 @@
 rule_id	family	protein_id_pattern	reference_residue	query_residue	expected_query_classification	expected_reference_classification	evidence_label	refined_class	refined_priority	report_logic
-KR01	CoA_trans	T1P00[1-5]	B_54_GLU	A_54_GLU	query_conserved	reference_conserved	CoA_trans_Glu54_catalytic_residue_conserved	QUERY_SUPPORTED_PLUS_CATALYTIC_RESIDUE_CONSERVED	MEDIUM_HIGH	Literature-supported catalytic Glu54 residue is conserved in the aligned query pocket; this supports residue-level conservation but does not prove enzymatic activity or substrate specificity.

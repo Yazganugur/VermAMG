@@ -1,6 +1,6 @@
 policy_key	value	rationale	downstream_effect
 m13_scope	ligand/cofactor/motif/known-residue/rulebook evidence layer	M12 is structural decision; M13 adds biochemical/rulebook evidence	Feeds refined evidence matrix and final interpretation
-existing_rulebook_scope	Pilot32 Section 8 rulebook was calibrated on 32 proteins / 11 families	It must not be blindly forced onto new Tier1 full families	Family coverage must be checked explicitly
+existing_rulebook_scope	Section 8 rulebook was calibrated on a benchmark protein/family set	It must not be blindly forced onto new full families	Family coverage must be checked explicitly
 never_force_classification	YES	New families or mismatching evidence patterns should not be forced into old classes	Use REVIEW / NEW_RULE_NEEDED classes
 primary_reference_rule	Primary/rank-1 evidence remains the main automated interpretation anchor	Consistent with M12 primary decision matrix	Rulebook may refine but must retain primary/supporting distinction
 supporting_reference_rule	Supporting rank-2-to-rank-5 references provide context and warnings, not automatic confirmation	Prevents holo supporting structure from overclaiming function	Add supporting ligand/cofactor flags without overriding primary

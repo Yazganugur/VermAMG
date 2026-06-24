@@ -1,7 +1,7 @@
 mismatch_class	meaning	typical_trigger	recommended_action	automatic_final_class_allowed
-NO_EXISTING_FAMILY_RULE	Family absent from Pilot32/Section 8 rulebook	family not in known family rule table	Create candidate-specific or family-specific new rule after manual review	NO
+NO_EXISTING_FAMILY_RULE	Family absent from Section 8 rulebook	family not in known family rule table	Create candidate-specific or family-specific new rule after manual review	NO
 FAMILY_RULE_EXISTS_BUT_REQUIRED_EVIDENCE_MISSING	Family exists but required motif/residue/ligand evidence is absent	known residue not mapped; ligand class missing; no pocket residue overlap	Keep as REVIEW; inspect raw residue/pocket mapping	NO
-FAMILY_RULE_EXISTS_BUT_REFERENCE_CONTEXT_CHANGED	Rule exists but primary/reference context differs from Pilot32 calibration	PDB primary became AFSP primary; chain-specific reference unavailable; cache missing	Apply rule only if evidence compatibility is confirmed	NO
+FAMILY_RULE_EXISTS_BUT_REFERENCE_CONTEXT_CHANGED	Rule exists but primary/reference context differs from calibration	PDB primary became AFSP primary; chain-specific reference unavailable; cache missing	Apply rule only if evidence compatibility is confirmed	NO
 PRIMARY_APO_OR_NO_LIGAND	Primary reference has no ligand/cofactor context	n_ligand_groups=0 or no biological ligand in primary PDB	Do not penalize automatically; check known residues and supporting holo context	YES_REVIEW_ONLY
 SUPPORTING_HOLO_CONTEXT_AVAILABLE	Supporting PDB contains plausible biological ligand/cofactor context	supporting PDB ligand/cofactor present near pocket	Record as supporting evidence; do not override primary	YES_SUPPORTING_ONLY
 POTENTIAL_NEW_LIGAND_CONTEXT_RULE	Observed ligand/cofactor pattern not represented in rulebook	new ligand family, substrate analog, cofactor, metal cluster	Propose new ligand/cofactor rule class	NO

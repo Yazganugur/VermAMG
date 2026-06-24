@@ -10,7 +10,7 @@ Each module writes outputs into a predefined location. Later modules do not sear
 
 ## Top-level layout
 
-    structural_validation_tier1_full/
+    structural_validation/
     ├── 00_inputs/
     ├── 01_colabfold/
     ├── 02_foldseek/
@@ -20,7 +20,7 @@ Each module writes outputs into a predefined location. Later modules do not sear
     ├── 06_visual_qc_v6/
     ├── 07_decision_matrix/
     ├── 08_rulebook_evidence/
-    ├── 09_regression_pilot32/
+    ├── 09_regression/
     ├── 10_results_package/
     ├── config/
     ├── docs/
@@ -91,9 +91,9 @@ Registry columns:
 
 ## Regression principle
 
-Pilot32 is the benchmark/regression set.
+A benchmark/regression set is used for comparison.
 
-For each major module, the pipeline must compare new outputs against old Pilot32 outputs when available.
+For each major module, the pipeline must compare new outputs against old calibration outputs when available.
 
 Regression comparison must include both:
 

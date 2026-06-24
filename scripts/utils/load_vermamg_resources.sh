@@ -11,9 +11,9 @@ if [ ! -s "$MANIFEST_PATH" ]; then
 fi
 
 case "$MODE_RAW" in
-  regression|pilot32) MODE="regression" ;;
+  regression) MODE="regression" ;;
   smoke|test) MODE="test" ;;
-  full|tier1_full) MODE="full" ;;
+  full) MODE="full" ;;
   render) MODE="render" ;;
   foldseek) MODE="foldseek" ;;
   p2rank) MODE="p2rank" ;;

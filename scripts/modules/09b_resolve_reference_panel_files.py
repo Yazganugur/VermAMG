@@ -97,9 +97,9 @@ def classify_file(path):
         return "reference_structures_pdb"
     if "/reference_structures/afsp/" in p:
         return "reference_structures_afsp"
-    if "/pilot32_visual_qc_package/reference_pdb/" in p:
+    if "/visual_qc_package/reference_pdb/" in p:
         return "visual_qc_reference_pdb"
-    if "/pilot32_visual_qc_package/query_pdb/" in p:
+    if "/visual_qc_package/query_pdb/" in p:
         return "visual_qc_query_pdb"
     if "/foldseek_tm_align/querydb/" in p:
         return "foldseek_querydb_pdb_inputs"
