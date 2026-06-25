@@ -116,12 +116,32 @@ if [[ -x "${P2RANK_SYMLINK_CMD}" ]]; then
   ok "P2Rank ready: ${P2RANK_SYMLINK_CMD}"
 fi
 
+# ---------------------------------------------------------------------------
+# 2b) PyMOL — required only for optional visual overlay figures (m10f_render)
+# ---------------------------------------------------------------------------
+say "PyMOL check (for visual figure rendering; optional)"
+if have pymol; then
+  ok "PyMOL already on PATH: $(command -v pymol)"
+elif have conda; then
+  echo "  Installing PyMOL (conda-forge pymol-open-source)..."
+  if conda install -y -c conda-forge pymol-open-source; then
+    ok "PyMOL installed: $(command -v pymol 2>/dev/null || echo pymol)"
+  else
+    warn "conda install of pymol-open-source failed; figures will be skipped until installed."
+    warn "  Retry: conda install -c conda-forge pymol-open-source"
+  fi
+else
+  warn "PyMOL not found and conda unavailable — figure rendering will be skipped."
+  warn "  Install: conda install -c conda-forge pymol-open-source  (or: pip install pymol-open-source)"
+fi
+
 if [[ "${TOOLS_ONLY}" -eq 1 ]]; then
   say "Done (--tools-only)"
   echo
   echo "Add these to your run config under 'resources:':"
   echo "  p2rank_cmd: \"${P2RANK_SYMLINK_CMD##${PROJECT_ROOT}/}\""
   echo "  p2rank_jar: \"${P2RANK_SYMLINK_JAR##${PROJECT_ROOT}/}\""
+  echo "  pymol_cmd:  \"$(have pymol && command -v pymol || echo pymol)\"   # for visual figures"
   exit 0
 fi
 
@@ -179,6 +199,7 @@ echo "  resources:"
 echo "    java_bin     : java"
 echo "    p2rank_cmd   : ${P2RANK_SYMLINK_CMD##${PROJECT_ROOT}/}"
 echo "    p2rank_jar   : ${P2RANK_SYMLINK_JAR##${PROJECT_ROOT}/}"
+echo "    pymol_cmd    : $(have pymol && command -v pymol || echo pymol)   # visual figures"
 echo "    foldseek_bin : ${FOLDSEEK_BIN##${PROJECT_ROOT}/}"
 echo "    pdb_foldseek_db  : ${DBS##${PROJECT_ROOT}/}/foldseek/pdb"
 echo "    afsp_foldseek_db : ${DBS##${PROJECT_ROOT}/}/foldseek/alphafold_swissprot"

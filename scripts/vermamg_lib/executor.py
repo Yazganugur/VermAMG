@@ -1775,6 +1775,7 @@ def _run_m10f_render(ctx: RunContext, log: TextIO, follow: bool) -> int:
         "--out-png-dir",     _rel(ctx, png_dir),
         "--out-manifest",    _rel(ctx, png_dir / "full_rendered_png_manifest.tsv"),
         "--out-qc",          _rel(ctx, png_dir / "full_rendered_png_qc.tsv"),
+        "--pymol-cmd",       str(get_nested(ctx.cfg, "resources", "pymol_cmd", default="")),
         "--pymol-container", _rel(ctx, ctx.project_path("resources/containers/pymol_deb12_2.5.0_sc.sif")),
         "--project-root",    str(ctx.project_root),
         "--allowed-root",    _rel(ctx, ctx.run_root),

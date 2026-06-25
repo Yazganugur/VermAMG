@@ -26,6 +26,7 @@ import hashlib
 import csv
 import datetime
 import os
+import shutil
 import subprocess
 import tempfile
 from pathlib import Path
@@ -52,7 +53,8 @@ def main() -> int:
     ap.add_argument("--out-png-dir",      required=True, help="Output directory for PNG files")
     ap.add_argument("--out-manifest",     required=True, help="Output PNG manifest TSV")
     ap.add_argument("--out-qc",           required=True, help="Output QC report TSV")
-    ap.add_argument("--pymol-container",  required=True, help="Path to PyMOL Apptainer .sif")
+    ap.add_argument("--pymol-container",  default="", help="Path to PyMOL Apptainer .sif (used only if --pymol-cmd is not given)")
+    ap.add_argument("--pymol-cmd",        default="", help="PyMOL binary (e.g. conda 'pymol-open-source'); preferred over the container")
     ap.add_argument("--project-root",     required=True, help="Project root for Apptainer bind mount")
     ap.add_argument("--allowed-root",     required=True, help="Run root; all outputs must be under here")
     ap.add_argument("--panel-orders",     default="1,2,3,4,5",   help="Comma-separated panel_order values to render (default: 1,2,3,4,5)")
@@ -65,7 +67,7 @@ def main() -> int:
     out_png_dir     = Path(args.out_png_dir)
     out_manifest    = Path(args.out_manifest)
     out_qc          = Path(args.out_qc)
-    sif             = Path(args.pymol_container)
+    sif             = Path(args.pymol_container) if args.pymol_container else None
     project_root    = Path(args.project_root)
     allowed_root    = Path(args.allowed_root)
     target_orders   = set(args.panel_orders.split(","))
@@ -79,8 +81,17 @@ def main() -> int:
         except ValueError:
             raise SystemExit(f"ERROR: output path outside allowed_root: {p}")
 
-    if not sif.is_file():
-        raise SystemExit(f"ERROR: PyMOL container not found: {sif}")
+    pymol_cmd = (args.pymol_cmd or "").strip()
+    if pymol_cmd:
+        if not (shutil.which(pymol_cmd) or Path(pymol_cmd).is_file()):
+            raise SystemExit(f"ERROR: PyMOL command not found: {pymol_cmd}")
+        use_container = False
+    elif sif and sif.is_file():
+        use_container = True
+    else:
+        raise SystemExit(
+            "ERROR: no PyMOL available. Provide --pymol-cmd <pymol> "
+            "(e.g. `conda install -c conda-forge pymol-open-source`) or --pymol-container <sif>.")
     if not manifest_path.is_file():
         raise SystemExit(f"ERROR: manifest not found: {manifest_path}")
 
@@ -160,13 +171,16 @@ def main() -> int:
 
     print(f"master_pml: {master_pml_path}")
 
-    # Run Apptainer+PyMOL once for all renders
-    cmd = [
-        "apptainer", "exec",
-        "--bind", f"{project_root.as_posix()}:{project_root.as_posix()}",
-        str(sif),
-        "pymol", "-cq", master_pml_path,
-    ]
+    # Run PyMOL once for all renders — local binary if given, else Apptainer container.
+    if use_container:
+        cmd = [
+            "apptainer", "exec",
+            "--bind", f"{project_root.as_posix()}:{project_root.as_posix()}",
+            str(sif),
+            "pymol", "-cq", master_pml_path,
+        ]
+    else:
+        cmd = [pymol_cmd, "-cq", master_pml_path]
     print("COMMAND\t" + " ".join(cmd))
 
     rc = subprocess.run(cmd, cwd=str(project_root)).returncode

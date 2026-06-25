@@ -155,6 +155,7 @@ resources:
   java_bin: "{a['java_bin']}"
   p2rank_cmd: "{a['p2rank_cmd']}"
   p2rank_jar: "{a['p2rank_jar']}"
+  pymol_cmd: "{a['pymol_cmd']}"
   foldseek_bin: "{a['foldseek_bin']}"
   pdb_foldseek_db: "{a['pdb_db']}"
   afsp_foldseek_db: "{a['afsp_db']}"
@@ -178,7 +179,7 @@ stages:
   m09: true
   p2rank: true
   m10a_d: true
-  m10f_render: false
+  m10f_render: {"true" if a['render'] else "false"}
   m11: true
   m12: true
   m13: true
@@ -261,7 +262,20 @@ def questionnaire() -> dict:
         "java_bin": "java",
         "p2rank_cmd": "resources/tools/p2rank/current/prank",
         "p2rank_jar": "resources/tools/p2rank/current/bin/p2rank.jar",
+        "pymol_cmd": "pymol", "render": False,
     })
+
+    rend = ask_choice(
+        "Generate visual overlay figures (one PNG per query protein)?\n"
+        "     Needs PyMOL  (install: conda install -c conda-forge pymol-open-source,\n"
+        "     or run setup.sh which can install it).",
+        [("1", "Yes - render figures (full pipeline incl. visuals)"),
+         ("2", "No  - interpretation tables only")],
+        default="1",
+    )
+    a["render"] = rend == "1"
+    if a["render"]:
+        a["pymol_cmd"] = ask("PyMOL command", "pymol")
 
     if a["data_source"] == "demo":
         a.update(DEMO)
