@@ -117,7 +117,7 @@ backend_jobs:
   dry_run: {"false" if live else "true"}
   submit_jobs: false
   emit_local_bundle: true
-  emit_slurm_bundle: {"true" if a['backend'] == "slurm" else "false"}
+  emit_slurm_bundle: true
   plan_colabfold: true
   plan_foldseek: true
   local_threads: {a['threads']}
