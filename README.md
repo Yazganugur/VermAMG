@@ -110,42 +110,37 @@ everything downstream is identical.
 
 ---
 
-## Quickstart — smoke demo (5 min, no databases required)
+## Quickstart — clone, install, run
 
-The repo ships a 3-protein precomputed demo that exercises the **full pipeline
-end-to-end** (FASTA intake → structure import → reference panel → P2Rank pockets
-→ decision matrices → interpretation export) without downloading any databases.
-
-**Easiest — guided wizard.** After installing dependencies + tools (steps 1–2
-below), run the wizard and pick the bundled demo. It asks a few questions,
-writes the config, and runs the pipeline with a live, one-line-per-stage
-progress view:
+VermAMG follows the standard for structural-bioinformatics tools: **git ships the
+code plus a small bundled demo; the heavy binaries and databases are *not* in git**
+(they are gigabytes). One script — `setup.sh` — downloads and installs everything
+the pipeline needs: Foldseek, P2Rank + Java, PyMOL (for figures), and the Foldseek
+reference databases. So a fresh clone is complete — you just run the installer and
+wait for the downloads.
 
 ```bash
-python scripts/vermamg_init.py
-```
-
-Or run the demo directly:
-
-```bash
-# 1. Clone and install Python dependencies
+# 1) Get the code
 git clone <repo-url> VermAMG && cd VermAMG
 python3 -m pip install -r requirements.txt
 
-# 2. Install P2Rank + Java (needed for pocket prediction)
-bash setup.sh --tools-only
+# 2) Install everything else (tools + PyMOL + databases) — grab a coffee ☕
+bash setup.sh
+#    Precomputed-only and don't need the databases?  ->  bash setup.sh --tools-only
 
-# 3. Run the demo
-python scripts/vermamg.py run \
-    --config examples/smoke_precomputed/config.yaml \
-    --resume --follow
+# 3) Launch the guided wizard — it builds a run config and runs the FULL
+#    pipeline (incl. overlay figures) with live, one-line-per-stage progress
+python scripts/vermamg_init.py
 ```
 
-Outputs land in `runs/smoke_precomputed/smoke_3prot_v1/exports/`.
+That's the whole flow: answer a few questions (or pick the bundled 3-protein demo)
+and watch it run from FASTA intake → reference panel → P2Rank pockets → decision
+matrices → interpretation export → overlay figures. Results land under
+`runs/<project>/<run>/` — tables in `exports/`, PNG figures in `06_visual_qc_v6/`.
 
-> **Linux/WSL note:** Foldseek, P2Rank, and container-based rendering must run
-> from a Linux environment. On Windows, open WSL and:
-> `cd /path/to/VermAMG && bash setup.sh --tools-only`
+> **Linux/WSL only:** Foldseek, P2Rank, and PyMOL rendering need a Linux
+> environment. On Windows, open WSL first:
+> `cd /path/to/VermAMG && bash setup.sh`
 
 ---
 

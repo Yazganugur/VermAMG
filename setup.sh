@@ -136,12 +136,13 @@ else
 fi
 
 if [[ "${TOOLS_ONLY}" -eq 1 ]]; then
-  say "Done (--tools-only)"
+  say "Done (--tools-only) — tools + PyMOL ready (no databases; fine for precomputed mode)"
   echo
-  echo "Add these to your run config under 'resources:':"
-  echo "  p2rank_cmd: \"${P2RANK_SYMLINK_CMD##${PROJECT_ROOT}/}\""
-  echo "  p2rank_jar: \"${P2RANK_SYMLINK_JAR##${PROJECT_ROOT}/}\""
-  echo "  pymol_cmd:  \"$(have pymol && command -v pymol || echo pymol)\"   # for visual figures"
+  echo "  foldseek : ${FOLDSEEK_BIN##${PROJECT_ROOT}/}"
+  echo "  p2rank   : ${P2RANK_SYMLINK_CMD##${PROJECT_ROOT}/}   (java: $(have java && echo found || echo MISSING))"
+  echo "  pymol    : $(have pymol && command -v pymol || echo 'NOT installed — figures will be skipped')"
+  echo
+  echo "  >>> Next: python scripts/vermamg_init.py   (guided setup + run, incl. figures)"
   exit 0
 fi
 
@@ -193,22 +194,18 @@ fi
 # ---------------------------------------------------------------------------
 # 6) Summary: paste these paths into your run config
 # ---------------------------------------------------------------------------
-say "Setup complete — copy these paths into your run config"
+say "ALL READY — tools, PyMOL, and Foldseek databases are installed"
 echo
-echo "  resources:"
-echo "    java_bin     : java"
-echo "    p2rank_cmd   : ${P2RANK_SYMLINK_CMD##${PROJECT_ROOT}/}"
-echo "    p2rank_jar   : ${P2RANK_SYMLINK_JAR##${PROJECT_ROOT}/}"
-echo "    pymol_cmd    : $(have pymol && command -v pymol || echo pymol)   # visual figures"
-echo "    foldseek_bin : ${FOLDSEEK_BIN##${PROJECT_ROOT}/}"
-echo "    pdb_foldseek_db  : ${DBS##${PROJECT_ROOT}/}/foldseek/pdb"
-echo "    afsp_foldseek_db : ${DBS##${PROJECT_ROOT}/}/foldseek/alphafold_swissprot"
+echo "  Installed under resources/ (auto-detected by run configs):"
+echo "    foldseek     : ${FOLDSEEK_BIN##${PROJECT_ROOT}/}"
+echo "    p2rank       : ${P2RANK_SYMLINK_CMD##${PROJECT_ROOT}/}   (java: $(have java && echo found || echo MISSING))"
+echo "    pymol        : $(have pymol && command -v pymol || echo 'NOT installed — figures will be skipped')"
+echo "    foldseek DBs : ${DBS##${PROJECT_ROOT}/}/foldseek/{pdb,alphafold_swissprot}"
 echo
-echo "Next steps:"
-echo "  1. Run smoke demo (no DBs needed, just P2Rank):"
-echo "       python scripts/vermamg.py run --config examples/smoke_precomputed/config.yaml --resume --follow"
-echo "  2. Start your own project:"
-echo "       cp run_templates/local_run.yaml.template run_configs/my_project.yaml"
-echo "       # fill [FILL] fields, then:"
-echo "       python scripts/vermamg.py plan --config run_configs/my_project.yaml"
-echo "       python scripts/vermamg.py run  --config run_configs/my_project.yaml --resume --follow"
+echo "  >>> Next, just launch the guided wizard — it builds your run config and"
+echo "      runs the full pipeline (incl. figures) with live progress:"
+echo
+echo "          python scripts/vermamg_init.py"
+echo
+echo "      (Or run the bundled 3-protein demo directly:"
+echo "          python scripts/vermamg.py run --config examples/smoke_precomputed/config.yaml --resume --follow )"
