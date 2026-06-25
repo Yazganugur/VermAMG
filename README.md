@@ -116,6 +116,17 @@ The repo ships a 3-protein precomputed demo that exercises the **full pipeline
 end-to-end** (FASTA intake → structure import → reference panel → P2Rank pockets
 → decision matrices → interpretation export) without downloading any databases.
 
+**Easiest — guided wizard.** After installing dependencies + tools (steps 1–2
+below), run the wizard and pick the bundled demo. It asks a few questions,
+writes the config, and runs the pipeline with a live, one-line-per-stage
+progress view:
+
+```bash
+python scripts/vermamg_init.py
+```
+
+Or run the demo directly:
+
 ```bash
 # 1. Clone and install Python dependencies
 git clone <repo-url> VermAMG && cd VermAMG
@@ -149,24 +160,36 @@ bash setup.sh          # Foldseek binary + P2Rank + Foldseek PDB/AFSP DBs
 See [docs/INSTALL.md](docs/INSTALL.md) for details and the ColabFold MSA DB
 (needed only for live structure prediction).
 
-**Step 2 — Configure your project**
+**Step 2 — Configure your project** — two ways:
+
+*A) Guided wizard (recommended).* Answer a few questions in the terminal — or
+let it write a template for you to fill in your editor:
+
+```bash
+python scripts/vermamg_init.py
+```
+
+*B) Edit a template by hand.*
 
 ```bash
 # Local workstation / WSL:
 cp run_templates/local_run.yaml.template run_configs/my_project.yaml
-
 # HPC / SLURM cluster:
 cp run_templates/hpc_slurm_run_v2.yaml.template run_configs/my_project.yaml
 ```
 
-Open the file and fill in every `[FILL]` field: project name, FASTA path,
-precomputed input paths or live-mode settings, and tool paths printed by
-`setup.sh`. Documented field-by-field in
+Fill in every `[FILL]` field: project name, FASTA path, precomputed input paths
+or live-mode settings, and tool paths printed by `setup.sh`. Documented
+field-by-field in
 [run_templates/README_RUN_TEMPLATES.md](run_templates/README_RUN_TEMPLATES.md).
 
 **Step 3 — Plan, then run**
 
 ```bash
+# Wizard with live per-stage progress (any saved config):
+python scripts/vermamg_init.py --run run_configs/my_project.yaml
+
+# Or the underlying commands:
 python scripts/vermamg.py plan --config run_configs/my_project.yaml   # validate first
 python scripts/vermamg.py run  --config run_configs/my_project.yaml --resume --follow
 ```
