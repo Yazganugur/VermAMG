@@ -168,7 +168,7 @@ def main() -> int:
             tmp.write(f'@{pml_abs.as_posix()}\n')
             if use_ray:
                 tmp.write(f'ray 1800, 1400\n')
-            tmp.write(f'png "{png_abs.as_posix()}", dpi={dpi}, ray=0\n')
+            tmp.write(f'png {png_abs.as_posix()}, dpi={dpi}, ray=0\n')
             tmp.write(f'reinitialize\n')
             tmp.write(f'\n')
 
