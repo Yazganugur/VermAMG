@@ -118,7 +118,8 @@ code plus a small bundled demo; the heavy binaries and databases are *not* in gi
 `--tools-only`, prepares the Foldseek reference databases under `resources/`.
 The bundled smoke demo is database-free; live FASTA runs need the full resource
 install. Optional overlay figures also need the documented PyMOL/Apptainer
-render resource.
+render resource; use `bash setup.sh --with-pymol` only if you want setup to try
+installing local PyMOL via conda-forge.
 
 ```bash
 # 1) Get the code

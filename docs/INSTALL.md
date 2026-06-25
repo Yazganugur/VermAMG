@@ -24,6 +24,10 @@ python scripts/vermamg_doctor.py --mode smoke
 python scripts/run_smoke_test.py
 ```
 
+`--tools-only` intentionally skips PyMOL because the smoke demo does not need
+figure rendering. To let setup try a local PyMOL install, run
+`bash setup.sh --with-pymol`.
+
 ---
 
 ## Full install (live structure prediction mode)

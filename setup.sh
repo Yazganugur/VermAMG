@@ -10,6 +10,7 @@
 # Usage:
 #   bash setup.sh                       # tools + Foldseek reference DBs (PDB + AFSP)
 #   bash setup.sh --tools-only          # only Foldseek + P2Rank binaries (no DBs)
+#   bash setup.sh --with-pymol          # also try conda-forge PyMOL for optional figures
 #   bash setup.sh --with-colabfold-db   # also fetch the large ColabFold MSA DB
 #   bash setup.sh --foldseek-sse2       # use SSE2 Foldseek build (for older CPUs)
 #   bash setup.sh --foldseek-arm64      # use ARM64 Foldseek build
@@ -26,12 +27,14 @@ TOOLS="${RES}/tools"
 DBS="${RES}/databases"
 
 TOOLS_ONLY=0
+WITH_PYMOL=0
 WITH_COLABFOLD_DB=0
 FOLDSEEK_VER="avx2"   # avx2 (default) | sse2 | arm64
 
 for arg in "$@"; do
   case "$arg" in
     --tools-only)        TOOLS_ONLY=1 ;;
+    --with-pymol)        WITH_PYMOL=1 ;;
     --with-colabfold-db) WITH_COLABFOLD_DB=1 ;;
     --foldseek-sse2)     FOLDSEEK_VER="sse2" ;;
     --foldseek-arm64)    FOLDSEEK_VER="arm64" ;;
@@ -131,6 +134,9 @@ fi
 # 2b) PyMOL — required only for optional visual overlay figures (m10f_render)
 # ---------------------------------------------------------------------------
 say "PyMOL check (for visual figure rendering; optional)"
+if [[ "${WITH_PYMOL}" -eq 0 ]]; then
+  skip "PyMOL install skipped; add --with-pymol for optional local figure rendering."
+else
 if have pymol; then
   ok "PyMOL already on PATH: $(command -v pymol)"
 elif have conda; then
@@ -145,14 +151,15 @@ else
   warn "PyMOL not found and conda unavailable — figure rendering will be skipped."
   warn "  Install: conda install -c conda-forge pymol-open-source  (or: pip install pymol-open-source)"
 fi
+fi
 
 if [[ "${TOOLS_ONLY}" -eq 1 ]]; then
   install_python_deps
-  say "Done (--tools-only) — tools + PyMOL ready (no databases; fine for precomputed mode)"
+  say "Done (--tools-only) - smoke/precomputed tools ready (no databases)"
   echo
   echo "  foldseek : ${FOLDSEEK_BIN##${PROJECT_ROOT}/}"
   echo "  p2rank   : ${P2RANK_SYMLINK_CMD##${PROJECT_ROOT}/}   (java: $(have java && echo found || echo MISSING))"
-  echo "  pymol    : $(have pymol && command -v pymol || echo 'NOT installed — figures will be skipped')"
+  echo "  pymol    : $(have pymol && command -v pymol || echo 'not installed; optional figures will be skipped')"
   echo
   echo "  >>> Next:"
   echo "      python scripts/vermamg_doctor.py --mode smoke"
