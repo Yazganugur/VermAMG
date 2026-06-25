@@ -92,7 +92,11 @@ PYMOL_SIF="${VERMAMG_PYMOL_SIF:-${VERMAMG_ROOT}/resources/containers/pymol_deb12
 test -s "$PYMOL_SIF"                 || _fail "PyMOL SIF not found: $PYMOL_SIF"
 
 # Require evidence of smoke PASS before full run
-FRESH_RUN="${M10G_FRESH_RUN_REL:-runs/full_composite_run_v1}"
+FRESH_RUN="${M10G_FRESH_RUN_REL:-runs/smoke_precomputed/smoke_3prot_v1}"
+CONTRACT="${VERMAMG_ROOT}/${FRESH_RUN}/06_visual_qc_v6/full/input_manifests/full_visual_overlay_input_contract.tsv"
+test -s "$CONTRACT" || _fail "M10G input contract not found: $CONTRACT"
+EXPECTED_N=$(awk -F'\t' 'NR==1{for(i=1;i<=NF;i++) if($i=="panel_role") role=i; next} role && $role=="PRIMARY"{c++} END{print c+0}' "$CONTRACT")
+[ "$EXPECTED_N" -ge 1 ] || _fail "No PRIMARY rows found in contract: $CONTRACT"
 SMOKE_DIR="${VERMAMG_ROOT}/${FRESH_RUN}/06_visual_qc_v6/full/composite_png_smoke"
 SMOKE_OK=$(find "$SMOKE_DIR" "$SMOKE_DIR/final_pngs" -maxdepth 1 -name '*_v6_standard_600dpi.png' 2>/dev/null | wc -l || echo 0)
 if [ "$SMOKE_OK" -lt 1 ]; then
@@ -112,6 +116,8 @@ mkdir -p "$(dirname "$LOGBASE")"
 
 echo "OUTDIR:    $OUTDIR"
 echo "LOG_BASE:  $LOGBASE"
+echo "CONTRACT:  $CONTRACT"
+echo "EXPECTED:  $EXPECTED_N primary composites"
 echo ""
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -199,10 +205,11 @@ FAILED_N=$(awk 'NR>1{c++} END{print c+0}' "$FAILED" 2>/dev/null || echo 0)
 
 echo ""
 echo "FINAL_PRODUCED: $PRODUCED_N"
+echo "FINAL_EXPECTED: $EXPECTED_N"
 echo "FINAL_FAILED:   $FAILED_N"
 echo ""
 
-if [ "$PRODUCED_N" -ge 660 ] && [ "$FAILED_N" -le 5 ]; then
+if [ "$PRODUCED_N" -ge "$EXPECTED_N" ] && [ "$FAILED_N" -le 5 ]; then
   echo "M10G_FULL_COMPOSITE_QC: PASS"
   echo "Composite PNGs: $OUTDIR"
   echo "Open in Explorer: explorer.exe \"\$(wslpath -w ${OUTDIR})\""

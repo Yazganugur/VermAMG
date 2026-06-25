@@ -43,6 +43,11 @@ smoke_test/
 00_inputs/
 inputs/
 
+# --- User/private run configs ---
+run_configs/*.yaml
+!run_configs/example_project_live_v2.yaml
+!run_configs/example_project_precomputed_v2.yaml
+
 # --- Python ---
 __pycache__/
 *.pyc

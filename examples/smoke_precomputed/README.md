@@ -22,23 +22,23 @@ No external databases required. P2Rank + Java must be installed (via `setup.sh`)
 # 1. Install P2Rank (required for pocket prediction stage):
 bash setup.sh --tools-only
 
-# 2. Validate the demo config:
-python scripts/vermamg.py plan --config examples/smoke_precomputed/config.yaml
+# 2. Verify the smoke-test dependencies:
+python scripts/vermamg_doctor.py --mode smoke
 
-# 3. Run the full pipeline on the 3 demo proteins:
-python scripts/vermamg.py run --config examples/smoke_precomputed/config.yaml --resume --follow
+# 3. Run the full pipeline on the 3 demo proteins and validate outputs:
+python scripts/run_smoke_test.py
 ```
 
 Outputs land in `runs/smoke_precomputed/smoke_3prot_v1/exports/`.
 
 ## Proteins in this demo
 
-| Run ID | Family | Habitat |
+| Demo row | Family | Habitat |
 |---|---|---|
-| T1_Acidiferrobacteraceae_bacterium_...2024893_5 | MTTB | aquatic |
-| T1_Acidimicrobiaceae_bacterium_...2024894_6 | ECH\_1 | aquatic |
-| T1_Acidimicrobiia_bacterium_...2080302_3 | Aldedh | unknown |
+| demo protein 1 | MTTB | aquatic |
+| demo protein 2 | ECH\_1 | aquatic |
+| demo protein 3 | Aldedh | unknown |
 
-These three proteins were selected to cover diverse functional families (methylthioribose
-transferase, enoyl-CoA hydratase, and aldehyde dehydrogenase) from the tier-1
-viral AMG candidate set.
+These three proteins were selected to cover diverse functional families
+(methylthioribose transferase, enoyl-CoA hydratase, and aldehyde dehydrogenase)
+from a small precomputed viral AMG demonstration set.

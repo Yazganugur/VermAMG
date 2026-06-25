@@ -102,11 +102,11 @@ def _require_pil():
 
 FRESH_RUN_REL = os.environ.get(
     "M10G_FRESH_RUN_REL",
-    "runs/full_composite_run_v1"
+    "runs/smoke_precomputed/smoke_3prot_v1"
 )
 CONTRACT_REL = f"{FRESH_RUN_REL}/06_visual_qc_v6/full/input_manifests/full_visual_overlay_input_contract.tsv"
 DECISION_MATRIX_REL = f"{FRESH_RUN_REL}/results/full/07_decision_matrix/full_primary_decision_matrix.tsv"
-PYMOL_REL = "06_visual_qc_v6/render_env/bin/pymol"
+PYMOL_REL = "scripts/utils/pymol_apptainer_wrapper.sh"
 
 
 # ---------------------------------------------------------------------------
@@ -337,8 +337,8 @@ def choose_qtm(row, dm_map):
 # ---------------------------------------------------------------------------
 
 def write_pml(row, dm_map, workspace, panel_dir, table_dir, pml_dir):
-    query   = row["query"]          # T1_... prefix
-    pid     = row["protein_id"]     # without T1_
+    query   = row["query"]          # canonical query identifier
+    pid     = row["protein_id"]     # display-safe protein identifier
     family  = row.get("family", "NA")
 
     query_pdb_rel  = row.get("query_model_pdb_portable", "")
@@ -967,7 +967,7 @@ def main():
     ap.add_argument("--pymol",     default=None,
                     help="PyMOL executable. Default: $PYMOL_CMD, then {workspace}/" + PYMOL_REL)
     ap.add_argument("--only",      default=None,
-                    help="Comma-separated query IDs (T1_... form) to process.")
+                    help="Comma-separated query IDs to process.")
     ap.add_argument("--limit",     type=int, default=None,
                     help="Process at most N proteins.")
     ap.add_argument("--pml-only",  action="store_true",

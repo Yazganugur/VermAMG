@@ -54,9 +54,20 @@ dl() {  # dl <url> <output>
   else echo "ERROR: need wget or curl"; exit 1; fi
 }
 
+install_python_deps() {
+  say "Python dependencies"
+  if have python3; then
+    python3 -m pip install -q -r "${PROJECT_ROOT}/requirements.txt" && ok "requirements.txt installed"
+  elif have python; then
+    python  -m pip install -q -r "${PROJECT_ROOT}/requirements.txt" && ok "requirements.txt installed"
+  else
+    warn "python3 not found - install manually: pip install -r requirements.txt"
+  fi
+}
+
 say "VermAMG setup"
 echo "project_root = ${PROJECT_ROOT}"
-mkdir -p "${TOOLS}" "${DBS}/foldseek"
+mkdir -p "${TOOLS}" "${DBS}/foldseek/pdb" "${DBS}/foldseek/alphafold_swissprot"
 
 # ---------------------------------------------------------------------------
 # 1) Foldseek binary
@@ -136,13 +147,16 @@ else
 fi
 
 if [[ "${TOOLS_ONLY}" -eq 1 ]]; then
+  install_python_deps
   say "Done (--tools-only) — tools + PyMOL ready (no databases; fine for precomputed mode)"
   echo
   echo "  foldseek : ${FOLDSEEK_BIN##${PROJECT_ROOT}/}"
   echo "  p2rank   : ${P2RANK_SYMLINK_CMD##${PROJECT_ROOT}/}   (java: $(have java && echo found || echo MISSING))"
   echo "  pymol    : $(have pymol && command -v pymol || echo 'NOT installed — figures will be skipped')"
   echo
-  echo "  >>> Next: python scripts/vermamg_init.py   (guided setup + run, incl. figures)"
+  echo "  >>> Next:"
+  echo "      python scripts/vermamg_doctor.py --mode smoke"
+  echo "      python scripts/run_smoke_test.py"
   exit 0
 fi
 
@@ -161,8 +175,8 @@ fs_db() {  # fs_db <foldseek-db-name> <out-prefix>
     ok "DB ready: ${prefix}"
   fi
 }
-fs_db "PDB"                  "${DBS}/foldseek/pdb"
-fs_db "Alphafold/Swiss-Prot" "${DBS}/foldseek/alphafold_swissprot"
+fs_db "PDB"                  "${DBS}/foldseek/pdb/pdb"
+fs_db "Alphafold/Swiss-Prot" "${DBS}/foldseek/alphafold_swissprot/af_swissprot"
 
 # ---------------------------------------------------------------------------
 # 4) Optional: ColabFold MSA DB (large; live mode only)
@@ -194,18 +208,19 @@ fi
 # ---------------------------------------------------------------------------
 # 6) Summary: paste these paths into your run config
 # ---------------------------------------------------------------------------
-say "ALL READY — tools, PyMOL, and Foldseek databases are installed"
+say "INSTALL CHECKPOINT - tools and Foldseek database step completed"
 echo
 echo "  Installed under resources/ (auto-detected by run configs):"
 echo "    foldseek     : ${FOLDSEEK_BIN##${PROJECT_ROOT}/}"
 echo "    p2rank       : ${P2RANK_SYMLINK_CMD##${PROJECT_ROOT}/}   (java: $(have java && echo found || echo MISSING))"
-echo "    pymol        : $(have pymol && command -v pymol || echo 'NOT installed — figures will be skipped')"
-echo "    foldseek DBs : ${DBS##${PROJECT_ROOT}/}/foldseek/{pdb,alphafold_swissprot}"
+echo "    pymol        : $(have pymol && command -v pymol || echo 'not on PATH; use Apptainer/container wrapper for figures')"
+echo "    foldseek DBs : ${DBS##${PROJECT_ROOT}/}/foldseek/pdb/pdb"
+echo "                   ${DBS##${PROJECT_ROOT}/}/foldseek/alphafold_swissprot/af_swissprot"
 echo
-echo "  >>> Next, just launch the guided wizard — it builds your run config and"
-echo "      runs the full pipeline (incl. figures) with live progress:"
+echo "  >>> Next, verify the install and run the bundled smoke demo:"
 echo
+echo "          python scripts/vermamg_doctor.py --mode live"
+echo "          python scripts/run_smoke_test.py"
+echo
+echo "      Then launch the guided wizard for your own dataset:"
 echo "          python scripts/vermamg_init.py"
-echo
-echo "      (Or run the bundled 3-protein demo directly:"
-echo "          python scripts/vermamg.py run --config examples/smoke_precomputed/config.yaml --resume --follow )"

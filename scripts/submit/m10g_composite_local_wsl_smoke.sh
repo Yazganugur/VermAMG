@@ -100,8 +100,18 @@ test -s "$PYMOL_SIF"                 || _fail "PyMOL SIF not found: $PYMOL_SIF"
 echo ""
 
 # ── clear stale smoke output ──────────────────────────────────────────────────
-FRESH_RUN="${M10G_FRESH_RUN_REL:-runs/full_composite_run_v1}"
+FRESH_RUN="${M10G_FRESH_RUN_REL:-runs/smoke_precomputed/smoke_3prot_v1}"
 OUTDIR="${VERMAMG_ROOT}/${FRESH_RUN}/06_visual_qc_v6/full/composite_png_smoke"
+CONTRACT="${VERMAMG_ROOT}/${FRESH_RUN}/06_visual_qc_v6/full/input_manifests/full_visual_overlay_input_contract.tsv"
+test -s "$CONTRACT" || _fail "M10G input contract not found: $CONTRACT"
+PRIMARY_N=$(awk -F'\t' 'NR==1{for(i=1;i<=NF;i++) if($i=="panel_role") role=i; next} role && $role=="PRIMARY"{c++} END{print c+0}' "$CONTRACT")
+SMOKE_LIMIT="${M10G_SMOKE_LIMIT:-3}"
+if [ "$PRIMARY_N" -lt "$SMOKE_LIMIT" ]; then
+  EXPECTED_N="$PRIMARY_N"
+else
+  EXPECTED_N="$SMOKE_LIMIT"
+fi
+[ "$EXPECTED_N" -ge 1 ] || _fail "No PRIMARY rows found in contract: $CONTRACT"
 
 if [ -d "$OUTDIR" ]; then
   echo "Clearing stale smoke output: $OUTDIR"
@@ -112,21 +122,22 @@ mkdir -p "$OUTDIR"
 # ── run ───────────────────────────────────────────────────────────────────────
 LOGFILE="${VERMAMG_ROOT}/logs/m10g_smoke_$(date +%Y%m%d_%H%M%S).log"
 SCRIPT="scripts/modules/10g_generate_full_composite_figures.py"
-SMOKE_IDS="${M10G_SMOKE_IDS}"
 
 mkdir -p "$(dirname "$LOGFILE")"
 
 echo "OUTDIR:    $OUTDIR"
 echo "LOG:       $LOGFILE"
-echo "SMOKE_IDS: $SMOKE_IDS"
+echo "CONTRACT:  $CONTRACT"
+echo "LIMIT:     $SMOKE_LIMIT"
+echo "EXPECTED:  $EXPECTED_N / $PRIMARY_N primary rows"
 echo ""
-echo "--- Running smoke (3 proteins, sequential) ---"
+echo "--- Running smoke (first $EXPECTED_N primary proteins, sequential) ---"
 
 "$PYTHON_BIN" "$SCRIPT" \
   --workspace  "$VERMAMG_ROOT" \
   --outdir     "$OUTDIR" \
   --pymol      "$PYMOL_CMD" \
-  --only       "$SMOKE_IDS" \
+  --limit      "$SMOKE_LIMIT" \
   --cleanup-panel-pngs \
   2>&1 | tee "$LOGFILE"
 
@@ -147,11 +158,11 @@ PRODUCED_N=$(awk -F'\t' 'NR>1 && $3 != "PML_ONLY" {c++} END{print c+0}' "$MANIFE
 FAILED_N=$(awk 'NR>1{c++} END{print c+0}' "$FAILED" 2>/dev/null || echo 0)
 
 echo ""
-echo "SMOKE_PRODUCED: $PRODUCED_N / 3"
+echo "SMOKE_PRODUCED: $PRODUCED_N / $EXPECTED_N"
 echo "SMOKE_FAILED:   $FAILED_N"
 echo ""
 
-if [ "$PRODUCED_N" -ge 3 ] && [ "$FAILED_N" -eq 0 ]; then
+if [ "$PRODUCED_N" -ge "$EXPECTED_N" ] && [ "$FAILED_N" -eq 0 ]; then
   echo "M10G_SMOKE_QC: PASS"
   echo ""
   echo "Smoke composite PNGs:"

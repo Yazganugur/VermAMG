@@ -602,7 +602,7 @@ python3 scripts/modules/12d_multi_reference_pocket_overlap_metrics.py \
   --contract runs/<run_label>/06_visual_qc_v6/full/input_manifests/full_visual_overlay_input_contract.tsv \
   --outdir runs/<run_label>/results/full/08_user_facing_exports \
   --mode full \
-  --pymol-cmd 06_visual_qc_v6/render_env/bin/pymol
+  --pymol-cmd scripts/utils/pymol_apptainer_wrapper.sh
 ```
 
 ## 240_m15_user_facing_exports

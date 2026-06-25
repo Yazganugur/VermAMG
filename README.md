@@ -114,29 +114,34 @@ everything downstream is identical.
 
 VermAMG follows the standard for structural-bioinformatics tools: **git ships the
 code plus a small bundled demo; the heavy binaries and databases are *not* in git**
-(they are gigabytes). One script — `setup.sh` — downloads and installs everything
-the pipeline needs: Foldseek, P2Rank + Java, PyMOL (for figures), and the Foldseek
-reference databases. So a fresh clone is complete — you just run the installer and
-wait for the downloads.
+(they are gigabytes). `setup.sh` installs the local toolchain and, unless you use
+`--tools-only`, prepares the Foldseek reference databases under `resources/`.
+The bundled smoke demo is database-free; live FASTA runs need the full resource
+install. Optional overlay figures also need the documented PyMOL/Apptainer
+render resource.
 
 ```bash
 # 1) Get the code
 git clone <repo-url> VermAMG && cd VermAMG
 python3 -m pip install -r requirements.txt
 
-# 2) Install everything else (tools + PyMOL + databases) — grab a coffee ☕
-bash setup.sh
-#    Precomputed-only and don't need the databases?  ->  bash setup.sh --tools-only
+# 2) Install smoke/precomputed tools, then verify the install
+bash setup.sh --tools-only
+python scripts/vermamg_doctor.py --mode smoke
 
-# 3) Launch the guided wizard — it builds a run config and runs the FULL
-#    pipeline (incl. overlay figures) with live, one-line-per-stage progress
+# 3) Run the bundled DB-free smoke test and verify final outputs
+python scripts/run_smoke_test.py
+
+# 4) Launch the guided wizard for your own project
 python scripts/vermamg_init.py
 ```
 
-That's the whole flow: answer a few questions (or pick the bundled 3-protein demo)
-and watch it run from FASTA intake → reference panel → P2Rank pockets → decision
-matrices → interpretation export → overlay figures. Results land under
-`runs/<project>/<run>/` — tables in `exports/`, PNG figures in `06_visual_qc_v6/`.
+That's the normal first-run flow: verify the local tools with the bundled
+3-protein demo, then answer a few questions for your own dataset and watch it run
+from FASTA intake → reference panel → P2Rank pockets → decision matrices →
+interpretation export. Optional overlay figures need PyMOL/render resources.
+Results land under `runs/<project>/<run>/` — tables in `exports/`, PNG figures in
+`06_visual_qc_v6/`.
 
 > **Linux/WSL only:** Foldseek, P2Rank, and PyMOL rendering need a Linux
 > environment. On Windows, open WSL first:
@@ -150,6 +155,7 @@ matrices → interpretation export → overlay figures. Results land under
 
 ```bash
 bash setup.sh          # Foldseek binary + P2Rank + Foldseek PDB/AFSP DBs
+python scripts/vermamg_doctor.py --mode live
 ```
 
 See [docs/INSTALL.md](docs/INSTALL.md) for details and the ColabFold MSA DB

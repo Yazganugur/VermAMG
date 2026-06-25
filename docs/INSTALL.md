@@ -20,7 +20,8 @@ bash setup.sh --tools-only        # installs Foldseek binary + P2Rank
 Then run the bundled demo:
 
 ```bash
-python scripts/vermamg.py run --config examples/smoke_precomputed/config.yaml --resume --follow
+python scripts/vermamg_doctor.py --mode smoke
+python scripts/run_smoke_test.py
 ```
 
 ---
@@ -30,6 +31,7 @@ python scripts/vermamg.py run --config examples/smoke_precomputed/config.yaml --
 ```bash
 bash setup.sh                     # Foldseek + P2Rank + Foldseek reference DBs
 bash setup.sh --with-colabfold-db # also fetches the ColabFold MSA DB (~100 GB)
+python scripts/vermamg_doctor.py --mode live
 ```
 
 ---
@@ -43,8 +45,8 @@ bash setup.sh --with-colabfold-db # also fetches the ColabFold MSA DB (~100 GB)
 | **Java ≥ 11** | Required by P2Rank | adoptium.net or `apt install default-jre` | system | ~200 MB | `resources.java_bin` |
 | **Foldseek binary** | Structural search (live mode) | mmseqs.com/foldseek | `resources/tools/foldseek/bin/foldseek` | ~50 MB | `resources.foldseek_bin` |
 | **P2Rank binary** | Binding pocket prediction | github.com/rdk/p2rank/releases | `resources/tools/p2rank/current/prank` (symlink) | ~30 MB | `resources.p2rank_cmd` |
-| **Foldseek PDB DB** | PDB structural homologs | `foldseek databases PDB ...` | `resources/databases/foldseek/pdb` | ~11 GB | `resources.pdb_foldseek_db` |
-| **Foldseek AFSP DB** | AlphaFold/Swiss-Prot homologs | `foldseek databases Alphafold/Swiss-Prot ...` | `resources/databases/foldseek/alphafold_swissprot` | ~5 GB | `resources.afsp_foldseek_db` |
+| **Foldseek PDB DB** | PDB structural homologs | `foldseek databases PDB ...` | `resources/databases/foldseek/pdb/pdb` | ~11 GB | `resources.pdb_foldseek_db` |
+| **Foldseek AFSP DB** | AlphaFold/Swiss-Prot homologs | `foldseek databases Alphafold/Swiss-Prot ...` | `resources/databases/foldseek/alphafold_swissprot/af_swissprot` | ~5 GB | `resources.afsp_foldseek_db` |
 | **ColabFold MSA DB** | MSA for structure prediction (live) | ColabFold docs | `resources/databases/colabfold/` | ~100 GB | `resources.colabfold_db` |
 | **ColabFold container** | Structure prediction (live, GPU) | see ColabFold docs | `resources/containers/colabfold.sif` | ~4 GB | — |
 
@@ -105,8 +107,8 @@ resources:
 
 ```bash
 bash setup.sh
-# PDB DB:  resources/databases/foldseek/pdb
-# AFSP DB: resources/databases/foldseek/alphafold_swissprot
+# PDB DB:  resources/databases/foldseek/pdb/pdb
+# AFSP DB: resources/databases/foldseek/alphafold_swissprot/af_swissprot
 ```
 
 These are large (~16 GB total) and take time to download. Download is
@@ -117,8 +119,8 @@ Run-config:
 ```yaml
 resources:
   foldseek_bin: "resources/tools/foldseek/bin/foldseek"
-  pdb_foldseek_db:  "resources/databases/foldseek/pdb"
-  afsp_foldseek_db: "resources/databases/foldseek/alphafold_swissprot"
+  pdb_foldseek_db:  "resources/databases/foldseek/pdb/pdb"
+  afsp_foldseek_db: "resources/databases/foldseek/alphafold_swissprot/af_swissprot"
 ```
 
 ---
@@ -144,6 +146,26 @@ bash setup.sh --with-colabfold-db
 | Precomputed mode (no structure prediction) | ~300 MB |
 | Live Foldseek mode (precomputed ColabFold) | ~17 GB |
 | Full live mode (ColabFold + Foldseek) | ~120 GB |
+
+---
+
+## Verification commands
+
+Use these after installing resources:
+
+```bash
+# Checks Python packages, Java, P2Rank, and bundled smoke data.
+python scripts/vermamg_doctor.py --mode smoke
+
+# Runs the bundled 3-protein smoke test and verifies the final tables.
+python scripts/run_smoke_test.py
+
+# Checks live-mode Foldseek binary and database prefixes.
+python scripts/vermamg_doctor.py --mode live
+
+# Checks optional PyMOL rendering resources.
+python scripts/vermamg_doctor.py --mode render
+```
 
 ---
 

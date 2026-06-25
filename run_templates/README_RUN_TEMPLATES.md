@@ -122,8 +122,8 @@ resources:
   p2rank_jar: "resources/tools/p2rank/current/bin/p2rank.jar"  # symlink created by setup.sh
   # Live Foldseek mode only:
   foldseek_bin: "resources/tools/foldseek/bin/foldseek"
-  pdb_foldseek_db:  "resources/databases/foldseek/pdb"
-  afsp_foldseek_db: "resources/databases/foldseek/alphafold_swissprot"
+  pdb_foldseek_db:  "resources/databases/foldseek/pdb/pdb"
+  afsp_foldseek_db: "resources/databases/foldseek/alphafold_swissprot/af_swissprot"
 ```
 
 See [docs/INSTALL.md](../docs/INSTALL.md) for full installation instructions.

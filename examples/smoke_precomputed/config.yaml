@@ -1,10 +1,11 @@
 # =============================================================================
 # VermAMG smoke demo — 3 proteins, precomputed mode, no external DBs required.
 # =============================================================================
-# Run this after cloning (no setup.sh needed):
+# Run this after cloning and installing smoke-mode tools:
 #
-#   python scripts/vermamg.py plan --config examples/smoke_precomputed/config.yaml
-#   python scripts/vermamg.py run  --config examples/smoke_precomputed/config.yaml --resume --follow
+#   bash setup.sh --tools-only
+#   python scripts/vermamg_doctor.py --mode smoke
+#   python scripts/run_smoke_test.py
 #
 # Requires: Python >= 3.10, pip install -r requirements.txt, P2Rank + Java.
 # Outputs land in: runs/smoke_precomputed/smoke_3prot_v1/exports/

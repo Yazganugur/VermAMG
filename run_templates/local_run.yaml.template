@@ -150,8 +150,8 @@ resources:
   p2rank_jar: "resources/tools/p2rank/current/bin/p2rank.jar" # symlink created by setup.sh
   # Live Foldseek mode only:
   foldseek_bin: ""       # e.g. resources/tools/foldseek/bin/foldseek  (setup.sh installs here)
-  pdb_foldseek_db: ""    # e.g. resources/databases/foldseek/pdb       (setup.sh installs here)
-  afsp_foldseek_db: ""   # e.g. resources/databases/foldseek/alphafold_swissprot
+  pdb_foldseek_db: ""    # e.g. resources/databases/foldseek/pdb/pdb
+  afsp_foldseek_db: ""   # e.g. resources/databases/foldseek/alphafold_swissprot/af_swissprot
 
 # ---------------------------------------------------------------------------
 # Reference materialization
