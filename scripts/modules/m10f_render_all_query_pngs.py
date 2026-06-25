@@ -82,16 +82,19 @@ def main() -> int:
             raise SystemExit(f"ERROR: output path outside allowed_root: {p}")
 
     pymol_cmd = (args.pymol_cmd or "").strip()
-    if pymol_cmd:
-        if not (shutil.which(pymol_cmd) or Path(pymol_cmd).is_file()):
-            raise SystemExit(f"ERROR: PyMOL command not found: {pymol_cmd}")
+    pymol_ok = bool(pymol_cmd and (shutil.which(pymol_cmd) or Path(pymol_cmd).is_file()))
+    container_ok = bool(sif and sif.is_file())
+    if pymol_ok:
         use_container = False
-    elif sif and sif.is_file():
+    elif container_ok:
         use_container = True
+        if pymol_cmd:
+            print(f"NOTE: pymol command '{pymol_cmd}' not found; using Apptainer container: {sif}")
     else:
         raise SystemExit(
-            "ERROR: no PyMOL available. Provide --pymol-cmd <pymol> "
-            "(e.g. `conda install -c conda-forge pymol-open-source`) or --pymol-container <sif>.")
+            "ERROR: no PyMOL available. Either set resources.pymol_cmd to a PyMOL binary "
+            "(e.g. `conda install -c conda-forge pymol-open-source`), or provide the Apptainer "
+            f"container at {sif if sif else 'resources/containers/pymol_*.sif'} with apptainer on PATH.")
     if not manifest_path.is_file():
         raise SystemExit(f"ERROR: manifest not found: {manifest_path}")
 
